@@ -14,6 +14,22 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+import { useState } from "react";
+
+import { signIn } from "next-auth/react";
+import Image from "next/image";
+
+// Run: npx shadcn-ui@latest add button
+import { ButtonMine } from "../../components/button";  // the button that is made from the TA 
+// Run: npx shadcn-ui@latest add card
+
+import { Card, CardContent, CardHeader, CardTitle } from "../../components/card";
+import { publicEnv } from "@/lib/env/public";
+
+// Run: npx shadcn-ui@latest add button
+// Run: npx shadcn-ui@latest add card
+
+
 
 import Copyright from '@/components/copyright';
 import { main_theme } from '@/components/themes';
@@ -22,6 +38,11 @@ import { main_theme } from '@/components/themes';
 const defaultTheme = createTheme();
 
 export default function SignInSide() {
+  const [email, setEmail] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [isSignUp, setIsSignUp] = useState<boolean>(false);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -98,6 +119,20 @@ export default function SignInSide() {
               >
                 Sign In
               </Button>
+              <ButtonMine
+                onClick={async () => {
+                  // TODO: sign in with github
+                  signIn("github", {
+                    callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/docs`,
+                  });
+                }}
+                className="flex w-full"
+                variant={"outline"}
+              >
+                {/* Remember to copy "github.png" to ./public folder */}
+                <Image src="/github.png" alt="github icon" width={20} height={20} />
+                <span className="grow">Sign In with Github</span>
+              </ButtonMine>
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">
@@ -113,8 +148,10 @@ export default function SignInSide() {
               <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
+          
         </Grid>
       </Grid>
+      
     </ThemeProvider>
   );
 }
