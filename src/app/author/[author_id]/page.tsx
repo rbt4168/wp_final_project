@@ -6,7 +6,6 @@ import { Box, Button, Card, CardActionArea, CardContent, CardMedia, CssBaseline,
 import { useState } from "react";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { Griffy } from "next/font/google";
 function RecWorkCard(props: any) {
   const [onliked, setonliked] = useState(true);
   return (

@@ -99,7 +99,7 @@ export default function Pricing() {
                   sx={{
                     backgroundColor: (theme) =>
                       theme.palette.mode === 'light'
-                        ? theme.palette.grey[200]
+                        ? theme.palette.secondary.main
                         : theme.palette.grey[700],
                   }}
                 />
