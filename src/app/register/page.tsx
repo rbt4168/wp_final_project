@@ -15,9 +15,9 @@ import Typography from '@mui/material/Typography';
 import { ThemeProvider } from '@mui/material/styles';
 
 import Copyright from '@/components/copyright';
-import { main_theme } from '@/components/themes';
+import { main_theme } from '@/lib/themes';
 
-export default function SignInSide() {
+export default function Register() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);

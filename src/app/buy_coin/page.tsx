@@ -14,7 +14,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
 import NavigationBar from '@/components/navbar';
-import { main_theme } from '@/components/themes';
+import { main_theme } from '@/lib/themes';
 import FooterComponent from '@/components/footer';
 
 const tiers = [

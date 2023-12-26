@@ -4,8 +4,8 @@ import Grid from '@mui/material/Grid';
 import Copyright from './copyright';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
-import { ThemeProvider } from 'styled-components';
-import { main_theme } from './themes';
+import { main_theme } from '../lib/themes';
+import { ThemeProvider } from '@mui/material';
 
 const footers = [ {
     title: 'Legal',

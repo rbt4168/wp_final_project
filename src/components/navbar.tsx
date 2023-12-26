@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import { ThemeProvider } from '@mui/material/styles';
-import { main_theme } from './themes';
+import { main_theme } from '../lib/themes';
 export default function NavigationBar(props: any) {
   return(
     <ThemeProvider theme={main_theme}>
@@ -23,7 +23,7 @@ export default function NavigationBar(props: any) {
             <Link
                 variant="button"
                 color="text.primary"
-                href="#"
+                href="/profile"
                 sx={{ my: 1, mx: 1.5 }}
             >
                 Profile
