@@ -1,7 +1,6 @@
 "use client"
 import * as React from 'react';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
+import { ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -11,88 +10,55 @@ import CardHeader from '@mui/material/CardHeader';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import StarIcon from '@mui/icons-material/StarBorder';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
-import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
 
 import NavigationBar from '@/components/navbar';
-import Copyright from '@/components/copyright';
+import { main_theme } from '@/components/themes';
+import FooterComponent from '@/components/footer';
 
 const tiers = [
   {
-    title: 'Free',
-    price: '0',
+    title: '少量 Coin',
+    subheader: '',
+    price: '10',
     description: [
-      '10 users included',
-      '2 GB of storage',
-      'Help center access',
-      'Email support',
+      '向創作投以小小支持',
+      '享有對方的感謝',
+      '將你的名字列入支持者名單',
     ],
-    buttonText: 'Sign up for free',
+    buttonText: 'NTD $30',
     buttonVariant: 'outlined',
   },
   {
-    title: 'Pro',
+    title: '一堆 Coin',
     subheader: 'Most popular',
-    price: '15',
+    price: '100',
     description: [
-      '20 users included',
-      '10 GB of storage',
-      'Help center access',
-      'Priority email support',
+      '更多的 Coin',
+      '讓創作者更積極地創作',
+      '專屬支持者徽章'
     ],
-    buttonText: 'Get started',
-    buttonVariant: 'contained',
+    buttonText: 'NTD $250',
+    buttonVariant: 'outlined',
   },
   {
-    title: 'Enterprise',
-    price: '30',
+    title: '好多 Coin',
+    price: '300',
     description: [
-      '50 users included',
-      '30 GB of storage',
-      'Help center access',
-      'Phone & email support',
+      '有助於更多、更優質的內容',
+      '與創作者和其他支持者交流',
+      '專屬支持者徽章'
     ],
-    buttonText: 'Contact us',
+    buttonText: 'NTD $700',
     buttonVariant: 'outlined',
   },
 ];
-const footers = [
-  {
-    title: 'Company',
-    description: ['Team', 'History', 'Contact us', 'Locations'],
-  },
-  {
-    title: 'Features',
-    description: [
-      'Cool stuff',
-      'Random feature',
-      'Team feature',
-      'Developer stuff',
-      'Another one',
-    ],
-  },
-  {
-    title: 'Resources',
-    description: ['Resource', 'Resource name', 'Another resource', 'Final resource'],
-  },
-  {
-    title: 'Legal',
-    description: ['Privacy policy', 'Terms of use'],
-  },
-];
-
-// TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme();
 
 export default function Pricing() {
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
+    <ThemeProvider theme={main_theme}>
       <CssBaseline />
-      
       <NavigationBar />
       {/* Hero unit */}
       <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 8, pb: 6 }}>
@@ -103,12 +69,10 @@ export default function Pricing() {
           color="text.primary"
           gutterBottom
         >
-          Pricing
+          購買 Coin 點數
         </Typography>
         <Typography variant="h5" align="center" color="text.secondary" component="p">
-          Quickly build an effective pricing table for your potential customers with
-          this layout. It&apos;s built with default MUI components with little
-          customization.
+          快購買點數來支持自己喜歡的創作者吧！
         </Typography>
       </Container>
       {/* End hero unit */}
@@ -149,10 +113,10 @@ export default function Pricing() {
                     }}
                   >
                     <Typography component="h2" variant="h3" color="text.primary">
-                      ${tier.price}
+                      {tier.price}
                     </Typography>
                     <Typography variant="h6" color="text.secondary">
-                      /mo
+                      Coins
                     </Typography>
                   </Box>
                   <ul>
@@ -182,35 +146,7 @@ export default function Pricing() {
         </Grid>
       </Container>
       {/* Footer */}
-      <Container
-        maxWidth="md"
-        component="footer"
-        sx={{
-          borderTop: (theme) => `1px solid ${theme.palette.divider}`,
-          mt: 8,
-          py: [3, 6],
-        }}
-      >
-        <Grid container spacing={4} justifyContent="space-evenly">
-          {footers.map((footer) => (
-            <Grid item xs={6} sm={3} key={footer.title}>
-              <Typography variant="h6" color="text.primary" gutterBottom>
-                {footer.title}
-              </Typography>
-              <ul>
-                {footer.description.map((item) => (
-                  <li key={item}>
-                    <Link href="#" variant="subtitle1" color="text.secondary">
-                      {item}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </Grid>
-          ))}
-        </Grid>
-        <Copyright sx={{ mt: 5 }} />
-      </Container>
+      <FooterComponent />
       {/* End footer */}
     </ThemeProvider>
   );
