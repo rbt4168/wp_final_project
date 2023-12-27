@@ -10,6 +10,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShareIcon from '@mui/icons-material/Share';
 import { useState } from "react";
 import GlobalChip from "@/components/chipglobal"
+import { default_tags } from "@/lib/utils"
 function WorkCard(props: any) {
   const [onliked, setonliked] = useState(true);
   return (
@@ -93,7 +94,7 @@ export default function PictureFull(props: any) {
   const { params } = props;
   const { picture_id } = params;
 
-  var tag_array = ["Happy", "Sad", "Angry", "Excited", "Anxious", "Relaxed", "Confident", "Nervous", "Playful", "Thoughtful", "Content", "Bored", "Energetic", "Tired", "Curious", "Surprised", "Motivated", "Inspired", "Grateful", "Hopeful", "Enthusiastic", "Pensive", "Reflective", "Inquisitive", "Amused", "Disappointed", "Overwhelmed", "Peaceful", "Irritated", "Proud", "Guilty", "Jealous", "Apathetic", "Sentimental", "Optimistic", "Melancholic", "Frustrated", "Sympathetic", "Anticipating", "Cautious", "Disgusted", "Amazed", "Blissful", "Defiant", "Humble", "Insecure", "Regretful", "Satisfied", "Serious", "Whimsical"];
+  var tag_array = default_tags;
   
   const [onliked, setonliked] = useState(true);
   return(

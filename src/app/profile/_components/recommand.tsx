@@ -1,23 +1,14 @@
 "use client"
 import { main_theme } from "@/lib/themes"
 import { Box, CssBaseline, Divider, Grid, ThemeProvider,
-    Typography, styled, Rating, List, ListItem, IconButton, Button, ListItemButton } from "@mui/material"
-
+    Typography, styled, Rating, List, ListItem, ListItemButton } from "@mui/material"
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { useState } from "react";
-import DivLineCenter, { DivLineCenterFull } from "@/components/divline";
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import { DivLineCenterFull } from "@/components/divline";
+import { StyledRating } from "@/components/styledcomps";
 
-const StyledRating = styled(Rating)({
-  '& .MuiRating-iconFilled': {
-    color: '#ff6d75',
-  },
-  '& .MuiRating-iconHover': {
-    color: '#ff3d47',
-  },
-});
-function WorkCard(props: any) {
+function ArtWorkListItem(props: any) {
+  const { small_url, name, idx, like_count, rec_point } = props;
   return (
     <ListItem disablePadding>
     <ListItemButton>
@@ -30,26 +21,26 @@ function WorkCard(props: any) {
                 width: 128,
               }}
               alt="a"
-              src="https://upload.wikimedia.org/wikipedia/en/8/88/Bugcat_Capoo.jpg"
+              src={small_url}
           />
         </Grid>
         <Grid item xs={12} sm container>
           <Grid item xs container direction="column" spacing={2}>
             <Grid item xs>
               <Typography gutterBottom variant="h5" component="div">
-                嘎波的作品 {Math.random()}
+                {name}
               </Typography>
               <Typography variant="body2" gutterBottom>
-                ID: 142857142857
+                ID: {idx}
               </Typography>
               <Typography variant="body2" gutterBottom>
-                478 <FavoriteIcon color="secondary" />
+                {like_count} <FavoriteIcon color="secondary" />
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 <StyledRating
                   name="customized-color"
                   readOnly
-                  defaultValue={Math.floor(Math.random()*10)}
+                  defaultValue={rec_point}
                   max={10}
                   getLabelText={(value: number) => `${value} Heart${value !== 1 ? 's' : ''}`}
                   icon={<FavoriteIcon fontSize="inherit" />}
@@ -64,6 +55,7 @@ function WorkCard(props: any) {
     </ListItem>
   );
 }
+
 export default function RecommandWork(props: any) {
   return (
     <ThemeProvider theme={main_theme}>
@@ -75,11 +67,26 @@ export default function RecommandWork(props: any) {
       <Box>
         <List>
           <DivLineCenterFull text="Recent"/>
-          {Array.from(Array(2)).map((_, index) => (<WorkCard />))}
+          {Array.from(Array(2)).map((_, index) => (
+            <ArtWorkListItem
+              small_url="https://upload.wikimedia.org/wikipedia/en/8/88/Bugcat_Capoo.jpg"
+              name={"嘎波的作品"+Math.random()} idx="18515" like_count={123}
+              rec_point={Math.floor(Math.random()*10)}
+            />))}
           <DivLineCenterFull text="2023-11"/>
-          {Array.from(Array(1)).map((_, index) => (<WorkCard />))}
+          {Array.from(Array(1)).map((_, index) => (
+            <ArtWorkListItem
+              small_url="https://upload.wikimedia.org/wikipedia/en/8/88/Bugcat_Capoo.jpg"
+              name={"嘎波的作品"+Math.random()} idx="18515" like_count={123}
+              rec_point={Math.floor(Math.random()*10)}
+            />))}
           <DivLineCenterFull text="2023-10"/>
-          {Array.from(Array(1)).map((_, index) => (<WorkCard />))}
+          {Array.from(Array(1)).map((_, index) => (
+            <ArtWorkListItem
+              small_url="https://upload.wikimedia.org/wikipedia/en/8/88/Bugcat_Capoo.jpg"
+              name={"嘎波的作品"+Math.random()} idx="18515" like_count={123}
+              rec_point={Math.floor(Math.random()*10)}
+            />))}
         </List>
       </Box>
       

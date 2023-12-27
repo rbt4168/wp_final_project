@@ -145,16 +145,6 @@ export default function Home() {
       </Grid>
 
       <FooterComponent/>
-      <form onSubmit={handleSubmit}>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
-        >
-          修改資料 
-        </Button>
-      </form>
     </ThemeProvider>
   )
 }
