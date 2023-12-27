@@ -10,7 +10,6 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useState } from "react";
 
-import axios from 'axios';
 function RecWorkCard(props: any) {
   const [onliked, setonliked] = useState(true);
   return (
@@ -46,7 +45,7 @@ export default function Home() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // TODO: sign in logic
-    axios.post("/api/userprofile", {}).then().catch(() => alert("你到底做什麼 解釋一下"))
+    // axios.post("/api/userprofile", {}).then().catch(() => alert("你到底做什麼 解釋一下"))
     
   };
   return (
