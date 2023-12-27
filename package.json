@@ -33,14 +33,13 @@
     "@types/react-dnd": "^3.0.2",
     "@types/react-sortable-hoc": "^0.7.1",
     "array-move": "^4.0.0",
-    "next": "14.0.4",
     "react": "^18",
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18",
     "react-icons": "^4.11.0",
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7",
-    "use-debounce": "^10.0.0"
+    "use-debounce": "^10.0.0",
     "react-sortable-hoc": "^2.0.0",
     "styled-components": "^6.1.3"
 
