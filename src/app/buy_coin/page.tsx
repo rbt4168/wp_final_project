@@ -60,7 +60,7 @@ export default function Pricing() {
     <ThemeProvider theme={main_theme}>
       <CssBaseline />
       <NavigationBar />
-      {/* Hero unit */}
+
       <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 8, pb: 6 }}>
         <Typography
           component="h1"
@@ -75,7 +75,7 @@ export default function Pricing() {
           快購買點數來支持自己喜歡的創作者吧！
         </Typography>
       </Container>
-      {/* End hero unit */}
+
       <Container maxWidth="md" component="main">
         <Grid container spacing={5} alignItems="flex-end">
           {tiers.map((tier) => (
@@ -145,9 +145,7 @@ export default function Pricing() {
           ))}
         </Grid>
       </Container>
-      {/* Footer */}
       <FooterComponent />
-      {/* End footer */}
     </ThemeProvider>
   );
 }

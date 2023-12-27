@@ -1,23 +1,31 @@
 "use client"
 import { main_theme } from "@/lib/themes"
 import { Box, Button, CssBaseline, Divider, Input, TextField, ThemeProvider, Typography } from "@mui/material"
+import { useState } from "react";
 // import axios from "axios";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
+export default function UserProfile(props: any) {
 
-export default function UserProfile() {
+  const [name, setName] = useState("");
+  const [quote, setQuote] = useState("");
+  const [title, setTitle] = useState("");
+  const [bio, setBio] = useState("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // TODO: sign in logic
-    // axios.post("/api/userprofile", {}).then().catch(() => alert("你到底做什麼 解釋一下"))
+  const [link0, setLink0] = useState("");
+  const [link1, setLink1] = useState("");
+  const [link2, setLink2] = useState("");
+  const [link3, setLink3] = useState("");
+
+  const handleSubmit = (e: any) => {
+    // TODO: Update User Profile
     
   };
+
   return (
     <ThemeProvider theme={main_theme}>
       <CssBaseline />
-
       <Typography component="h1" variant="h5" m={3} sx={{ fontWeight: 600 }}>
-        帳號資料
+        帳號資料 Account
       </Typography>
       
       <Divider />
@@ -28,6 +36,8 @@ export default function UserProfile() {
           placeholder="name"
           color="primary"
           sx={{width: "60%"}}
+          value={name}
+          onChange={(e:any)=>setName(e.target.value)}
         />
       </Box>
       <Box mx={5} my={3}>
@@ -37,6 +47,8 @@ export default function UserProfile() {
           placeholder="quote"
           color="primary"
           sx={{width: "60%"}}
+          value={quote}
+          onChange={(e:any)=>setQuote(e.target.value)}
         />
       </Box>
       <Box mx={5} my={3} sx={{ typography: 'subtitle2'}}>
@@ -46,6 +58,8 @@ export default function UserProfile() {
           placeholder="title"
           color="primary"
           sx={{width: "60%"}}
+          value={title}
+          onChange={(e:any)=>setTitle(e.target.value)}
         />
       </Box>
       <Box mx={5} my={3} sx={{ typography: 'subtitle2'}}>
@@ -56,6 +70,8 @@ export default function UserProfile() {
           multiline
           rows={5}
           sx={{width: "60%"}}
+          value={bio}
+          onChange={(e:any)=>setBio(e.target.value)}
         />
       </Box>
       <Box mx={5} my={3} sx={{ typography: 'subtitle2'}} >
@@ -66,6 +82,8 @@ export default function UserProfile() {
           color="primary"
           size="small"
           sx={{width: "60%"}}
+          value={link0}
+          onChange={(e:any)=>setLink0(e.target.value)}
         />
         <TextField
           id="link1"
@@ -73,6 +91,8 @@ export default function UserProfile() {
           color="primary"
           size="small"
           sx={{width: "60%"}}
+          value={link1}
+          onChange={(e:any)=>setLink1(e.target.value)}
         />
         <TextField
           id="link2"
@@ -80,6 +100,8 @@ export default function UserProfile() {
           color="primary"
           size="small"
           sx={{width: "60%"}}
+          value={link2}
+          onChange={(e:any)=>setLink2(e.target.value)}
         />
         <TextField
           id="link3"
@@ -87,19 +109,22 @@ export default function UserProfile() {
           color="primary"
           size="small"
           sx={{width: "60%"}}
+          value={link3}
+          onChange={(e:any)=>setLink3(e.target.value)}
         />
         
       </Box>
-      <form onSubmit={handleSubmit}>
+      <Box mx={5} my={3} sx={{ typography: 'subtitle2'}}>
         <Button
           type="submit"
           fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
+          variant="outlined"
+          onClick={handleSubmit}
+          sx={{width: "60%"}}
         >
-          修改資料 
+          修改資料 Modify
         </Button>
-      </form>
+      </Box>
     </ThemeProvider>
   )
 }

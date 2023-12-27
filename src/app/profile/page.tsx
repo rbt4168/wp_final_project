@@ -48,8 +48,9 @@ const list_items = [
     component: (<LikedCreator/>)
   }
 ];
+
 export default function Profile() {
-  const [ selectName, setSelectName ] = useState("帳號資料");
+  const [ selectName, setSelectName ] = useState(list_items[0].title);
   return(
     <ThemeProvider theme={main_theme}>
       <CssBaseline />

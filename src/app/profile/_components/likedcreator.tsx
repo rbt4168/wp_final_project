@@ -1,6 +1,7 @@
 "use client"
 import { main_theme } from "@/lib/themes"
-import { Box, Card, CardMedia, CardContent, CssBaseline, Divider, Grid, ThemeProvider, Typography, CardActions, Button, Hidden, CardActionArea, styled, Rating, IconButton, ButtonBase } from "@mui/material"
+import { Box, CssBaseline, Divider,
+  Grid, ThemeProvider, Typography, IconButton } from "@mui/material"
 
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';

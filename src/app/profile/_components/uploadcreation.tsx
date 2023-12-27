@@ -6,7 +6,7 @@ export default function UploadCreation(props: any) {
     <ThemeProvider theme={main_theme}>
       <CssBaseline/>
       <Typography component="h1" variant="h5" m={3} sx={{ fontWeight: 600 }}>
-        上傳作品
+        上傳作品 Creation
       </Typography>
         
       <Divider />
