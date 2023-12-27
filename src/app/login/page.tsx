@@ -17,20 +17,37 @@ import { ThemeProvider } from '@mui/material/styles';
 import Copyright from '@/components/copyright';
 import { main_theme } from '@/lib/themes';
 
+import { useState } from "react";
+
+import { signIn } from "next-auth/react";
+import Image from "next/image";
+
+// Run: npx shadcn-ui@latest add button
+import { MyButton } from "../../components/button";
+// Run: npx shadcn-ui@latest add card
+import { publicEnv } from "@/lib/env/public";
+
+
 export default function SignInSide() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [isSignUp, setIsSignUp] = useState<boolean>(false);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // TODO: sign in logic
+    signIn("credentials", {
+      email,
+      password,
+      callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/`,
     });
   };
 
   return (
     <ThemeProvider theme={main_theme}>
-      <CssBaseline />
       <Grid container component="main" sx={{ height: '100vh' }}>
+        <CssBaseline />
         <Grid
           item
           xs={false}
@@ -70,6 +87,10 @@ export default function SignInSide() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
                 autoFocus
               />
               <TextField
@@ -80,6 +101,10 @@ export default function SignInSide() {
                 label="Password"
                 type="password"
                 id="password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
                 autoComplete="current-password"
               />
               <FormControlLabel
@@ -94,7 +119,37 @@ export default function SignInSide() {
               >
                 Sign In
               </Button>
-              <Grid container>
+              
+            </Box>
+            <MyButton
+                onClick={async () => {
+                  // TODO: sign in with github
+                  signIn("github", {
+                    callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/`,
+                  });
+                }}
+                className="flex w-full"
+                variant={"outline"}
+              >
+                {/* Remember to copy "github.png" to ./public folder */}
+                <Image src="/github.png" alt="github icon" width={20} height={20} />
+                <span className="grow">Sign In with Github</span>
+            </MyButton>
+            <MyButton
+                onClick={async () => {
+                  // TODO: sign in with github
+                  signIn("google", {
+                    callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/`,
+                  });
+                }}
+                className="flex w-full"
+                variant={"outline"}
+              >
+                {/* Remember to copy "github.png" to ./public folder */}
+                <Image src="/google.jpg" alt="google icon" width={20} height={20} />
+                <span className="grow">Sign In with Google</span>
+            </MyButton>
+            <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">
                     Forgot password?
@@ -107,7 +162,6 @@ export default function SignInSide() {
                 </Grid>
               </Grid>
               <Copyright sx={{ mt: 5 }} />
-            </Box>
           </Box>
         </Grid>
       </Grid>
