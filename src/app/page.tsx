@@ -3,6 +3,7 @@ import DivLineCenter from "@/components/divline";
 import FooterComponent from "@/components/footer";
 import NavigationBar from "@/components/navbar";
 import { main_theme } from "@/lib/themes";
+
 import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, CssBaseline, Grid, IconButton, Paper, TextField, ThemeProvider, Typography } from "@mui/material";
 
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -38,7 +39,14 @@ function RecWorkCard(props: any) {
     </Box>
   );
 }
+
 export default function Home() {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // TODO: sign in logic
+    axios.post("/api/userprofile", {}).then().catch(() => alert("你到底做什麼 解釋一下"))
+    
+  };
   return (
     <ThemeProvider theme={main_theme}>
       <CssBaseline/>
@@ -136,6 +144,16 @@ export default function Home() {
       </Grid>
 
       <FooterComponent/>
+      <form onSubmit={handleSubmit}>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+        >
+          修改資料 
+        </Button>
+      </form>
     </ThemeProvider>
   )
 }

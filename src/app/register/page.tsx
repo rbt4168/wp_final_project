@@ -17,17 +17,34 @@ import { ThemeProvider } from '@mui/material/styles';
 import Copyright from '@/components/copyright';
 import { main_theme } from '@/lib/themes';
 
-export default function Register() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    if(data.get('password') === data.get('repeat_password'))
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+import { useState } from "react";
+
+import { signIn } from "next-auth/react";
+import Image from "next/image";
+
+// Run: npx shadcn-ui@latest add button
+import { MyButton } from "../../components/button";
+// Run: npx shadcn-ui@latest add card
+import { publicEnv } from "@/lib/env/public";
+
+
+export default function SignInSide() {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [username, setName] = useState<string>("");
+  const [isSignUp, setIsSignUp] = useState<boolean>(false);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // TODO: sign in logic
+    console.log(username)
+    signIn("credentials", {
+      username,
+      email,
+      password,
+      callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/`,
     });
   };
-
   return (
     <ThemeProvider theme={main_theme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
@@ -71,6 +88,10 @@ export default function Register() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
                 autoFocus
               />
               <TextField
@@ -81,22 +102,30 @@ export default function Register() {
                 label="Password"
                 type="password"
                 id="password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
                 autoComplete="current-password"
               />
               <TextField
                 margin="normal"
                 required
                 fullWidth
-                name="repeat_password"
-                label="Repeat Password"
-                type="repeat_password"
-                id="repeat_password"
+                name="username"
+                label="Username"
+                id="username"
+                value={username}
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
                 autoComplete="current-password"
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="I agree the user policy."
               />
+              
               <Button
                 type="submit"
                 fullWidth
@@ -114,6 +143,34 @@ export default function Register() {
               </Grid>
               <Copyright sx={{ mt: 5 }} />
             </Box>
+              <MyButton
+                onClick={async () => {
+                  // TODO: sign in with github
+                  signIn("github", {
+                    callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/`,
+                  });
+                }}
+                className="flex w-full"
+                variant={"outline"}
+              >
+                {/* Remember to copy "github.png" to ./public folder */}
+                <Image src="/github.png" alt="github icon" width={20} height={20} />
+                <span className="grow">Sign Up with Github</span>
+            </MyButton>
+              <MyButton
+                onClick={async () => {
+                  // TODO: sign in with github
+                  signIn("google", {
+                    callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/`,
+                  });
+                }}
+                className="flex w-full"
+                variant={"outline"}
+              >
+                {/* Remember to copy "github.png" to ./public folder */}
+                <Image src="/google.jpg" alt="google icon" width={20} height={20} />
+                <span className="grow">Sign Up with Google</span>
+              </MyButton>
           </Box>
         </Grid>
       </Grid>
