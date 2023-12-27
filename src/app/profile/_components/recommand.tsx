@@ -6,6 +6,8 @@ import { Box, CssBaseline, Divider, Grid, ThemeProvider,
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useState } from "react";
+import DivLineCenter, { DivLineCenterFull } from "@/components/divline";
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 const StyledRating = styled(Rating)({
   '& .MuiRating-iconFilled': {
@@ -16,7 +18,6 @@ const StyledRating = styled(Rating)({
   },
 });
 function WorkCard(props: any) {
-  const [onliked, setonliked] = useState(true);
   return (
     <ListItem disablePadding>
     <ListItemButton>
@@ -39,7 +40,10 @@ function WorkCard(props: any) {
                 嘎波的作品 {Math.random()}
               </Typography>
               <Typography variant="body2" gutterBottom>
-                好喜歡和大家玩的~~
+                ID: 142857142857
+              </Typography>
+              <Typography variant="body2" gutterBottom>
+                478 <FavoriteIcon color="secondary" />
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 <StyledRating
@@ -70,7 +74,12 @@ export default function RecommandWork(props: any) {
       <Divider />
       <Box>
         <List>
-          {Array.from(Array(40)).map((_, index) => (<WorkCard />))}
+          <DivLineCenterFull text="Recent"/>
+          {Array.from(Array(2)).map((_, index) => (<WorkCard />))}
+          <DivLineCenterFull text="2023-11"/>
+          {Array.from(Array(1)).map((_, index) => (<WorkCard />))}
+          <DivLineCenterFull text="2023-10"/>
+          {Array.from(Array(1)).map((_, index) => (<WorkCard />))}
         </List>
       </Box>
       

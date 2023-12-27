@@ -19,3 +19,21 @@ export default function DivLineCenter(props:any) {
     </ThemeProvider>
   )
 }
+
+export function DivLineCenterFull(props:any) {
+  const { text } = props;
+  return(
+    <ThemeProvider theme={main_theme}>
+      <CssBaseline/>
+      <Grid
+        container
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Grid item xs={12} md={12}>
+          <Divider textAlign="right">{text}</Divider>
+        </Grid>
+      </Grid>
+    </ThemeProvider>
+  )
+}
