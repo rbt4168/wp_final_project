@@ -11,6 +11,7 @@ export async function POST(request: Request) {
     if (!session?.user?.email) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
+    
 
     // Extract data from request body
     const body = await request.json();
