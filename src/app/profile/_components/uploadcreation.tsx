@@ -3,15 +3,34 @@ import { Box, Button, CssBaseline, Divider, Input, TextField, ThemeProvider, Typ
 
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useState } from "react";
+import axios from "axios";
 export default function UploadCreation(props: any) {
   const [title, setTitle] = useState("");
   const [origin, setOrigin] = useState("");
   const [previewUrl, setPreviewUrl] = useState("");
 
-  const handleSubmit = (e:any) => {
-    // TODO: complete file upload
-    console.log({title, origin, previewUrl});
-  }
+  const handleSubmit = (e: any) => {
+    // TODO: Update User Profile
+    alert(title);
+    alert(origin);
+    alert(previewUrl);
+    const data = {
+      title,
+      origin,
+      previewUrl,
+    };
+  
+    // Make the API call
+    axios.post("/api/uploadCreation", data)
+      .then(response => {
+        alert("success");
+      })
+      .catch((e) => {
+        // Handle error
+        alert("Error occurred while updating profile");
+      });
+
+  };
 
   const handleFileChange = (e:any) => {
     const file = e.target.files[0];
