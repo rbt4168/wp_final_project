@@ -2,7 +2,7 @@
 import FooterComponent from "@/components/footer";
 import NavigationBar from "@/components/navbar";
 import { main_theme } from "@/lib/themes"
-import { Box, Card, CardActionArea, CardContent, CardMedia, CssBaseline, Divider, Grid, IconButton, Link, Paper, ThemeProvider, Typography } from "@mui/material"
+import { Box, Card, CardActionArea, CardContent, CardMedia, CssBaseline, Grid, IconButton, ThemeProvider, Typography } from "@mui/material"
 import { useState } from "react";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';

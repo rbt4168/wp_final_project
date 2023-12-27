@@ -6,9 +6,11 @@ export default function UserProfile() {
   return (
     <ThemeProvider theme={main_theme}>
       <CssBaseline />
+
       <Typography component="h1" variant="h5" m={3} sx={{ fontWeight: 600 }}>
         帳號資料
       </Typography>
+      
       <Divider />
       <Box mx={5} my={3}>
         <Typography>名稱</Typography>

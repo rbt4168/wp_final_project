@@ -8,6 +8,7 @@ import Person2Icon from '@mui/icons-material/Person2';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Diversity1Icon from '@mui/icons-material/Diversity1';
+import PublishIcon from '@mui/icons-material/Publish';
 
 import SidebarComponent from "./_components/sidebar"
 import UserProfile from "./_components/userprofile"
@@ -15,6 +16,7 @@ import { useState } from "react"
 import RecommandWork from "./_components/recommand"
 import LikedWork from "./_components/likedwork"
 import LikedCreator from "./_components/likedcreator"
+import UploadCreation from "./_components/uploadcreation"
 
 const list_items = [
   {
@@ -26,6 +28,11 @@ const list_items = [
     title: "作品管理",
     icon: (<ColorLensIcon color="secondary"/>),
     component: (<RecommandWork />)
+  },
+  {
+    title: "上傳作品",
+    icon: (<PublishIcon color="secondary"/>),
+    component: (<UploadCreation />)
   },
   {
     title: "Divider"
