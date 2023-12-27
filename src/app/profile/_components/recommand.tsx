@@ -1,17 +1,17 @@
 "use client"
 import { main_theme } from "@/lib/themes"
 import { Box, CssBaseline, Divider, Grid, ThemeProvider,
-    Typography, styled, Rating, List, ListItem, ListItemButton } from "@mui/material"
+    Typography, List, ListItem, ListItemButton } from "@mui/material"
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { DivLineCenterFull } from "@/components/divline";
 import { StyledRating } from "@/components/styledcomps";
 
 function ArtWorkListItem(props: any) {
-  const { small_url, name, idx, like_count, rec_point } = props;
+  const { small_url, name, idx, like_count, rec_point, setid, redir } = props;
   return (
     <ListItem disablePadding>
-    <ListItemButton>
+    <ListItemButton onClick={()=>{ setid(idx); redir("修改作品");}}>
       <Grid container spacing={2}>
         <Grid item>
           <Box
@@ -57,6 +57,7 @@ function ArtWorkListItem(props: any) {
 }
 
 export default function RecommandWork(props: any) {
+  const { setModifyID, setSelectName } = props;
   return (
     <ThemeProvider theme={main_theme}>
       <CssBaseline />
@@ -71,21 +72,21 @@ export default function RecommandWork(props: any) {
             <ArtWorkListItem
               small_url="https://upload.wikimedia.org/wikipedia/en/8/88/Bugcat_Capoo.jpg"
               name={"嘎波的作品"+Math.random()} idx="18515" like_count={123}
-              rec_point={Math.floor(Math.random()*10)}
+              rec_point={Math.floor(Math.random()*10)} setid={setModifyID} redir={setSelectName}
             />))}
           <DivLineCenterFull text="2023-11"/>
           {Array.from(Array(1)).map((_, index) => (
             <ArtWorkListItem
               small_url="https://upload.wikimedia.org/wikipedia/en/8/88/Bugcat_Capoo.jpg"
               name={"嘎波的作品"+Math.random()} idx="18515" like_count={123}
-              rec_point={Math.floor(Math.random()*10)}
+              rec_point={Math.floor(Math.random()*10)} setid={setModifyID} redir={setSelectName}
             />))}
           <DivLineCenterFull text="2023-10"/>
           {Array.from(Array(1)).map((_, index) => (
             <ArtWorkListItem
               small_url="https://upload.wikimedia.org/wikipedia/en/8/88/Bugcat_Capoo.jpg"
               name={"嘎波的作品"+Math.random()} idx="18515" like_count={123}
-              rec_point={Math.floor(Math.random()*10)}
+              rec_point={Math.floor(Math.random()*10)} setid={setModifyID} redir={setSelectName}
             />))}
         </List>
       </Box>
