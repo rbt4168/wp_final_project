@@ -1,9 +1,11 @@
 "use client"
 import { main_theme } from "@/lib/themes"
-import { Box, Card, CardMedia, CardContent, CssBaseline, Divider, Grid, ThemeProvider, Typography, CardActions, Button, Hidden, CardActionArea, styled, Rating } from "@mui/material"
+import { Box, CssBaseline, Divider, Grid, ThemeProvider,
+    Typography, styled, Rating, List, ListItem, IconButton, Button, ListItemButton } from "@mui/material"
 
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { useState } from "react";
 
 const StyledRating = styled(Rating)({
   '& .MuiRating-iconFilled': {
@@ -14,36 +16,48 @@ const StyledRating = styled(Rating)({
   },
 });
 function WorkCard(props: any) {
+  const [onliked, setonliked] = useState(true);
   return (
-    <Card sx={{ maxWidth: "100%" }}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          image="https://upload.wikimedia.org/wikipedia/en/8/88/Bugcat_Capoo.jpg"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Lizard
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      
-      <CardActions sx={{ justifyContent: "space-between" }}>
-        <Button size="large" color="primary" sx={{ fontWeight: 800 }}>分享</Button>
-        <StyledRating
-          name="customized-color"
-          defaultValue={0}
-          getLabelText={(value: number) => `${value} Heart${value !== 1 ? 's' : ''}`}
-          icon={<FavoriteIcon fontSize="inherit" />}
-          emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-        />
-        <Button size="large" color="secondary" sx={{ fontWeight: 800 }}>刪除</Button>
-      </CardActions>
-    </Card>
+    <ListItem disablePadding>
+    <ListItemButton>
+      <Grid container spacing={2}>
+        <Grid item>
+          <Box
+              component="img"
+              sx={{
+                height: 128,
+                width: 128,
+              }}
+              alt="a"
+              src="https://upload.wikimedia.org/wikipedia/en/8/88/Bugcat_Capoo.jpg"
+          />
+        </Grid>
+        <Grid item xs={12} sm container>
+          <Grid item xs container direction="column" spacing={2}>
+            <Grid item xs>
+              <Typography gutterBottom variant="h5" component="div">
+                嘎波的作品 {Math.random()}
+              </Typography>
+              <Typography variant="body2" gutterBottom>
+                好喜歡和大家玩的~~
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                <StyledRating
+                  name="customized-color"
+                  readOnly
+                  defaultValue={Math.floor(Math.random()*10)}
+                  max={10}
+                  getLabelText={(value: number) => `${value} Heart${value !== 1 ? 's' : ''}`}
+                  icon={<FavoriteIcon fontSize="inherit" />}
+                  emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                />
+              </Typography>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </ListItemButton>
+    </ListItem>
   );
 }
 export default function RecommandWork(props: any) {
@@ -54,14 +68,10 @@ export default function RecommandWork(props: any) {
         作品管理 Artworks
       </Typography>
       <Divider />
-      <Box mx={5} my={3}>
-        <Grid container spacing={{ xs: 2, md: 4 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-          {Array.from(Array(40)).map((_, index) => (
-            <Grid item xs={4} sm={2} md={4} key={index}>
-              <WorkCard />
-            </Grid>
-          ))}
-        </Grid>
+      <Box>
+        <List>
+          {Array.from(Array(40)).map((_, index) => (<WorkCard />))}
+        </List>
       </Box>
       
     </ThemeProvider>

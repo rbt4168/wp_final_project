@@ -47,8 +47,8 @@ export default function UploadCreation(props: any) {
       <Box mx={5} my={3}>
         <Typography>作品名稱 Title</Typography>
         <Input
-          id="name"
-          placeholder="name"
+          id="title"
+          placeholder="title"
           color="primary"
           sx={{width: "60%"}}
           value={title}
