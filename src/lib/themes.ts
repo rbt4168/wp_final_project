@@ -1,7 +1,4 @@
-import { alpha, createTheme, getContrastRatio } from '@mui/material/styles';
-
-const violetBase = '#7F00FF';
-const violetMain = alpha(violetBase, 0.7);
+import { createTheme } from '@mui/material/styles';
 
 export const main_theme = createTheme({
   palette: {
