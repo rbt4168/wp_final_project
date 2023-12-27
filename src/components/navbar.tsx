@@ -16,9 +16,10 @@ export default function NavigationBar(props: any) {
         sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
       >
         <Toolbar sx={{ flexWrap: 'wrap' }}>
-          <Typography variant="h4" color="inherit" noWrap sx={{ flexGrow: 1, fontWeight: 700 }}>
+          <Typography component="a" href='/' variant="h4" color="inherit" noWrap sx={{ flexGrow: 1, fontWeight: 700 }}>
             WP Creation
           </Typography>
+          
           <nav>
             <Link
                 variant="button"
