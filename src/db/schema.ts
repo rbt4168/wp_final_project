@@ -54,7 +54,7 @@ export const pictureTable = pgTable(
     post_date: text("post_date"),
     liked_count: integer("liked_count"),
     recommand_point: integer("recommand_point"),
-    tags:  integer("tags").array(),
+    tags: text("tags").array(),
     message: text("message"),
   },
 );

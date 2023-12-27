@@ -11,11 +11,11 @@ export async function POST(request: Request) {
     if (!session?.user?.email) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    
+
 
     // Extract data from request body
     const body = await request.json();
-    const { title, origin, previewUrl} = body;
+    const { title, origin, previewUrl, recommand, value} = body;
 
     // Assume you have a user table where you want to update this information
     // and 'userId' is obtained from the session or some other source
@@ -36,7 +36,8 @@ export async function POST(request: Request) {
           .execute();
     // Update user profile in the database
     console.log("----------------------------------------------");
-    console.log(User[0].author);
+    console.log("value")
+    console.log(value);
     console.log("----------------------------------------------");
     if (!User){
         console.log("fefefe");
@@ -49,7 +50,9 @@ export async function POST(request: Request) {
         name: title,
         description: origin,
         author : User[0].author,
-        url: previewUrl // Ensure your database can handle this array format
+        url: previewUrl, // Ensure your database can handle this array format
+        recommand_point: recommand,
+        tags: value,
       })
       .returning();
 
