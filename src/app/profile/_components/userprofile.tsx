@@ -2,6 +2,7 @@
 import { main_theme } from "@/lib/themes"
 import { Box, Button, CssBaseline, Divider, Input, TextField, ThemeProvider, Typography } from "@mui/material"
 import { useState } from "react";
+import axios from "axios"
 // import axios from "axios";
 // import { useRouter } from "next/navigation";
 export default function UserProfile(props: any) {
@@ -18,7 +19,29 @@ export default function UserProfile(props: any) {
 
   const handleSubmit = (e: any) => {
     // TODO: Update User Profile
-    
+    const links = [link0, link1, link2, link3];
+    alert(link0);
+    alert(link1);
+    alert(link2);
+    alert(link3);
+    const data = {
+      name,
+      quote,
+      title,
+      bio,
+      links // This is now an array of integers
+    };
+  
+    // Make the API call
+    axios.post("/api/userprofile", data)
+      .then(response => {
+        alert("success");
+      })
+      .catch((e) => {
+        // Handle error
+        alert("Error occurred while updating profile");
+      });
+
   };
 
   return (

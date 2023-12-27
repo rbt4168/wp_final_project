@@ -7,10 +7,9 @@ import {
   uuid,
   varchar,
   unique,
+  PgArray,
+  integer,
 } from "drizzle-orm/pg-core";
-
-// Checkout the many-to-many relationship in the following tutorial:
-// https://orm.drizzle.team/docs/rqb#many-to-many
 
 export const usersTable = pgTable(
   "users",
@@ -24,22 +23,31 @@ export const usersTable = pgTable(
     hashedPassword: varchar("hashed_password", { length: 100 }),
     provider: varchar("provider", {
       length: 100,
-    })
-    .notNull()
-    .default("credentials"),
-    name: text('name'),
-    quote: text('quote'),
-    title: text('title'),
-    birthday: text('birthday'),
-    bio: text('bio'),
-    links: text('links'),
-             /* 點數 */
+    }).notNull().default("credentials"),
+    name: text("name"),
+    quote: text("quote"),
+    title: text("title"),
+    birthday: text("birthday"),
+    bio: text("bio"),
+    links: text("links"),
+    liked_picture: integer("like_picture").array(),
+    liked_user: integer("liked_user").array(),
+    recommand_picture: integer("recommand_picture").array(),
+    post_picture: integer("post_picture").array(),
+    private_tags: integer("private_tags").array(),
+    private_tags_cost: integer("private_tags_cost").array(),
+    owned_private_tag: integer("owned_private_tag").array(),
+    coins: integer("coins").array(),
+
   },
   (table) => ({
     displayIdIndex: index("display_id_index").on(table.displayId),
     emailIndex: index("email_index").on(table.email),
   }),
 );
+
+// Remaining code for relations and other tables remains unchanged
+
 
 export const usersRelations = relations(usersTable, ({ many }) => ({
   usersToDocumentsTable: many(usersToDocumentsTable),
