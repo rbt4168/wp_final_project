@@ -20,10 +20,7 @@ export default function UserProfile(props: any) {
   const handleSubmit = (e: any) => {
     // TODO: Update User Profile
     const links = [link0, link1, link2, link3];
-    alert(link0);
-    alert(link1);
-    alert(link2);
-    alert(link3);
+
     const data = {
       name,
       quote,

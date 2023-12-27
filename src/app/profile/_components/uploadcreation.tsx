@@ -23,14 +23,14 @@ export default function UploadCreation(props: any) {
 
   const handleSubmit = (e: any) => {
     // TODO: Update User Profile
-    alert(title);
-    alert(origin);
-    alert(previewUrl);
     
+    alert(value);
     const data = {
       title,
       origin,
       previewUrl,
+      recommand,
+      value,
     };
   
     // Make the API call
