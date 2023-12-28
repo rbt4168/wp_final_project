@@ -6,7 +6,7 @@ import axios from "axios"
 // import axios from "axios";
 // import { useRouter } from "next/navigation";
 export default function UserProfile(props: any) {
-  const { actionUser } = props;
+  const { actionUser, trigger } = props;
 
   const [name, setName] = useState("Loading...");
   const [quote, setQuote] = useState("Loading...");
@@ -53,7 +53,8 @@ export default function UserProfile(props: any) {
     // Make the API call
     axios.post("/api/userprofile", payload)
       .then(response => {
-        alert("success");
+        alert("修改成功");
+        trigger();
       }).catch((e) => {
         // Handle error
         alert("Error occurred while updating profile");

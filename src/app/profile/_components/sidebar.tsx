@@ -5,7 +5,7 @@ import { Box, CssBaseline, Divider, List, ListItem,
          ThemeProvider} from "@mui/material"
 
 export default function SidebarComponent(props: any) {
-  const { selectName, setSelectName, listItmes } = props;
+  const { selectName, setSelectName, listItmes, actionUser } = props;
 
   return(
     <ThemeProvider theme={main_theme}>
@@ -25,7 +25,7 @@ export default function SidebarComponent(props: any) {
               src="https://upload.wikimedia.org/wikipedia/en/8/88/Bugcat_Capoo.jpg"
           />
           </ListItemIcon>
-          <ListItemText primary={"我操，我是嘎波"} secondary={"早安~"} />
+          <ListItemText primary={actionUser.name} secondary={actionUser.quote} />
       </ListItem>
       </List>
       <Divider />

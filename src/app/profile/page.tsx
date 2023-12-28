@@ -23,6 +23,7 @@ import axios from "axios"
 
 export default function Profile() {
   const [ actionUser, setActionUser ] = useState({});
+  const [ tirgger, setTrigger ] = useState(false);
 
   useEffect(()=>{
     axios.get("/api/getNowUser").then((e)=>{
@@ -32,7 +33,15 @@ export default function Profile() {
     }).catch((e)=>{
       console.error(e);
     })
-  }, []);
+  }, [tirgger]);
+
+  function trig() {
+    setTrigger(!tirgger);
+  }
+
+  // useEffect(()=>{
+  //   setTrigger(!tirgger);
+  // }, [])
 
   const [ modifyID, setModifyID ] = useState(0);
   const [ selectName, setSelectName ] = useState("帳號資料");
@@ -40,7 +49,7 @@ export default function Profile() {
     {
       title: "帳號資料",
       icon: (<Person2Icon color="secondary"/>),
-      component: (<UserProfile actionUser={actionUser}/>)
+      component: (<UserProfile actionUser={actionUser} trigger={trig}/>)
     },
     {
       title: "作品管理",
