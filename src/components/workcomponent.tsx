@@ -7,6 +7,17 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { StyledRating } from "./styledcomps";
 
+async function creatorFetchHandler(user_id: any) {
+  try {
+    let response = await axios.get("/api/getAuthorById?user_id="+user_id);
+    console.log(response.data)
+    return response.data;
+  } catch (e) {
+    console.error(e);
+    return {};
+  }
+}
+
 async function workFetchHandler(pic_id: any) {
   try {
     let payload = {
@@ -28,12 +39,22 @@ export function RelatedWorkListItem(props: any) {
       url:"",
       name:"untitled",
       post_date: "",
+      author_id: 0,
     });
+
+    const [ author, setAuthor ] = useState("")
 
     useEffect(()=>{
       workFetchHandler(pic_id).then((e)=>{
-        e?setPicdata(e):0;
+        if(e){
+          setPicdata(e);
+          creatorFetchHandler(e.author_id).then((e2)=>{
+            setAuthor(e2.name);
+          })
+        }
+        
       });
+      
     }, [pic_id]);
 
     return (
@@ -58,7 +79,7 @@ export function RelatedWorkListItem(props: any) {
                 {picdata.name?picdata.name:"untitled"}
               </Typography>
               <Typography gutterBottom variant="body2" component="div" color="primary">
-                作者
+                {author}
               </Typography>
               <Typography variant="body2" gutterBottom>
                 ID: {pic_id}
