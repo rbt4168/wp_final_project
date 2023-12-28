@@ -32,10 +32,10 @@ export default function NavigationBar(props: any) {
             <Link
                 variant="button"
                 color="text.primary"
-                href="#"
+                href="/search"
                 sx={{ my: 1, mx: 1.5 }}
             >
-                Enterprise
+                SEARCH
             </Link>
             <Link
                 variant="button"

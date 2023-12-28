@@ -70,8 +70,8 @@ export default function AuthorPage(props: any) {
       mt={2}
     >
       <Button href={"/donate/"+author_id} component="a" variant="contained"
-        sx={{width: "60%"}}>
-        Donate
+        sx={{width: "40%"}}>
+        Sponsor Creator
       </Button>
     </Grid>
 
