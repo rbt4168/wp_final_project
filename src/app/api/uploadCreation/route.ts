@@ -61,6 +61,28 @@ export async function POST(request: Request) {
         tags: value,
       })
       .returning();
+    
+
+      const [currentUser] = await db
+      .select()
+      .from(usersTable)
+      .where(eq(usersTable.username,(session?.user?.username)))
+    
+    // Check if the user has an existing post_picture array, if not, initialize it
+    const currentPostPictures = currentUser.post_picture || [];
+    
+    // Append the new pic_id to the array
+    const updatedPostPictures = [...currentPostPictures, updoadPicture.pic_id];
+    
+    // Update the user's record
+    const [updatedUser] = await db
+      .update(usersTable)
+      .set({
+        post_picture: updatedPostPictures,
+        title: title,
+      })
+      .where(eq(usersTable.username, session?.user?.username))
+      .returning();
 
     // Return the updated user information
     return NextResponse.json({ updoadPicture });

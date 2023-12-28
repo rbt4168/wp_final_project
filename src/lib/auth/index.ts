@@ -80,6 +80,7 @@ export const {
       await db.insert(usersTable).values({
         email: email.toLowerCase(),
         username: name,
+        coins: Number(0),
         provider,
       });
 
