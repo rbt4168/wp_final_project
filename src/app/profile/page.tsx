@@ -37,6 +37,7 @@ export default function Profile() {
 
   function trig() {
     setTrigger(!tirgger);
+    setModifyID(0);
   }
 
   const [ modifyID, setModifyID ] = useState(0);
@@ -60,7 +61,7 @@ export default function Profile() {
     {
       title: "修改作品",
       icon: (<ModeEditIcon color="secondary"/>),
-      component: (<ModifyCreation pic_id={modifyID}/>),
+      component: (<ModifyCreation pic_id={modifyID} trigger={trig}/>),
     },
     {
       title: "Divider"
