@@ -72,8 +72,6 @@ export default function DonatePage(props: any) {
         </Grid>
       </Grid>
 
-      
-
       <FooterComponent/>
     </ThemeProvider>
   )

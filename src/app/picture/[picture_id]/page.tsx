@@ -92,7 +92,7 @@ export default function PictureFull(props: any) {
           <StyledRating
             name="customized-color"
             readOnly
-            defaultValue={picdata.recommand_point?picdata.recommand_point:0}
+            value={picdata.recommand_point?picdata.recommand_point:0}
             max={10}
             getLabelText={(value: number) => `${value} Heart${value !== 1 ? 's' : ''}`}
             icon={<FavoriteIcon fontSize="inherit" />}

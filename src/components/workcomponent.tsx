@@ -152,7 +152,8 @@ export function WorkCardComponent(props: any) {
                   <StyledRating
                     name="customized-color"
                     readOnly
-                    defaultValue={picdata.recommand_point}
+                    defaultValue={10}
+                    value={picdata.recommand_point}
                     max={10}
                     getLabelText={(value: number) => `${value} Heart${value !== 1 ? 's' : ''}`}
                     icon={<FavoriteIcon fontSize="inherit" />}
