@@ -2,47 +2,37 @@
 import FooterComponent from "@/components/footer";
 import NavigationBar from "@/components/navbar";
 import { main_theme } from "@/lib/themes"
-import { Box, Card, CardActionArea, CardContent, CardMedia, CssBaseline, Grid, IconButton, ThemeProvider, Typography } from "@mui/material"
-import { useState } from "react";
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { CssBaseline, Grid, ThemeProvider } from "@mui/material"
+import { useEffect, useState } from "react";
 import CreatorHeader from "@/components/creatorheader";
 import DivLineCenter from "@/components/divline";
-function RecWorkCard(props: any) {
-  const [onliked, setonliked] = useState(true);
-  return (
-    <Box sx={{margin: "30px"}}>
-      <Card sx={{ maxWidth: "100%" }}>
-        <CardActionArea>
-          <CardMedia
-            component="img"
-            image="https://upload.wikimedia.org/wikipedia/en/8/88/Bugcat_Capoo.jpg"
-          />
-        </CardActionArea>
-        <CardContent>
-          <Typography variant="h5" component="div" sx={{ maxWidth:'100%', display: "flex", justifyContent:"space-between" }}>
-            <Box>
-              Lizard
-            </Box>
-            <IconButton aria-label="fingerprint" color="secondary" onClick={()=>setonliked(!onliked)}>
-              {onliked?(<FavoriteIcon />):(<FavoriteBorderIcon/>) }
-            </IconButton>
-          </Typography>
-        </CardContent>
-      </Card>
-    </Box>
-  );
-}
+import axios from "axios";
+import { WorkCardComponent } from "@/components/workcomponent";
 
 export default function AuthorPage(props: any) {
   const { params } = props;
   const { author_id } = params;
 
+  const [ activeAuthor, setActiveAuthor ] = useState({
+    name: "",
+    quote: "",
+    bio: "",
+    links: "",
+    works: []
+  })
+
+  useEffect(()=>{
+    axios.get("/api/getAuthorById?user_id="+author_id).then((e)=>{
+      console.log(e.data);
+      setActiveAuthor(e.data);
+    }).catch((e)=>console.error(e));
+  }, [])
+
   return(
   <ThemeProvider theme={main_theme}>
     <CssBaseline />
     <NavigationBar />
-    <CreatorHeader />
+    <CreatorHeader activeAuthor={activeAuthor}/>
 
     <DivLineCenter text="Top 3 Recommanded by Author"/>
     
@@ -51,13 +41,13 @@ export default function AuthorPage(props: any) {
       alignItems="center"
     >
       <Grid item xs={12} md={3}>
-        <RecWorkCard />
+        <WorkCardComponent pic_id={0} />
       </Grid>
       <Grid item xs={12} md={3}>
-        <RecWorkCard />
+        <WorkCardComponent pic_id={0} />
       </Grid>
       <Grid item xs={12} md={3}>
-        <RecWorkCard />
+        <WorkCardComponent pic_id={0} />
       </Grid>
     </Grid>
 
@@ -68,19 +58,19 @@ export default function AuthorPage(props: any) {
       alignItems="center"
     >
       <Grid item xs={12} md={2}>
-        <RecWorkCard />
+        <WorkCardComponent pic_id={0} />
       </Grid>
       <Grid item xs={12} md={2}>
-        <RecWorkCard />
+        <WorkCardComponent pic_id={0} />
       </Grid>
       <Grid item xs={12} md={2}>
-        <RecWorkCard />
+        <WorkCardComponent pic_id={0} />
       </Grid>
       <Grid item xs={12} md={2}>
-        <RecWorkCard />
+        <WorkCardComponent pic_id={0} />
       </Grid>
       <Grid item xs={12} md={2}>
-        <RecWorkCard />
+        <WorkCardComponent pic_id={0} />
       </Grid>
     </Grid>
 
@@ -91,61 +81,59 @@ export default function AuthorPage(props: any) {
       alignItems="center"
     >
       <Grid item xs={12} md={2}>
-        <RecWorkCard />
+        <WorkCardComponent pic_id={0} />
       </Grid>
       <Grid item xs={12} md={2}>
-        <RecWorkCard />
+        <WorkCardComponent pic_id={0} />
       </Grid>
       <Grid item xs={12} md={2}>
-        <RecWorkCard />
+        <WorkCardComponent pic_id={0} />
       </Grid>
       <Grid item xs={12} md={2}>
-        <RecWorkCard />
+        <WorkCardComponent pic_id={0} />
       </Grid>
       <Grid item xs={12} md={2}>
-        <RecWorkCard />
+        <WorkCardComponent pic_id={0} />
       </Grid>
     </Grid>
-    
     <Grid container 
       justifyContent="center"
       alignItems="center"
     >
       <Grid item xs={12} md={2}>
-        <RecWorkCard />
+        <WorkCardComponent pic_id={0} />
       </Grid>
       <Grid item xs={12} md={2}>
-        <RecWorkCard />
+        <WorkCardComponent pic_id={0} />
       </Grid>
       <Grid item xs={12} md={2}>
-        <RecWorkCard />
+        <WorkCardComponent pic_id={0} />
       </Grid>
       <Grid item xs={12} md={2}>
-        <RecWorkCard />
+        <WorkCardComponent pic_id={0} />
       </Grid>
       <Grid item xs={12} md={2}>
-        <RecWorkCard />
+        <WorkCardComponent pic_id={0} />
       </Grid>
     </Grid>
-    
     <Grid container 
       justifyContent="center"
       alignItems="center"
     >
       <Grid item xs={12} md={2}>
-        <RecWorkCard />
+        <WorkCardComponent pic_id={0} />
       </Grid>
       <Grid item xs={12} md={2}>
-        <RecWorkCard />
+        <WorkCardComponent pic_id={0} />
       </Grid>
       <Grid item xs={12} md={2}>
-        <RecWorkCard />
+        <WorkCardComponent pic_id={0} />
       </Grid>
       <Grid item xs={12} md={2}>
-        <RecWorkCard />
+        <WorkCardComponent pic_id={0} />
       </Grid>
       <Grid item xs={12} md={2}>
-        <RecWorkCard />
+        <WorkCardComponent pic_id={0} />
       </Grid>
     </Grid>
     

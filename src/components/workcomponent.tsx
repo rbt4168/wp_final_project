@@ -1,4 +1,4 @@
-import { Box, Grid, ListItem, ListItemButton, Typography } from "@mui/material";
+import { Box, Card, CardActionArea, CardMedia, Grid, ListItem, ListItemButton, Typography } from "@mui/material";
 
 export function RelatedWorkListItem(props: any) {
     const { pic_id } = props;
@@ -40,5 +40,24 @@ export function RelatedWorkListItem(props: any) {
       </Grid>
       </ListItemButton>
       </ListItem>
+    );
+  }
+
+export function WorkCardComponent(props: any) {
+    const { pic_id } = props;
+    // TODO complete backend
+
+    return (
+      <Box m={2}>
+        <Card sx={{ maxWidth: "100%" }}>
+          <CardActionArea>
+            <CardMedia
+              component="img"
+              image="https://upload.wikimedia.org/wikipedia/en/8/88/Bugcat_Capoo.jpg"
+            />
+          </CardActionArea>
+        </Card>
+        <Typography>2023-05-07</Typography>
+      </Box>
     );
   }
