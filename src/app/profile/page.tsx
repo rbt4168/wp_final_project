@@ -69,7 +69,7 @@ export default function Profile() {
     {
       title: "喜歡的作品",
       icon: (<FavoriteIcon color="secondary"/>),
-      component: (<LikedWork />)
+      component: (<LikedWork actionUser={actionUser}/>)
     },
     {
       title: "喜歡的創作者",

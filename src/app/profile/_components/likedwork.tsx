@@ -4,6 +4,7 @@ import { Box, CssBaseline, Divider, Grid, ThemeProvider, Typography } from "@mui
 import { WorkCardComponent } from "@/components/workcomponent";
 
 export default function LikedWork(props: any) {
+  const { actionUser } = props;
   return (
     <ThemeProvider theme={main_theme}>
       <CssBaseline />
@@ -13,9 +14,9 @@ export default function LikedWork(props: any) {
       <Divider />
       <Box mx={5} my={3}>
         <Grid container spacing={{ xs: 2, md: 4 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-          {Array.from(Array(10)).map((_, index) => (
+          {actionUser.liked_picture.map((pic_id: any, index: any) => (
             <Grid item xs={4} sm={2} md={3} key={index}>
-              <WorkCardComponent pic_id={1} />
+              <WorkCardComponent pic_id={pic_id} />
             </Grid>
           ))}
         </Grid>
