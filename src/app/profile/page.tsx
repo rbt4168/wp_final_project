@@ -13,51 +13,64 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 import SidebarComponent from "./_components/sidebar"
 import UserProfile from "./_components/userprofile"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import RecommandWork from "./_components/recommand"
 import LikedWork from "./_components/likedwork"
 import LikedCreator from "./_components/likedcreator"
 import UploadCreation from "./_components/uploadcreation"
 import ModifyCreation from "./_components/modifycreation"
-
-const list_items = [
-  {
-    title: "帳號資料",
-    icon: (<Person2Icon color="secondary"/>),
-    component: (<UserProfile />)
-  },
-  {
-    title: "作品管理",
-    icon: (<ColorLensIcon color="secondary"/>),
-    component: (<RecommandWork />)
-  },
-  {
-    title: "上傳作品",
-    icon: (<PublishIcon color="secondary"/>),
-    component: (<UploadCreation />)
-  },
-  {
-    title: "修改作品",
-    icon: (<ModeEditIcon color="secondary"/>),
-  },
-  {
-    title: "Divider"
-  },
-  {
-    title: "喜歡的作品",
-    icon: (<FavoriteIcon color="secondary"/>),
-    component: (<LikedWork />)
-  },
-  {
-    title: "喜歡的創作者",
-    icon: (<Diversity1Icon color="secondary"/>),
-    component: (<LikedCreator/>)
-  }
-];
+import axios from "axios"
 
 export default function Profile() {
-  const [ selectName, setSelectName ] = useState(list_items[0].title);
+  const [ actionUser, setActionUser ] = useState({});
+
+  useEffect(()=>{
+    axios.get("/api/getNowUser").then((e)=>{
+      let event_user = e.data.user[0];
+      setActionUser(event_user);
+      console.log(actionUser);
+    }).catch((e)=>{
+      console.error(e);
+    })
+  }, []);
+
   const [ modifyID, setModifyID ] = useState(0);
+  const [ selectName, setSelectName ] = useState("帳號資料");
+  const list_items = [
+    {
+      title: "帳號資料",
+      icon: (<Person2Icon color="secondary"/>),
+      component: (<UserProfile actionUser={actionUser}/>)
+    },
+    {
+      title: "作品管理",
+      icon: (<ColorLensIcon color="secondary"/>),
+      component: (<RecommandWork setModifyID={setModifyID} setSelectName={setSelectName}/>)
+    },
+    {
+      title: "上傳作品",
+      icon: (<PublishIcon color="secondary"/>),
+      component: (<UploadCreation />)
+    },
+    {
+      title: "修改作品",
+      icon: (<ModeEditIcon color="secondary"/>),
+      component: (<ModifyCreation pic_id={modifyID}/>),
+    },
+    {
+      title: "Divider"
+    },
+    {
+      title: "喜歡的作品",
+      icon: (<FavoriteIcon color="secondary"/>),
+      component: (<LikedWork />)
+    },
+    {
+      title: "喜歡的創作者",
+      icon: (<Diversity1Icon color="secondary"/>),
+      component: (<LikedCreator/>)
+    }
+  ];
 
   return(
     <ThemeProvider theme={main_theme}>
@@ -65,16 +78,12 @@ export default function Profile() {
       <NavigationBar />
       <Grid container component="main">
         <Grid item xs={5} sm={4} md={2}>
-          <SidebarComponent selectName={selectName} setSelectName={setSelectName} listItmes={list_items}/>
+          <SidebarComponent selectName={selectName} setSelectName={setSelectName} listItmes={list_items} actionUser={actionUser}/>
         </Grid>
         <Divider orientation="vertical" flexItem />
         <Grid item xs={7} sm={8} md={9}>
           {list_items.map((e:any,id:any)=>{
-              if(e.title === selectName && selectName === "作品管理") {
-                return (<RecommandWork setModifyID={setModifyID} setSelectName={setSelectName}/>);
-              } else if(e.title === selectName && selectName === "修改作品") {
-                return (<ModifyCreation pic_id={modifyID}/>);
-              } else if(e.title === selectName) {
+              if(e.title === selectName) {
                 return e.component;
               }
             })

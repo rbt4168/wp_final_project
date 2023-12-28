@@ -6,41 +6,37 @@ import axios from "axios"
 // import axios from "axios";
 // import { useRouter } from "next/navigation";
 export default function UserProfile(props: any) {
+  const { actionUser } = props;
 
-  const [name, setName] = useState("");
-  const [quote, setQuote] = useState("");
-  const [title, setTitle] = useState("");
-  const [bio, setBio] = useState("");
+  const [name, setName] = useState("Loading...");
+  const [quote, setQuote] = useState("Loading...");
+  const [title, setTitle] = useState("Loading...");
+  const [bio, setBio] = useState("Loading...");
 
-  const [link0, setLink0] = useState("");
-  const [link1, setLink1] = useState("");
-  const [link2, setLink2] = useState("");
-  const [link3, setLink3] = useState("");
+  const [link0, setLink0] = useState("Loading...");
+  const [link1, setLink1] = useState("Loading...");
+  const [link2, setLink2] = useState("Loading...");
+  const [link3, setLink3] = useState("Loading...");
 
   useEffect(()=>{
-    axios.get("/api/getNowUser").then((e)=>{
-      let event_user=e.data.user[0]
-      setName(event_user.name);
-      setQuote(event_user.quote);
-      setTitle(event_user.title);
-      setBio(event_user.bio);
-      let linkx = event_user.links.split(",");
-      if(linkx.length > 0) {
-        setLink0(linkx[0]);
-      }
-      if(linkx.length > 1) {
-        setLink1(linkx[1]);
-      }
-      if(linkx.length > 2) {
-        setLink2(linkx[2]);
-      }
-      if(linkx.length > 3) {
-        setLink3(linkx[3]);
-      }
-    }).catch((e)=>{
-      console.error(e);
-    })
-  }, []);
+    setName(actionUser.name);
+    setQuote(actionUser.quote);
+    setTitle(actionUser.title);
+    setBio(actionUser.bio);
+    let linkx = actionUser.links?.split(",");
+    if(linkx?.length > 0) {
+      setLink0(linkx[0]);
+    }
+    if(linkx?.length > 1) {
+      setLink1(linkx[1]);
+    }
+    if(linkx?.length > 2) {
+      setLink2(linkx[2]);
+    }
+    if(linkx?.length > 3) {
+      setLink3(linkx[3]);
+    }
+  }, [actionUser]);
 
   const handleSubmit = (e: any) => {
     // TODO: Update User Profile
