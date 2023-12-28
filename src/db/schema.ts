@@ -20,9 +20,9 @@ export const usersTable = pgTable(
     liked_picture: integer("like_picture").array(),
     liked_user: integer("liked_user").array(),
     post_picture: integer("post_picture").array(),
-    private_tags: integer("private_tags").array(),
+    private_tags: text("private_tags").array(),
     private_tags_cost: integer("private_tags_cost").array(),
-    owned_private_tag: integer("owned_private_tag").array(),
+    owned_private_tag: text("owned_private_tag").array(),
     coins: integer("coins"),
   },
   (table) => ({

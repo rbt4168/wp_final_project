@@ -25,7 +25,9 @@ export async function GET(request: Request) {
       quote: select_user?.quote, 
       bio: select_user?.bio, 
       links: select_user?.links,
-      works: select_user?.post_picture
+      works: select_user?.post_picture,
+      tags: select_user?.private_tags,
+      costs: select_user?.private_tags_cost
     });
 
   } catch (error) {

@@ -5,24 +5,59 @@ import DivLineCenter from "@/components/divline";
 import FooterComponent from "@/components/footer";
 import NavigationBar from "@/components/navbar";
 import { main_theme } from "@/lib/themes";
-import { Box, CssBaseline, Divider, Grid, List, ListItem, ListItemButton, ThemeProvider, Typography } from "@mui/material";
+import { Box, Button, CssBaseline, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Grid, List, ListItem, ListItemButton, ThemeProvider, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 function CostListItem(props: any) {
-  const {text, cost} = props;
+  const {text, cost, author} = props;
+  const [open, setOpen] = useState(false);
+
+  const handleAgree = () => {
+    setOpen(false);
+    let payload = {
+      tagname: text,
+      authorname: author, 
+    }
+    // complete buying action
+    axios.post("/api/buyTag", payload).then((e)=>{
+      console.log(e);
+    }).catch((e)=>console.error(e));
+  };
+
   return(
     <>
       <Divider />
       <ListItem disablePadding>
-        <ListItemButton>
+        <ListItemButton onClick={()=>setOpen(true)}>
           <Box display="flex" justifyContent="space-between" sx={{width: "100%"}}>
-            <GlobalChip text={text}/>
+            <GlobalChip text={"private-"+author+"-"+text}/>
             <Typography color="inherit">
               {cost+" Coins"}
             </Typography>
           </Box>
         </ListItemButton>
+        <Dialog
+          open={open}
+          onClose={()=>setOpen(false)}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            Buy this Tag <GlobalChip text={"private-"+author+"-"+text}/>
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Transfer {cost} coins to the creator.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={()=>setOpen(false)}>No</Button>
+            <Button onClick={handleAgree} autoFocus>
+              Yes
+            </Button>
+          </DialogActions>
+        </Dialog>
       </ListItem>
     </>
   )
@@ -36,11 +71,14 @@ export default function DonatePage(props: any) {
   const cost_array=[50, 100, 150, 200];
   
   const [ activeAuthor, setActiveAuthor ] = useState({
+    account: "",
     name: "",
     quote: "",
     bio: "",
     links: "",
-    works: []
+    works: [],
+    tags: [],
+    costs: [],
   })
 
   useEffect(()=>{
@@ -66,7 +104,7 @@ export default function DonatePage(props: any) {
       >
         <Grid item xs={7} md={7}>
           <List >
-            {tag_array.map((e:any, id:any)=>(<CostListItem text={e} cost={cost_array[id]}/>))}
+            {activeAuthor.tags?.map((e:any, id:any)=>(<CostListItem author={activeAuthor.account} text={e} cost={activeAuthor.costs[id]}/>))}
             <Divider />
           </List>
         </Grid>
