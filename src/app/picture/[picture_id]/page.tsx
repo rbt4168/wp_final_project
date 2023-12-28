@@ -96,7 +96,15 @@ export default function PictureFull(props: any) {
   const { params } = props;
   const { picture_id } = params;
 
-  const [ picdata, setPicdata ] = useState({});
+  const [ picdata, setPicdata ] = useState({
+    url: "",
+    name: "untitled",
+    liked_count: 0,
+    pic_id: 0,
+    tags: [],
+    recommand_point: 0,
+    description: ""
+  });
 
   useEffect(()=>{
     let payload = {
@@ -105,7 +113,7 @@ export default function PictureFull(props: any) {
 
     axios.post('/api/getPicture',payload).then((e)=>{
       setPicdata(e.data.picture[0]);
-      console.log(e.data.picture[0]);
+      // console.log(e.data.picture[0]);
     }).catch((e)=>console.error(e));
 
   }, [])
@@ -176,7 +184,7 @@ export default function PictureFull(props: any) {
           <Box mt={1}></Box>
           <Paper elevation={0} sx={{ p: 2, bgcolor: main_theme.palette.info.main }}>
             <Typography>
-              {picdata.description}
+              {picdata.description?picdata.description:""}
             </Typography >
           </Paper>
           <Box mt={1}></Box>

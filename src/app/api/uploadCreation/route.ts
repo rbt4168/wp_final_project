@@ -12,17 +12,15 @@ export async function POST(request: Request) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-
     // Extract data from request body
     const body = await request.json();
-    const { title, origin, previewUrl, recommand, value} = body;
+    const { title, origin, previewUrl, recommand, value } = body;
 
     // Assume you have a user table where you want to update this information
     // and 'userId' is obtained from the session or some other source
     const session_id = session?.user?.id; // Replace with actual way to get the user's ID
 
     console.log("----------------------------------------------");
-
     console.log(session?.user)
     console.log("----------------------------------------------");
 
@@ -34,19 +32,22 @@ export async function POST(request: Request) {
           .from(usersTable)
           .where(eq(usersTable.displayId, session_id))
           .execute();
+    
     // Update user profile in the database
     console.log("----------------------------------------------");
     console.log("value")
     console.log(value);
     console.log("----------------------------------------------");
+
     if (!User){
-        console.log("fefefe");
+        // console.log("fefefe");
         return new NextResponse("No author you bad guy", { status: 401 });
     }
+
     console.log("stage1 ")
     const currentDate = new Date(); 
 
-    const [updoadPicture] = await db
+    const [ updoadPicture ] = await db
       .insert(pictureTable)
       .values({
         name: title,

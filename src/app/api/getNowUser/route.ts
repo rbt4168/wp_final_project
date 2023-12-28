@@ -18,9 +18,8 @@ export async function GET(request: Request) {
       .from(usersTable)
       .where(eq(usersTable.username, session?.user?.username))
       .execute();
-
     
-    // Return the updated user information
+    // Return the user information
     return NextResponse.json({ user });
   } catch (error) {
     console.error("Error in POST function: ", error);

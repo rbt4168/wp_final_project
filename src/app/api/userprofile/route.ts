@@ -36,7 +36,7 @@ export async function POST(request: Request) {
         quote: quote,
         title: title,
         bio: bio,
-        links: links // Ensure your database can handle this array format
+        links: links // String, seperate by ','
       })
       .where(eq(usersTable.username, username)) // Assuming 'id' is the user identifier in your table
       .returning();
