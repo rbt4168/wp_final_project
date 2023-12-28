@@ -23,26 +23,21 @@ export default function ModifyCreation(props: any) {
   
 
   const handleSubmit = (e: any) => {
-    // TODO: Creation Data Modified
-    alert("Not Yet Complete");
-
-    // alert(title);
-    // alert(origin);
-    
-    // const payload = {
-    //   title,
-    //   origin,
-    // };
+    // TODO: Update User Profile
+    const payload = {
+      pic_id,
+      title,
+      origin,
+      recommand,
+      value,
+    };
   
     // Make the API call
-    // axios.post("/api/uploadCreation", payload)
-    //   .then(response => {
-    //     alert("success");
-    //   })
-    //   .catch((e) => {
-    //     // Handle error
-    //     alert("Error occurred while updating profile");
-    //   });
+    axios.post("/api/modifycreation", payload)
+      .then(response => {
+        console.log(response);
+        alert("修改成功!");
+      }).catch(()=>alert("修改作品失敗 "));
   };
 
   return pic_id ? (
