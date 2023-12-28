@@ -3,19 +3,18 @@
 import FooterComponent from "@/components/footer"
 import NavigationBar from "@/components/navbar"
 import { main_theme } from "@/lib/themes"
-import { Box, CssBaseline, Divider, Grid, IconButton, List, ListItem, ListItemButton, Paper, ThemeProvider, Typography } from "@mui/material"
+import { Box, CssBaseline, Divider, Grid, IconButton, List, Paper, ThemeProvider, Typography } from "@mui/material"
 
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShareIcon from '@mui/icons-material/Share';
 import { useEffect, useState } from "react";
 import GlobalChip from "@/components/chipglobal"
-import { default_tags } from "@/lib/utils"
-import axios from "axios"
 import { StyledRating } from "@/components/styledcomps"
 import { CreatorListItem } from "@/components/creatorcomponent"
 import { RelatedWorkListItem } from "@/components/workcomponent"
 
+import axios from "axios"
 
 export default function PictureFull(props: any) {
   const { params } = props;
@@ -42,8 +41,6 @@ export default function PictureFull(props: any) {
     }).catch((e)=>console.error(e));
 
   }, [])
-
-  var tag_array = default_tags;
   
   const [onliked, setonliked] = useState(true);
   return(
