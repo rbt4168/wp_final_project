@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 async function creatorFetchHandler(user_id: any) {
   try {
     let response = await axios.get("/api/getAuthorById?user_id="+user_id);
-    console.log(response.data)
+    // console.log(response.data)
     return response.data;
   } catch (e) {
     console.error(e);

@@ -23,7 +23,7 @@ export default function AuthorPage(props: any) {
 
   useEffect(()=>{
     axios.get("/api/getAuthorById?user_id="+author_id).then((e)=>{
-      console.log(e.data);
+      // console.log(e.data);
       setActiveAuthor(e.data);
     }).catch((e)=>console.error(e));
     
@@ -31,10 +31,6 @@ export default function AuthorPage(props: any) {
     let payload = {
       author_id: author_id
     }
-
-    // axios.post("/api/apiapaiaiiii", payload).then((e)=>{
-    //   console.log(e);
-    // }).catch((e)=>console.error(e));
 
     axios.post("/api/authorHighToLow", payload).then((e)=>{
       console.log(e);

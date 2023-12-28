@@ -10,7 +10,7 @@ import { StyledRating } from "./styledcomps";
 async function creatorFetchHandler(user_id: any) {
   try {
     let response = await axios.get("/api/getAuthorById?user_id="+user_id);
-    console.log(response.data)
+    // console.log(response.data)
     return response.data;
   } catch (e) {
     console.error(e);
@@ -24,7 +24,7 @@ async function workFetchHandler(pic_id: any) {
       pic_id: pic_id,
     }
     let response = await axios.post("/api/getPicture", payload);
-    console.log(response.data.picture[0])
+    // console.log(response.data.picture[0])
     return response.data.picture[0];
   } catch (e) {
     console.error(e);
