@@ -1,7 +1,7 @@
 "use client"
 import { main_theme } from "@/lib/themes"
 import { Box, Button, CssBaseline, Divider, Input, TextField, ThemeProvider, Typography } from "@mui/material"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios"
 // import axios from "axios";
 // import { useRouter } from "next/navigation";
@@ -17,24 +17,48 @@ export default function UserProfile(props: any) {
   const [link2, setLink2] = useState("");
   const [link3, setLink3] = useState("");
 
+  useEffect(()=>{
+    axios.get("/api/getNowUser").then((e)=>{
+      let event_user=e.data.user[0]
+      setName(event_user.name);
+      setQuote(event_user.quote);
+      setTitle(event_user.title);
+      setBio(event_user.bio);
+      let linkx = event_user.links.split(",");
+      if(linkx.length > 0) {
+        setLink0(linkx[0]);
+      }
+      if(linkx.length > 1) {
+        setLink0(linkx[1]);
+      }
+      if(linkx.length > 2) {
+        setLink0(linkx[2]);
+      }
+      if(linkx.length > 3) {
+        setLink0(linkx[3]);
+      }
+    }).catch((e)=>{
+      console.error(e);
+    })
+  }, []);
+
   const handleSubmit = (e: any) => {
     // TODO: Update User Profile
-    const links = [link0, link1, link2, link3];
+    const links = [link0, link1, link2, link3].join(",");
 
-    const data = {
-      name,
-      quote,
-      title,
-      bio,
-      links // This is now an array of integers
+    const payload = {
+      name: name,
+      quote: quote,
+      title: title,
+      bio: bio,
+      links: links
     };
   
     // Make the API call
-    axios.post("/api/userprofile", data)
+    axios.post("/api/userprofile", payload)
       .then(response => {
         alert("success");
-      })
-      .catch((e) => {
+      }).catch((e) => {
         // Handle error
         alert("Error occurred while updating profile");
       });
