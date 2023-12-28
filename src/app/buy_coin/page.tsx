@@ -58,23 +58,28 @@ const tiers = [
 ];
 
 export default function Pricing() {
-  const handleSubmit = (e: any) => {
-    // TODO: Update User Profile
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  const handleSubmit = (e : any) => {
+    // Disable all buttons
+    setIsDisabled(true);
+
     const payload = {
       coins: Number(e)
     };
-    alert(payload)
+
     // Make the API call
-    
     axios.post("/api/buy_coin", payload)
       .then(response => {
         alert("儲值成功");
       }).catch((e) => {
-        // Handle error
         alert("Error occurred while paying");
+      }).finally(() => {
+        // Re-enable all buttons, whether the call was successful or failed
+        setIsDisabled(false);
       });
-    
   };
+
   return (
     <ThemeProvider theme={main_theme}>
       <CssBaseline />
@@ -156,6 +161,7 @@ export default function Pricing() {
                     fullWidth
                     variant={tier.buttonVariant as 'outlined' | 'contained'}
                     onClick={() => handleSubmit(tier.price)}
+                    disabled={isDisabled}
                   >
                     {tier.buttonText}
                   </Button>
