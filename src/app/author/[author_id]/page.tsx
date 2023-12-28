@@ -84,21 +84,68 @@ export default function AuthorPage(props: any) {
       </Grid>
     </Grid>
 
-
     <DivLineCenter text="Previous Works"/>
 
-    <Grid container
+    <Grid container 
       justifyContent="center"
       alignItems="center"
     >
-      <Grid item xs={9} md={9}>
-        <Grid container spacing={{ xs: 2, md: 0 }} columns={{ xs: 4, sm: 4, md: 12 }}>
-          {Array.from(Array(40)).map((_, index) => (
-            <Grid item xs={2} sm={2} md={2} key={index}>
-              <RecWorkCard />
-            </Grid>
-          ))}
-        </Grid>
+      <Grid item xs={12} md={2}>
+        <RecWorkCard />
+      </Grid>
+      <Grid item xs={12} md={2}>
+        <RecWorkCard />
+      </Grid>
+      <Grid item xs={12} md={2}>
+        <RecWorkCard />
+      </Grid>
+      <Grid item xs={12} md={2}>
+        <RecWorkCard />
+      </Grid>
+      <Grid item xs={12} md={2}>
+        <RecWorkCard />
+      </Grid>
+    </Grid>
+    
+    <Grid container 
+      justifyContent="center"
+      alignItems="center"
+    >
+      <Grid item xs={12} md={2}>
+        <RecWorkCard />
+      </Grid>
+      <Grid item xs={12} md={2}>
+        <RecWorkCard />
+      </Grid>
+      <Grid item xs={12} md={2}>
+        <RecWorkCard />
+      </Grid>
+      <Grid item xs={12} md={2}>
+        <RecWorkCard />
+      </Grid>
+      <Grid item xs={12} md={2}>
+        <RecWorkCard />
+      </Grid>
+    </Grid>
+    
+    <Grid container 
+      justifyContent="center"
+      alignItems="center"
+    >
+      <Grid item xs={12} md={2}>
+        <RecWorkCard />
+      </Grid>
+      <Grid item xs={12} md={2}>
+        <RecWorkCard />
+      </Grid>
+      <Grid item xs={12} md={2}>
+        <RecWorkCard />
+      </Grid>
+      <Grid item xs={12} md={2}>
+        <RecWorkCard />
+      </Grid>
+      <Grid item xs={12} md={2}>
+        <RecWorkCard />
       </Grid>
     </Grid>
     

@@ -39,10 +39,6 @@ export default function Profile() {
     setTrigger(!tirgger);
   }
 
-  // useEffect(()=>{
-  //   setTrigger(!tirgger);
-  // }, [])
-
   const [ modifyID, setModifyID ] = useState(0);
   const [ selectName, setSelectName ] = useState("帳號資料");
   const list_items = [
