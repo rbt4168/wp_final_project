@@ -42,12 +42,17 @@ function RecWorkCard(props: any) {
 }
 
 export default function Home() {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // TODO: sign in logic
-    // axios.post("/api/userprofile", {}).then().catch(() => alert("你到底做什麼 解釋一下"))
+  const [ searchText, setSearchText ] = useState("");
+
+  const handleSubmit = () => {
+    // TODO: search api
+    let payload = {
+      keyword: searchText,
+    }
+    alert(payload);
     
   };
+
   return (
     <ThemeProvider theme={main_theme}>
       <CssBaseline/>
@@ -66,8 +71,10 @@ export default function Home() {
             color="primary"
             size="small"
             sx={{width: "90%"}}
+            value={searchText}
+            onChange={(e:any)=>setSearchText(e.target.value)}
           />
-          <Button sx={{width: "10%"}} variant="outlined">
+          <Button sx={{width: "10%"}} variant="outlined" onClick={handleSubmit}>
             Search
           </Button>
         </Grid>

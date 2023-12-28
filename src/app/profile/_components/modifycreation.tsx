@@ -17,7 +17,6 @@ export default function ModifyCreation(props: any) {
 
   const [title, setTitle] = useState("");
   const [origin, setOrigin] = useState("");
-  const [previewUrl, setPreviewUrl] = useState("");
   
   const [recommand, setRecommand] = useState(5);
 
@@ -29,23 +28,21 @@ export default function ModifyCreation(props: any) {
     // TODO: Update User Profile
     alert(title);
     alert(origin);
-    alert(previewUrl);
     
     const data = {
       title,
       origin,
-      previewUrl,
     };
   
     // Make the API call
-    axios.post("/api/uploadCreation", data)
-      .then(response => {
-        alert("success");
-      })
-      .catch((e) => {
-        // Handle error
-        alert("Error occurred while updating profile");
-      });
+    // axios.post("/api/uploadCreation", data)
+    //   .then(response => {
+    //     alert("success");
+    //   })
+    //   .catch((e) => {
+    //     // Handle error
+    //     alert("Error occurred while updating profile");
+    //   });
   };
 
   return pic_id ? (
