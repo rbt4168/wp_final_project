@@ -18,7 +18,7 @@ export default function AuthorPage(props: any) {
     quote: "",
     bio: "",
     links: "",
-    works: []
+    works: [],
   })
 
   useEffect(()=>{
@@ -28,21 +28,21 @@ export default function AuthorPage(props: any) {
     }).catch((e)=>console.error(e));
     
 
-    let payload = {
-      author_id: author_id
-    }
+    // let payload = {
+    //   author_id: author_id
+    // }
 
-    axios.post("/api/apiapaiaiiii", payload).then((e)=>{
-      console.log(e);
-    }).catch((e)=>console.error(e));
-    
+    // axios.post("/api/apiapaiaiiii", payload).then((e)=>{
+    //   console.log(e);
+    // }).catch((e)=>console.error(e));
+
   }, [])
 
   return(
   <ThemeProvider theme={main_theme}>
     <CssBaseline />
     <NavigationBar />
-    <CreatorHeader activeAuthor={activeAuthor}/>
+    <CreatorHeader activeAuthor={activeAuthor} authorId={author_id}/>
 
     <DivLineCenter text="Top 3 Recommanded by Author"/>
     

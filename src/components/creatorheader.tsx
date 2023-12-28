@@ -5,8 +5,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function CreatorHeader(props: any) {
-  const { activeAuthor } = props;
+  const { activeAuthor, authorId } = props;
   const [ linkArr, setLinkArr ] = useState(["", "", "", ""])
+
+  const [ followed, setFollowed ] = useState(false);
 
   useEffect(()=>{
     console.log(activeAuthor.links)
@@ -63,11 +65,24 @@ export default function CreatorHeader(props: any) {
             {activeAuthor.quote}
           </Typography>
           <Box display="flex" justifyContent="center" alignItems="center">
-            <Button component="label" 
-              color="primary" variant="contained"
-            >
-              Follow
-            </Button>
+            {followed?(
+              <Button component="label" 
+                color="secondary" variant="contained"
+                sx={{ fontSize: "25px" }}
+                onClick={()=>setFollowed(false)}
+              >
+                UnFollow
+              </Button>
+            ):(
+              <Button component="label" 
+                color="primary" variant="contained"
+                sx={{ fontSize: "25px" }}
+                onClick={()=>setFollowed(true)}
+              >
+                Follow
+              </Button>
+            )}
+            
           </Box>
         </Box>
       </Paper>
