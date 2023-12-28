@@ -21,7 +21,6 @@ export default function ModifyCreation(props: any) {
 
   const fixedOptions: string[] = [];
   const [value, setValue] = useState(fixedOptions);
-  const router = useRouter();
 
 
   const handleSubmit = (e: any) => {

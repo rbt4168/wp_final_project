@@ -13,6 +13,7 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+import LoyaltyIcon from '@mui/icons-material/Loyalty';
 
 import SidebarComponent from "./_components/sidebar"
 import UserProfile from "./_components/userprofile"
@@ -26,6 +27,7 @@ import axios from "axios"
 import Transactions from "./_components/txlists"
 import TransactionCreat from "./_components/sendtransaction"
 import PrivTagManange from "./_components/privatetagman"
+import OwnedTags from "./_components/ownedtag"
 
 export default function Profile() {
   const [ actionUser, setActionUser ] = useState({});
@@ -83,6 +85,11 @@ export default function Profile() {
       title: "標籤管理",
       icon: (<LocalOfferIcon color="secondary"/>),
       component: (<PrivTagManange actionUser={actionUser} trigger={trig}/>),
+    },
+    {
+      title: "持有標籤",
+      icon: (<LoyaltyIcon color="secondary"/>),
+      component: (<OwnedTags actionUser={actionUser}/>),
     },
     {
       title: "Divider"
