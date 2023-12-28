@@ -34,7 +34,7 @@ export function CreatorListItem(props: any) {
 
     return (
       <ListItem disablePadding>
-      <ListItemButton onClick={()=>{}}>
+      <ListItemButton href={"/author/"+user_id}>
       <Grid container spacing={2}>
         <Grid item>
           <Box

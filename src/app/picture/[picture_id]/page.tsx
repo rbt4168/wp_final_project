@@ -64,14 +64,16 @@ export default function PictureFull(props: any) {
           />
           <Box display="flex" justifyContent="space-between" >
             <Typography display="flex" justifyContent="left" alignItems="center"
-            component="h2" variant="h4" color="inherit" gutterBottom mt={3}>
+            component="h2" variant="h4" color="inherit" gutterBottom mt={3} sx={{ maxWidth: "80%", overflow:"hidden" }}>
               {picdata.name?picdata.name:"untitled"}
             </Typography>
             <Box display="flex" alignItems="center">
               <IconButton aria-label="fingerprint" color="secondary" onClick={()=>setonliked(!onliked)}>
                 {picdata.liked_count?picdata.liked_count:0}{onliked?(<FavoriteIcon  sx={{ width: "3rem", height: "3rem" }}/>):(<FavoriteBorderIcon  sx={{ width: "3rem", height: "3rem" }}/>) }
               </IconButton>
-              <ShareIcon color="primary" sx={{ width: "3rem", height: "3rem" }}/>
+              <IconButton aria-label="fingerprintx" color="primary" onClick={()=>{}}>
+                <ShareIcon color="primary" sx={{ width: "3rem", height: "3rem" }}/>
+              </IconButton>
             </Box>
           </Box>
           <Box display="flex" justifyContent="space-between" >
@@ -131,7 +133,7 @@ export default function PictureFull(props: any) {
               <Divider>What's Next</Divider>
               <List>
                 {[1,2,3,4,5].map((e:any, id:any)=>{
-                  return(<RelatedWorkListItem pic_id={id}/>)
+                  return(<RelatedWorkListItem pic_id={e}/>)
                 })}
               </List>
             </Grid>

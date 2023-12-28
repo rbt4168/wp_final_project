@@ -4,42 +4,10 @@ import FooterComponent from "@/components/footer";
 import NavigationBar from "@/components/navbar";
 import { main_theme } from "@/lib/themes";
 
-import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, CssBaseline, Grid, IconButton, Paper, TextField, ThemeProvider, Typography } from "@mui/material";
+import { Button, CssBaseline, Grid, TextField, ThemeProvider } from "@mui/material";
 
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useState } from "react";
-
-function RecWorkCard(props: any) {
-  const [onliked, setonliked] = useState(true);
-  return (
-    <Box sx={{margin: "30px"}}>
-      <Card sx={{ maxWidth: "100%" }}>
-        <CardActionArea>
-          <CardMedia
-            component="img"
-            image="https://upload.wikimedia.org/wikipedia/en/8/88/Bugcat_Capoo.jpg"
-          />
-        </CardActionArea>
-        <CardContent>
-          <Typography variant="h5" component="div" sx={{ maxWidth:'100%', display: "flex", justifyContent:"space-between" }}>
-            <Box>
-              Lizard
-            </Box>
-            <IconButton aria-label="fingerprint" color="secondary" onClick={()=>setonliked(!onliked)}>
-              {onliked?(<FavoriteIcon />):(<FavoriteBorderIcon/>) }
-            </IconButton>
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Typography variant="body2">
-            ID: 168598
-          </Typography>
-        </CardActions>
-      </Card>
-    </Box>
-  );
-}
+import { WorkCardComponent } from "@/components/workcomponent";
 
 export default function Home() {
   const [ searchText, setSearchText ] = useState("");
@@ -79,8 +47,6 @@ export default function Home() {
           </Button>
         </Grid>
       </Grid>
-
-      
       
       <DivLineCenter text="Followed Latest"/>
 
@@ -89,19 +55,19 @@ export default function Home() {
         alignItems="center"
       >
         <Grid item xs={12} md={2}>
-          <RecWorkCard />
+          <WorkCardComponent pic_id={1} />
         </Grid>
         <Grid item xs={12} md={2}>
-          <RecWorkCard />
+          <WorkCardComponent pic_id={2} />
         </Grid>
         <Grid item xs={12} md={2}>
-          <RecWorkCard />
+          <WorkCardComponent pic_id={3} />
         </Grid>
         <Grid item xs={12} md={2}>
-          <RecWorkCard />
+          <WorkCardComponent pic_id={4} />
         </Grid>
         <Grid item xs={12} md={2}>
-          <RecWorkCard />
+          <WorkCardComponent pic_id={5} />
         </Grid>
       </Grid>
 
@@ -112,19 +78,19 @@ export default function Home() {
         alignItems="center"
       >
         <Grid item xs={12} md={2}>
-          <RecWorkCard />
+          <WorkCardComponent pic_id={6} />
         </Grid>
         <Grid item xs={12} md={2}>
-          <RecWorkCard />
+          <WorkCardComponent pic_id={7} />
         </Grid>
         <Grid item xs={12} md={2}>
-          <RecWorkCard />
+          <WorkCardComponent pic_id={8} />
         </Grid>
         <Grid item xs={12} md={2}>
-          <RecWorkCard />
+          <WorkCardComponent pic_id={9} />
         </Grid>
         <Grid item xs={12} md={2}>
-          <RecWorkCard />
+          <WorkCardComponent pic_id={10} />
         </Grid>
       </Grid>
 
@@ -135,19 +101,19 @@ export default function Home() {
         alignItems="center"
       >
         <Grid item xs={12} md={2}>
-          <RecWorkCard />
+          <WorkCardComponent pic_id={11} />
         </Grid>
         <Grid item xs={12} md={2}>
-          <RecWorkCard />
+          <WorkCardComponent pic_id={12} />
         </Grid>
         <Grid item xs={12} md={2}>
-          <RecWorkCard />
+          <WorkCardComponent pic_id={13} />
         </Grid>
         <Grid item xs={12} md={2}>
-          <RecWorkCard />
+          <WorkCardComponent pic_id={14} />
         </Grid>
         <Grid item xs={12} md={2}>
-          <RecWorkCard />
+          <WorkCardComponent pic_id={15} />
         </Grid>
       </Grid>
 

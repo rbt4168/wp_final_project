@@ -7,15 +7,15 @@ import axios from "axios"
 export default function UserProfile(props: any) {
   const { actionUser, trigger } = props;
 
-  const [name, setName] = useState("Loading...");
-  const [quote, setQuote] = useState("Loading...");
-  const [title, setTitle] = useState("Loading...");
-  const [bio, setBio] = useState("Loading...");
+  const [name, setName] = useState("");
+  const [quote, setQuote] = useState("");
+  const [title, setTitle] = useState("");
+  const [bio, setBio] = useState("");
 
-  const [link0, setLink0] = useState("Loading...");
-  const [link1, setLink1] = useState("Loading...");
-  const [link2, setLink2] = useState("Loading...");
-  const [link3, setLink3] = useState("Loading...");
+  const [link0, setLink0] = useState("");
+  const [link1, setLink1] = useState("");
+  const [link2, setLink2] = useState("");
+  const [link3, setLink3] = useState("");
 
   useEffect(()=>{
     setName(actionUser.name);

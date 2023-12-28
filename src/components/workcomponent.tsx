@@ -47,7 +47,7 @@ export function RelatedWorkListItem(props: any) {
                 height: 128,
                 width: 128,
               }}
-              alt="a"
+              alt="Related Work."
               src={picdata.url?picdata.url:""}
           />
         </Grid>
