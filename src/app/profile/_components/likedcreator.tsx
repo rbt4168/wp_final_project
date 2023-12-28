@@ -1,7 +1,7 @@
 "use client"
 import { main_theme } from "@/lib/themes"
 import { Box, CssBaseline, Divider,
-  Grid, ThemeProvider, Typography, IconButton } from "@mui/material"
+  Grid, ThemeProvider, Typography, IconButton, ListItem, ListItemButton, List } from "@mui/material"
 
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -9,6 +9,9 @@ import { useState } from "react";
 function WorkCard(props: any) {
   const [onliked, setonliked] = useState(true);
   return (
+    <ListItem disablePadding>
+    <ListItemButton onClick={()=>{}}>
+
     <Grid container spacing={2}>
       <Grid item>
         <Box
@@ -37,13 +40,16 @@ function WorkCard(props: any) {
             </Typography>
           </Grid>
         </Grid>
-        <Grid item>
+        {/* <Grid item>
           <IconButton aria-label="fingerprint" color="secondary" onClick={()=>setonliked(!onliked)}>
             {onliked?(<FavoriteIcon />):(<FavoriteBorderIcon/>) }
           </IconButton>
-        </Grid>
+        </Grid> */}
       </Grid>
     </Grid>
+    
+    </ListItemButton>
+    </ListItem>
   );
 }
 export default function LikedCreator(props: any) {
@@ -54,16 +60,13 @@ export default function LikedCreator(props: any) {
         喜歡的創作者 Creators
       </Typography>
       <Divider />
-      <Box mx={5} my={3}>
-        <Grid container spacing={{ xs: 2, md: 4 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+      <Box>
+        <List>
           {Array.from(Array(40)).map((_, index) => (
-            <Grid item xs={12} sm={12} md={12} key={index}>
-              <WorkCard />
-            </Grid>
+            <WorkCard key={index} />
           ))}
-        </Grid>
+        </List>
       </Box>
-      
     </ThemeProvider>
   )
 }

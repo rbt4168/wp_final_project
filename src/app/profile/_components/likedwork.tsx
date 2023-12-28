@@ -14,23 +14,23 @@ function WorkCard(props: any) {
           component="img"
           image="https://upload.wikimedia.org/wikipedia/en/8/88/Bugcat_Capoo.jpg"
         />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Lizard
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
+        {/* <Typography gutterBottom variant="h5" component="div">
+          Lizard
+        </Typography> */}
+        {/* <CardContent> */}
+          {/* <Typography variant="body2" color="text.secondary">
             Lizards are a widespread group of squamate reptiles, with over 6,000
             species, ranging across all continents except Antarctica
-          </Typography>
-        </CardContent>
+          </Typography> */}
+        {/* </CardContent> */}
       </CardActionArea>
       
-      <CardActions sx={{ justifyContent: "space-between" }}>
+      {/* <CardActions sx={{ justifyContent: "space-between" }}>
         <Button size="large" color="primary" sx={{ fontWeight: 800 }}>分享</Button>
         <IconButton aria-label="fingerprint" color="secondary" onClick={()=>setonliked(!onliked)}>
           {onliked?(<FavoriteIcon />):(<FavoriteBorderIcon/>) }
         </IconButton>
-      </CardActions>
+      </CardActions> */}
     </Card>
   );
 }
@@ -45,7 +45,7 @@ export default function LikedWork(props: any) {
       <Box mx={5} my={3}>
         <Grid container spacing={{ xs: 2, md: 4 }} columns={{ xs: 4, sm: 8, md: 12 }}>
           {Array.from(Array(40)).map((_, index) => (
-            <Grid item xs={4} sm={2} md={4} key={index}>
+            <Grid item xs={4} sm={2} md={3} key={index}>
               <WorkCard />
             </Grid>
           ))}

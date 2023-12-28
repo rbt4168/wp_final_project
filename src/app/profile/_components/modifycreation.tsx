@@ -23,8 +23,9 @@ export default function ModifyCreation(props: any) {
   
 
   const handleSubmit = (e: any) => {
-    // TODO: Update User Profile
+    // TODO: Creation Data Modified
     alert("Not Yet Complete");
+
     // alert(title);
     // alert(origin);
     
@@ -34,7 +35,7 @@ export default function ModifyCreation(props: any) {
     // };
   
     // Make the API call
-    // axios.post("/api/uploadCreation", data)
+    // axios.post("/api/uploadCreation", payload)
     //   .then(response => {
     //     alert("success");
     //   })
@@ -144,6 +145,8 @@ export default function ModifyCreation(props: any) {
     </Typography>
       
     <Divider />
-    
+    <Box mx={5} my={3} sx={{ typography: 'subtitle2'}}>
+      <Typography>Select Creation To Modify ...</Typography>
+    </Box>
   </ThemeProvider>);
 }
