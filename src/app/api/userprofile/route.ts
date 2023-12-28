@@ -20,13 +20,13 @@ export async function POST(request: Request) {
     // and 'userId' is obtained from the session or some other source
     const username = session.user.username; // Replace with actual way to get the user's ID
 
-    console.log("----------------------------------------------");
-    console.log(session.user);
-    console.log(quote);
-    console.log(title);
-    console.log(bio);
-    console.log(links);
-    console.log("----------------------------------------------");
+    //console.log("----------------------------------------------");
+   // console.log(session.user);
+   // console.log(quote);
+    //console.log(title);
+   //console.log(bio);
+   // console.log(links);
+   // console.log("----------------------------------------------");
 
     // Update user profile in the database
     const [updatedUser] = await db

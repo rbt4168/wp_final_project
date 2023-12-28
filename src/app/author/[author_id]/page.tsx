@@ -36,6 +36,19 @@ export default function AuthorPage(props: any) {
     //   console.log(e);
     // }).catch((e)=>console.error(e));
 
+    axios.post("/api/authorHighToLow", payload).then((e)=>{
+      console.log(e);
+    }).catch((e)=>console.error(e));
+    axios.post("/api/authorLowToHigh", payload).then((e)=>{
+      console.log(e);
+    }).catch((e)=>console.error(e));
+    axios.post("/api/authorRecommand", payload).then((e)=>{
+      console.log(e);
+    }).catch((e)=>console.error(e));
+    axios.post("/api/authorPopular", payload).then((e)=>{
+      console.log(e);
+    }).catch((e)=>console.error(e));
+    
   }, [])
 
   return(
