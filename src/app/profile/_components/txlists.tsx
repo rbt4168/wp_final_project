@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 function TxListItem(props: any) {
-    const {item} = props;
+    const {item, username} = props;
 
     return(
       <>
@@ -16,9 +16,9 @@ function TxListItem(props: any) {
       <ListItem disablePadding>
       <ListItemButton>
         <Box display="flex" justifyContent="space-between" sx={{ width: "100%" }}>
-          <Box>from: <Typography variant="h6" color="primary">{item.from_user}</Typography></Box>
-          <Box>to: <Typography variant="h6" color="secondary">{item.to_user}</Typography></Box>
-          <Box>amount: <Typography variant="h6" color="error">{item.amount}</Typography></Box>
+          <Box>From: <Typography variant="h6" color={item.from_user===username?"primary":"grey.600"}>{item.from_user}</Typography></Box>
+          <Box>To: <Typography variant="h6" color={item.to_user===username?"primary":"grey.600"}>{item.to_user}</Typography></Box>
+          <Box>Amount: <Typography variant="h6" color="error">{item.amount}</Typography></Box>
         </Box>
       </ListItemButton>
       </ListItem>
@@ -56,7 +56,7 @@ export default function Transactions(props: any) {
           </ListItem>
           <Divider />
           {txs.map((e: any, index:any) => (
-            <TxListItem item={e}/>
+            <TxListItem item={e} username={actionUser.username}/>
           ))}
           <Divider />
         </List>

@@ -11,6 +11,7 @@ import Diversity1Icon from '@mui/icons-material/Diversity1';
 import PublishIcon from '@mui/icons-material/Publish';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 
 import SidebarComponent from "./_components/sidebar"
 import UserProfile from "./_components/userprofile"
@@ -22,6 +23,7 @@ import UploadCreation from "./_components/uploadcreation"
 import ModifyCreation from "./_components/modifycreation"
 import axios from "axios"
 import Transactions from "./_components/txlists"
+import TransactionCreat from "./_components/sendtransaction"
 
 export default function Profile() {
   const [ actionUser, setActionUser ] = useState({});
@@ -67,8 +69,13 @@ export default function Profile() {
     },
     {
       title: "交易紀錄",
-      icon: (<CurrencyExchangeIcon color="secondary"/>),
+      icon: (<AccountBalanceIcon color="secondary"/>),
       component: (<Transactions actionUser={actionUser}/>),
+    },
+    {
+      title: "轉帳",
+      icon: (<CurrencyExchangeIcon color="secondary"/>),
+      component: (<TransactionCreat actionUser={actionUser} trigger={trig}/>),
     },
     {
       title: "Divider"
