@@ -27,7 +27,9 @@ export default function PictureFull(props: any) {
     pic_id: 0,
     tags: [],
     recommand_point: 0,
-    description: ""
+    description: "",
+    post_date: "",
+    author_id: 0,
   });
 
   useEffect(()=>{
@@ -77,7 +79,7 @@ export default function PictureFull(props: any) {
               ID:{picdata.pic_id?picdata.pic_id:0}
             </Typography>
             <Typography display="flex" justifyContent="left" alignItems="center">
-              2022-05-08
+              {picdata.post_date?picdata.post_date:""}
             </Typography>
           </Box>
           <Divider textAlign="left">Tags</Divider>
@@ -99,7 +101,7 @@ export default function PictureFull(props: any) {
           <Box mt={1}></Box>
           <Divider textAlign="left">Creator</Divider>
           <List>
-            <CreatorListItem user_id={0}/>
+            <CreatorListItem user_id={picdata.author_id?picdata.author_id:0}/>
           </List>
           <Divider textAlign="left">Origin</Divider>
           <Box mt={1}></Box>
@@ -128,8 +130,8 @@ export default function PictureFull(props: any) {
               </Typography>
               <Divider>What's Next</Divider>
               <List>
-                {[1,1,1,1,1].map((e:any, id:any)=>{
-                  return(<RelatedWorkListItem pic_id={0}/>)
+                {[1,2,3,4,5].map((e:any, id:any)=>{
+                  return(<RelatedWorkListItem pic_id={id}/>)
                 })}
               </List>
             </Grid>

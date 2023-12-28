@@ -20,6 +20,7 @@ export async function GET(request: Request) {
     
     // Return the user information
     return NextResponse.json({
+      account: select_user.username,
       name: select_user.name, 
       quote: select_user.quote, 
       bio: select_user.bio, 

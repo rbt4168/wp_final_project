@@ -1,7 +1,36 @@
 import { Box, Grid, ListItem, ListItemButton, Typography } from "@mui/material";
+import axios from "axios";
+import { useEffect, useState } from "react";
+
+async function creatorFetchHandler(user_id: any) {
+  try {
+    let response = await axios.get("/api/getAuthorById?user_id="+user_id);
+    console.log(response.data)
+    return response.data;
+  } catch (e) {
+    console.error(e);
+    return {};
+  }
+}
+
 export function CreatorListItem(props: any) {
     const { user_id } = props;
-    // TODO: add backend
+    
+    const [ authorData, setAuthouData ] = useState({
+      account: "",
+      name:"",
+      quote:"",
+      bio: "",
+      links: "",
+      works: []
+    });
+
+    useEffect(()=>{
+      creatorFetchHandler(user_id).then((e)=>{
+        e?setAuthouData(e):0;
+      });
+    }, [user_id]);
+    
 
     return (
       <ListItem disablePadding>
@@ -24,13 +53,13 @@ export function CreatorListItem(props: any) {
           <Grid item xs container direction="column" spacing={2}>
             <Grid item xs>
               <Typography gutterBottom variant="h5" component="div" color="primary">
-                創作者嘎波
+                {authorData.name}
               </Typography>
               <Typography variant="body2" gutterBottom>
-                好喜歡和大家玩的~~
+                {authorData.quote}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                account: cappo
+                account: {authorData.account}
               </Typography>
             </Grid>
           </Grid>
