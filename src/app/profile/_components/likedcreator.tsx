@@ -13,7 +13,7 @@ export default function LikedCreator(props: any) {
       <Divider />
       <Box>
         <List>
-          {Array.from(Array(40)).map((_, index) => (
+          {Array.from(Array(2)).map((_, index) => (
             <CreatorListItem key={index} user_id={0} />
           ))}
         </List>

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { db } from "@/db";
 import { auth } from "@/lib/auth";
 import { pictureTable, usersTable } from "@/db/schema"; // Import your UserTable if not already done
@@ -14,15 +14,11 @@ export async function POST(request: Request) {
 
     // Extract data from request body
     const body = await request.json();
-    console.log(body.pic_id);
+    const { pic_id, like } = body;
 
     // Assume you have a user table where you want to update this information
     // and 'userId' is obtained from the session or some other source
     const session_id = session?.user?.id; // Replace with actual way to get the user's ID
-
-    console.log("1111111111111111111111111");
-    console.log(body.pic_id);
-    console.log("1111111111111111111111111")
 
     const User = await db
           .select({
@@ -32,46 +28,63 @@ export async function POST(request: Request) {
           .from(usersTable)
           .where(eq(usersTable.displayId, session_id))
           .execute();
-    
-    // Update user profile in the database
-
-
     if (!User){
-        // console.log("fefefe");
         return new NextResponse("No author you bad guy", { status: 401 });
     }
 
-    console.log("stage1 ")
+    console.log("Authentication Pass.");
     
-    await db.delete(pictureTable)
-    .where(eq(pictureTable.pic_id, body.pic_id))
-    .returning();
-    
+
+    const [currentPicture] = await db
+      .select()
+      .from(pictureTable)
+      .where(eq(pictureTable.pic_id, parseInt(pic_id)));
     
     const [currentUser] = await db
       .select()
       .from(usersTable)
       .where(eq(usersTable.username,(session?.user?.username)));
     
-    if (!currentUser.post_picture){
-        return new NextResponse("No author you bad guy", { status: 401 });
+    if (like && currentUser.liked_picture?.includes(parseInt(pic_id))) {
+      return new NextResponse("Duplicated like", { status: 400 });
+    } else if (!like && !currentUser.liked_picture?.includes(parseInt(pic_id))) {
+      return new NextResponse("Not Existed like", { status: 400 });
     }
-    // Check if the user has an existing post_picture array, if not, initialize it
-    const currentPostPictures = currentUser.post_picture || [];
-// Remove the specified pic_id from the array
-    const updatedPostPictures = currentPostPictures.filter(id => id !== body.pic_id);
+
+    var new_like_cnt;
+    const currentLikedPictures = currentUser.liked_picture || [];
+    var updatedLikedPictures = [];
+    if(like) {
+      new_like_cnt = (currentPicture.liked_count || 0) + 1;
+      updatedLikedPictures = [...currentLikedPictures, parseInt(pic_id)];
+    } else {
+      new_like_cnt = (currentPicture.liked_count || 0) - 1;
+      updatedLikedPictures = currentLikedPictures.filter(id => id !== parseInt(pic_id));
+    }
+    
+    const [updatedPicture] = await db
+      .update(pictureTable)
+      .set({
+        liked_count: new_like_cnt,
+      })
+      .where(eq(pictureTable.pic_id, parseInt(pic_id)))
+      .returning();
+      
+    console.log("Update Picture.");
     
     // Update the user's record
     const [updatedUser] = await db
       .update(usersTable)
       .set({
-        post_picture: updatedPostPictures,
+        liked_picture: updatedLikedPictures,
       })
       .where(eq(usersTable.username, session?.user?.username))
       .returning();
+      
+    console.log("Update User.");
 
     // Return the updated user information
-    return NextResponse.json({ body });
+    return NextResponse.json({ updatedUser, updatedPicture });
   } catch (error) {
     console.error("Error in POST function: ", error);
     return new NextResponse("Internal Error", { status: 500 });
