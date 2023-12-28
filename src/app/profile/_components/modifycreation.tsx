@@ -9,9 +9,10 @@ import { StyledRating } from "@/components/styledcomps";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { default_tags } from "@/lib/utils";
+import { useRouter } from 'next/navigation';
 
 export default function ModifyCreation(props: any) {
-  const { pic_id } = props;
+  const { pic_id , trigger } = props;
 
   const [title, setTitle] = useState("");
   const [origin, setOrigin] = useState("");
@@ -20,7 +21,8 @@ export default function ModifyCreation(props: any) {
 
   const fixedOptions: string[] = [];
   const [value, setValue] = useState(fixedOptions);
-  
+  const router = useRouter();
+
 
   const handleSubmit = (e: any) => {
     // TODO: Update User Profile
@@ -36,8 +38,25 @@ export default function ModifyCreation(props: any) {
     axios.post("/api/modifycreation", payload)
       .then(response => {
         console.log(response);
-        alert("修改成功!");
+        alert("刪除作品成功!");
+        // Redirect to the homepage
       }).catch(()=>alert("修改作品失敗 "));
+  };
+
+
+  const handleDelete = (e: any) => {
+    // TODO: Update User Profile
+    const payload = {
+      pic_id,
+    };
+  
+    // Make the API call
+    axios.post("/api/deletecreation", payload)
+      .then(response => {
+        console.log(response);
+        alert("刪除作品成功!");
+        trigger();
+      }).catch(()=>alert("刪除作品失敗 "));
   };
 
   return pic_id ? (
@@ -130,6 +149,14 @@ export default function ModifyCreation(props: any) {
           完成上傳
         </Button>
       </Box>
+
+      <Box mx={5} my={3}>
+        <Button component="label" variant="outlined" onClick={handleDelete}
+          sx={{width: "60%"}}>
+          刪除作品
+        </Button>
+      </Box>
+      
         
     </ThemeProvider>
   ) : (
