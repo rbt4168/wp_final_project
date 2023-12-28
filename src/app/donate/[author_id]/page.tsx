@@ -5,7 +5,7 @@ import DivLineCenter from "@/components/divline";
 import FooterComponent from "@/components/footer";
 import NavigationBar from "@/components/navbar";
 import { main_theme } from "@/lib/themes";
-import { Box, Button, CssBaseline, Divider, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Paper, ThemeProvider, Typography } from "@mui/material";
+import { Box, CssBaseline, Divider, Grid, List, ListItem, ListItemButton, ThemeProvider, Typography } from "@mui/material";
 
 function CostListItem(props: any) {
   const {text, cost} = props;
@@ -17,7 +17,7 @@ function CostListItem(props: any) {
           <Box display="flex" justifyContent="space-between" sx={{width: "100%"}}>
             <GlobalChip text={text}/>
             <Typography color="inherit">
-              {"NTD$ "+cost}
+              {cost+" Coins"}
             </Typography>
           </Box>
         </ListItemButton>

@@ -1,15 +1,4 @@
-import { relations } from "drizzle-orm";
-import {
-  index,
-  text,
-  pgTable,
-  serial,
-  uuid,
-  varchar,
-  unique,
-  PgArray,
-  integer,
-} from "drizzle-orm/pg-core";
+import { index, text, pgTable, serial, uuid, varchar,integer } from "drizzle-orm/pg-core";
 
 export const usersTable = pgTable(
   "users",
@@ -30,13 +19,11 @@ export const usersTable = pgTable(
     links: text("links"),
     liked_picture: integer("like_picture").array(),
     liked_user: integer("liked_user").array(),
-    recommand_picture: integer("recommand_picture").array(),
     post_picture: integer("post_picture").array(),
     private_tags: integer("private_tags").array(),
     private_tags_cost: integer("private_tags_cost").array(),
     owned_private_tag: integer("owned_private_tag").array(),
-    coins: integer("coins").array(),
-
+    coins: integer("coins"),
   },
   (table) => ({
     displayIdIndex: index("display_id_index").on(table.displayId),
