@@ -1,15 +1,15 @@
-import { eq } from "drizzle-orm";
-
-import { db } from "../../db";
-import { usersTable } from "../../db/schema";
+import { NextResponse } from "next/server";
+import { eq, and } from "drizzle-orm";
+import { db } from "@/db";
 import { auth } from "@/lib/auth";
+import { pictureTable, usersTable } from "@/db/schema"; // Import your UserTable if not already done
 
-const getNowUser = async () => {
-
+export async function POST(request: Request) {
   try {
+    // Authentication
     const session = await auth();
     if (!session?.user?.username) {
-      return [];
+        return new NextResponse("Unauthorized", { status: 401 });
     }
     const user = await db
       .select({
@@ -36,9 +36,10 @@ const getNowUser = async () => {
       .from(usersTable)
       .where(eq(usersTable.username, session?.user?.username))
       .execute();
-    return user;
+    // Return the updated user information
+    return NextResponse.json({ user });
   } catch (error) {
-    console.log("error in get user");
+    console.error("Error in POST function: ", error);
+    return new NextResponse("Internal Error", { status: 500 });
   }
-};
-export default getNowUser;
+}
