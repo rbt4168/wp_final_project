@@ -33,7 +33,7 @@ export default function AuthorPage(props: any) {
     }).catch((e)=>console.error(e));
     
 
-    let payload = {
+    const payload = {
       author_id: author_id
     }
 

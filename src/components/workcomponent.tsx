@@ -9,7 +9,7 @@ import { StyledRating } from "./styledcomps";
 
 async function creatorFetchHandler(user_id: any) {
   try {
-    let response = await axios.get("/api/getAuthorById?user_id="+user_id);
+    const response = await axios.get("/api/getAuthorById?user_id="+user_id);
     // console.log(response.data)
     return response.data;
   } catch (e) {
@@ -20,10 +20,10 @@ async function creatorFetchHandler(user_id: any) {
 
 async function workFetchHandler(pic_id: any) {
   try {
-    let payload = {
+    const payload = {
       pic_id: pic_id,
     }
-    let response = await axios.post("/api/getPicture", payload);
+    const response = await axios.post("/api/getPicture", payload);
     // console.log(response.data.picture[0])
     return response.data.picture[0];
   } catch (e) {

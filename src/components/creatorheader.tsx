@@ -15,7 +15,7 @@ export default function CreatorHeader(props: any) {
   const [disable, setDisable] = useState(false);
   function handleFollow(st: boolean) {
     setDisable(true);
-    let payload = {
+    const payload = {
       author_id: authorId,
       like: st,
     }
@@ -28,8 +28,8 @@ export default function CreatorHeader(props: any) {
 
   useEffect(()=>{
     console.log(activeAuthor.links)
-    let linkx = activeAuthor.links?.split(",");
-    let newArr = ["", "", "", ""];
+    const linkx = activeAuthor.links?.split(",");
+    const newArr = ["", "", "", ""];
     linkx?.forEach((element:any,id:any) => {
       newArr[id] = element;
     });

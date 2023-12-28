@@ -27,7 +27,7 @@ export default function Profile() {
 
   useEffect(()=>{
     axios.get("/api/getNowUser").then((e)=>{
-      let event_user = e.data.user[0];
+      const event_user = e.data.user[0];
       setActionUser(event_user);
       console.log(actionUser);
     }).catch((e)=>{

@@ -39,7 +39,7 @@ export async function POST(request: Request) {
     if (User.coins === null){
         return new NextResponse("No author you bad guy", { status: 403 });
     }
-    let newcoin = Number(body.coins) + Number(User.coins);
+    const newcoin = Number(body.coins) + Number(User.coins);
  
     console.log(newcoin);
     // Update the user's record

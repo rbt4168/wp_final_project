@@ -12,7 +12,8 @@ import axios from "axios"
 export default function Home() {
   const [ searchText, setSearchText ] = useState("");
 
-  const [ hotArr, setHotArr ] = useState([23,0,23,0,0]);
+  const [ foArr, setFoArr ] = useState([0,0,0,0,0]);
+  const [ hotArr, setHotArr ] = useState([0,0,0,0,0]);
   const [ recentArr, setRecentArr ] = useState([0,0,0,0,0]);
 
   useEffect(()=>{
@@ -32,7 +33,7 @@ export default function Home() {
   }, []);
   const handleSubmit = () => {
     // TODO: search api
-    let payload = {
+    const payload = {
       keyword: searchText,
     }
     alert(payload);
@@ -72,21 +73,13 @@ export default function Home() {
         justifyContent="center"
         alignItems="center"
       >
-        <Grid item xs={12} md={2}>
-          <WorkCardComponent pic_id={1} />
+        {foArr.map((e:any, id:any)=>{
+        return(
+        <Grid key={id} item xs={12} md={2}>
+          <WorkCardComponent pic_id={e} />
         </Grid>
-        <Grid item xs={12} md={2}>
-          <WorkCardComponent pic_id={2} />
-        </Grid>
-        <Grid item xs={12} md={2}>
-          <WorkCardComponent pic_id={3} />
-        </Grid>
-        <Grid item xs={12} md={2}>
-          <WorkCardComponent pic_id={4} />
-        </Grid>
-        <Grid item xs={12} md={2}>
-          <WorkCardComponent pic_id={5} />
-        </Grid>
+        )
+      })}
       </Grid>
 
       <DivLineCenter text="Recent"/>

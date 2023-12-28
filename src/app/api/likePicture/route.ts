@@ -51,9 +51,9 @@ export async function POST(request: Request) {
       return new NextResponse("Not Existed like", { status: 400 });
     }
 
-    var new_like_cnt;
+    let new_like_cnt;
     const currentLikedPictures = currentUser.liked_picture || [];
-    var updatedLikedPictures = [];
+    let updatedLikedPictures = [];
     if(like) {
       new_like_cnt = (currentPicture.liked_count || 0) + 1;
       updatedLikedPictures = [...currentLikedPictures, parseInt(pic_id)];

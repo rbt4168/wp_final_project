@@ -44,7 +44,7 @@ export default function PictureFull(props: any) {
   }, [currentUser])
 
   useEffect(()=>{
-    let payload = {
+    const payload = {
       pic_id: picture_id,
     }
 
@@ -59,7 +59,7 @@ export default function PictureFull(props: any) {
 
   function handleLikedStatus() {
     setDisable(true);
-    let payload = {
+    const payload = {
       pic_id: picture_id,
       like: !onliked,
     }

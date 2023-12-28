@@ -22,7 +22,7 @@ export default function UserProfile(props: any) {
     setQuote(actionUser.quote);
     setTitle(actionUser.title);
     setBio(actionUser.bio);
-    let linkx = actionUser.links?.split(",");
+    const linkx = actionUser.links?.split(",");
     if(linkx?.length > 0) {
       setLink0(linkx[0]);
     }

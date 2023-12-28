@@ -19,6 +19,7 @@ import {
   Droppable,
   Draggable,
 } from 'react-beautiful-dnd';
+import { WorkCardComponent } from "@/components/workcomponent";
 
 function DragComponent(props:any) {
   const { cid, idx, text } = props;
@@ -160,7 +161,7 @@ export default function SearchPage(props: any) {
         alignItems="center"
       >
         <Grid item xs={12} md={2}>
-          <RecWorkCard />
+          <WorkCardComponent  />
         </Grid>
         <Grid item xs={12} md={2}>
           <RecWorkCard />
