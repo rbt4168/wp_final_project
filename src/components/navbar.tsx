@@ -46,7 +46,7 @@ export default function NavigationBar(props: any) {
                 Support
             </Link>
           </nav>
-          <Button href="/login" color="secondary" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
+          <Button component="label" href="/login" color="secondary" variant="contained" sx={{ my: 1, mx: 1.5 }}>
             Login
           </Button>
         </Toolbar>

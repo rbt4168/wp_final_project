@@ -11,16 +11,24 @@ import { WorkCardComponent } from "@/components/workcomponent";
 import axios from "axios"
 export default function Home() {
   const [ searchText, setSearchText ] = useState("");
+
+  const [ hotArr, setHotArr ] = useState([23,0,23,0,0]);
+  const [ recentArr, setRecentArr ] = useState([0,0,0,0,0]);
+
   useEffect(()=>{
     axios.get("/api/homeFollowedLatest").then((e)=>{
       console.log(e.data);
     }).catch((e)=>console.error(e));
+
     axios.get("/api/homeRecent").then((e)=>{
-      console.log(e.data);
+      // console.log(e.data);
+      setRecentArr(e.data.pictureIds);
     }).catch((e)=>console.error(e));
+
     axios.get("/api/homeHot").then((e)=>{
-      console.log(e.data);
+      setHotArr(e.data.pictureIds);
     }).catch((e)=>console.error(e));
+
   }, []);
   const handleSubmit = () => {
     // TODO: search api
@@ -87,21 +95,13 @@ export default function Home() {
         justifyContent="center"
         alignItems="center"
       >
-        <Grid item xs={12} md={2}>
-          <WorkCardComponent pic_id={6} />
-        </Grid>
-        <Grid item xs={12} md={2}>
-          <WorkCardComponent pic_id={7} />
-        </Grid>
-        <Grid item xs={12} md={2}>
-          <WorkCardComponent pic_id={8} />
-        </Grid>
-        <Grid item xs={12} md={2}>
-          <WorkCardComponent pic_id={9} />
-        </Grid>
-        <Grid item xs={12} md={2}>
-          <WorkCardComponent pic_id={10} />
-        </Grid>
+        {recentArr.map((e:any, id:any)=>{
+          return(
+          <Grid key={id} item xs={12} md={2}>
+            <WorkCardComponent pic_id={e} />
+          </Grid>
+          )
+        })}
       </Grid>
 
       <DivLineCenter text="Hot!"/>
@@ -110,21 +110,13 @@ export default function Home() {
         justifyContent="center"
         alignItems="center"
       >
-        <Grid item xs={12} md={2}>
-          <WorkCardComponent pic_id={11} />
-        </Grid>
-        <Grid item xs={12} md={2}>
-          <WorkCardComponent pic_id={12} />
-        </Grid>
-        <Grid item xs={12} md={2}>
-          <WorkCardComponent pic_id={13} />
-        </Grid>
-        <Grid item xs={12} md={2}>
-          <WorkCardComponent pic_id={14} />
-        </Grid>
-        <Grid item xs={12} md={2}>
-          <WorkCardComponent pic_id={15} />
-        </Grid>
+        {hotArr.map((e:any, id:any)=>{
+          return(
+          <Grid key={id} item xs={12} md={2}>
+            <WorkCardComponent pic_id={e} />
+          </Grid>
+          )
+        })}
       </Grid>
 
       <FooterComponent/>
