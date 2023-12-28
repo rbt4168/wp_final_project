@@ -14,8 +14,6 @@ export function RelatedWorkListItem(props: any) {
               sx={{
                 height: 128,
                 width: 128,
-                border: "1px solid",
-                borderRadius: "5px"
               }}
               alt="a"
               src="https://upload.wikimedia.org/wikipedia/en/8/88/Bugcat_Capoo.jpg"
