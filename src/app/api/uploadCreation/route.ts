@@ -46,7 +46,10 @@ export async function POST(request: Request) {
 
     console.log("stage1 ")
     const currentDate = new Date(); 
-    const DateFomate = currentDate.getFullYear()+"-"+currentDate.getMonth()+"-"+currentDate.getDate();
+    const padWithZero = (number : any) => number < 10 ? `0${number}` : number;
+
+    const DateFomate = `${currentDate.getFullYear()}-${padWithZero(currentDate.getMonth() + 1)}-${padWithZero(currentDate.getDate())}`;
+
 
     const [ updoadPicture ] = await db
       .insert(pictureTable)

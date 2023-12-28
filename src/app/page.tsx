@@ -6,12 +6,22 @@ import { main_theme } from "@/lib/themes";
 
 import { Button, CssBaseline, Grid, TextField, ThemeProvider } from "@mui/material";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { WorkCardComponent } from "@/components/workcomponent";
-
+import axios from "axios"
 export default function Home() {
   const [ searchText, setSearchText ] = useState("");
-
+  useEffect(()=>{
+    axios.get("/api/homeFollowedLatest").then((e)=>{
+      console.log(e.data);
+    }).catch((e)=>console.error(e));
+    axios.get("/api/homeRecent").then((e)=>{
+      console.log(e.data);
+    }).catch((e)=>console.error(e));
+    axios.get("/api/homeHot").then((e)=>{
+      console.log(e.data);
+    }).catch((e)=>console.error(e));
+  }, []);
   const handleSubmit = () => {
     // TODO: search api
     let payload = {
