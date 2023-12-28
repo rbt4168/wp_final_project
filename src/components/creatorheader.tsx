@@ -5,8 +5,25 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function CreatorHeader(props: any) {
-  const { activeAuthor } = props;
+  const { activeAuthor, setActiveAuthor, authorId } = props;
   const [ linkArr, setLinkArr ] = useState(["", "", "", ""])
+
+  const [ followed, setFollowed ] = useState(false);
+  const [ currentUser, setCurrentUser ] = useState({
+    liked_user:[]
+  });
+
+  function handleFollow(st: boolean) {
+    let payload = {
+      author_id: authorId,
+      like: st,
+    }
+    
+    axios.post("/api/likeAuthor", payload).then((e)=>{
+      console.log(e.data.updatedUser);
+      setCurrentUser(e.data.updatedUser);
+    }).catch((e)=>console.error(e));
+  }
 
   useEffect(()=>{
     console.log(activeAuthor.links)
@@ -16,7 +33,17 @@ export default function CreatorHeader(props: any) {
       newArr[id] = element;
     });
     setLinkArr(newArr);
-  }, [activeAuthor])
+  }, [activeAuthor]);
+
+  useEffect(()=>{
+    axios.get('/api/getNowUser').then((e)=>{
+      setCurrentUser(e.data.user[0]);
+    }).catch((e)=>console.error(e));
+  }, [])
+
+  useEffect(()=>{
+    setFollowed(currentUser?.liked_user?.includes(parseInt(authorId)));
+  }, [currentUser]);
 
   return(
     <ThemeProvider theme={main_theme}>
@@ -63,11 +90,24 @@ export default function CreatorHeader(props: any) {
             {activeAuthor.quote}
           </Typography>
           <Box display="flex" justifyContent="center" alignItems="center">
-            <Button component="label" 
-              color="primary" variant="contained"
-            >
-              Follow
-            </Button>
+            {followed?(
+              <Button component="label" 
+                color="secondary" variant="contained"
+                sx={{ fontSize: "25px" }}
+                onClick={()=>handleFollow(false)}
+              >
+                UnFollow
+              </Button>
+            ):(
+              <Button component="label" 
+                color="primary" variant="contained"
+                sx={{ fontSize: "25px" }}
+                onClick={()=>handleFollow(true)}
+              >
+                Follow
+              </Button>
+            )}
+            
           </Box>
         </Box>
       </Paper>
