@@ -13,9 +13,9 @@ export default function LikedWork(props: any) {
       <Divider />
       <Box mx={5} my={3}>
         <Grid container spacing={{ xs: 2, md: 4 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-          {Array.from(Array(40)).map((_, index) => (
+          {Array.from(Array(10)).map((_, index) => (
             <Grid item xs={4} sm={2} md={3} key={index}>
-              <WorkCardComponent pic_id={0} />
+              <WorkCardComponent pic_id={1} />
             </Grid>
           ))}
         </Grid>

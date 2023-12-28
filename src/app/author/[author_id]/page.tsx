@@ -41,13 +41,13 @@ export default function AuthorPage(props: any) {
       alignItems="center"
     >
       <Grid item xs={12} md={3}>
-        <WorkCardComponent pic_id={0} />
+        <WorkCardComponent pic_id={1} />
       </Grid>
       <Grid item xs={12} md={3}>
-        <WorkCardComponent pic_id={0} />
+        <WorkCardComponent pic_id={1} />
       </Grid>
       <Grid item xs={12} md={3}>
-        <WorkCardComponent pic_id={0} />
+        <WorkCardComponent pic_id={1} />
       </Grid>
     </Grid>
 
@@ -58,19 +58,19 @@ export default function AuthorPage(props: any) {
       alignItems="center"
     >
       <Grid item xs={12} md={2}>
-        <WorkCardComponent pic_id={0} />
+        <WorkCardComponent pic_id={1} />
       </Grid>
       <Grid item xs={12} md={2}>
-        <WorkCardComponent pic_id={0} />
+        <WorkCardComponent pic_id={1} />
       </Grid>
       <Grid item xs={12} md={2}>
-        <WorkCardComponent pic_id={0} />
+        <WorkCardComponent pic_id={1} />
       </Grid>
       <Grid item xs={12} md={2}>
-        <WorkCardComponent pic_id={0} />
+        <WorkCardComponent pic_id={1} />
       </Grid>
       <Grid item xs={12} md={2}>
-        <WorkCardComponent pic_id={0} />
+        <WorkCardComponent pic_id={1} />
       </Grid>
     </Grid>
 

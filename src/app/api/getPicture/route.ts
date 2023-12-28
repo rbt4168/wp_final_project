@@ -7,7 +7,7 @@ export async function POST(request: Request) {
   try {
     // Request Body
     const body = await request.json();
-    const {pic_id} = body;
+    const { pic_id } = body;
 
     // Query
     const picture = await db

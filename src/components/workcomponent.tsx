@@ -1,12 +1,40 @@
+"use client"
 import { Box, Card, CardActionArea, CardMedia, Grid, ListItem, ListItemButton, Typography } from "@mui/material";
+import axios from "axios";
+import { useEffect, useState } from "react";
+
+async function workFetchHandler(pic_id: any) {
+  try {
+    let payload = {
+      pic_id: pic_id,
+    }
+    let response = await axios.post("/api/getPicture", payload);
+    console.log(response.data.picture[0])
+    return response.data.picture[0];
+  } catch (e) {
+    console.error(e);
+    return {};
+  }
+}
 
 export function RelatedWorkListItem(props: any) {
     const { pic_id } = props;
-    // TODO complete backend
+
+    const [ picdata, setPicdata ] = useState({
+      url:"",
+      name:"untitled",
+      post_date: "",
+    });
+
+    useEffect(()=>{
+      workFetchHandler(pic_id).then((e)=>{
+        e?setPicdata(e):0;
+      });
+    }, [pic_id]);
 
     return (
       <ListItem disablePadding>
-      <ListItemButton onClick={()=>{}}>
+      <ListItemButton href={"/picture/"+pic_id}>
       <Grid container spacing={2}>
         <Grid item>
           <Box
@@ -16,23 +44,23 @@ export function RelatedWorkListItem(props: any) {
                 width: 128,
               }}
               alt="a"
-              src="https://upload.wikimedia.org/wikipedia/en/8/88/Bugcat_Capoo.jpg"
+              src={picdata.url?picdata.url:""}
           />
         </Grid>
         <Grid item xs={12} sm container>
           <Grid item xs container direction="column" spacing={2}>
             <Grid item xs>
               <Typography gutterBottom variant="h5" component="div">
-                嘎波啵啵~
+                {picdata.name?picdata.name:"untitled"}
               </Typography>
               <Typography gutterBottom variant="body2" component="div" color="primary">
-                創作者嘎波
+                作者
               </Typography>
               <Typography variant="body2" gutterBottom>
-                ID: 13794058
+                ID: {pic_id}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                2023-03-05
+                {picdata.post_date}
               </Typography>
             </Grid>
           </Grid>
@@ -45,19 +73,30 @@ export function RelatedWorkListItem(props: any) {
 
 export function WorkCardComponent(props: any) {
     const { pic_id } = props;
-    // TODO complete backend
+
+    const [ picdata, setPicdata ] = useState({
+      url:"",
+      name:"untitled",
+      post_date: "",
+    });
+
+    useEffect(()=>{
+      workFetchHandler(pic_id).then((e)=>{
+        e?setPicdata(e):0;
+      });
+    }, [pic_id]);
 
     return (
       <Box m={2}>
         <Card sx={{ maxWidth: "100%" }}>
-          <CardActionArea>
+          <CardActionArea href={"/picture/"+pic_id}>
             <CardMedia
               component="img"
-              image="https://upload.wikimedia.org/wikipedia/en/8/88/Bugcat_Capoo.jpg"
+              image={picdata.url}
             />
           </CardActionArea>
         </Card>
-        <Typography>2023-05-07</Typography>
+        <Typography>{picdata.post_date}</Typography>
       </Box>
     );
   }
