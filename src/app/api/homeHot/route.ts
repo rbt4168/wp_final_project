@@ -13,7 +13,7 @@ export async function GET(request: Request) {
     }
 
     // Query
-    const [hotpicture] = await db
+    const hotpicture = await db
       .select()
       .from(pictureTable)
       .orderBy(desc(pictureTable.liked_count))

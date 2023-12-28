@@ -13,7 +13,7 @@ export async function GET(request: Request) {
     }
 
     // Query
-    const [recentpicture] = await db
+    const recentpicture = await db
       .select()
       .from(pictureTable)
       .orderBy(desc(pictureTable.pic_id))

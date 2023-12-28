@@ -19,7 +19,7 @@ import axios from "axios"
 export default function PictureFull(props: any) {
   const { params } = props;
   const { picture_id } = params;
-
+  const [disable, setDisable] = useState(false);
   const [ picdata, setPicdata ] = useState({
     url: "",
     name: "untitled",
@@ -58,6 +58,7 @@ export default function PictureFull(props: any) {
   }, [])
 
   function handleLikedStatus() {
+    setDisable(true);
     let payload = {
       pic_id: picture_id,
       like: !onliked,
@@ -66,7 +67,7 @@ export default function PictureFull(props: any) {
     axios.post('/api/likePicture',payload).then((e)=>{
       setPicdata(e.data.updatedPicture);
       setCurrentUser(e.data.updatedUser);
-    }).catch((e)=>console.error(e));
+    }).catch((e)=>console.error(e)).finally(()=>(setDisable(false)));
   }
 
   return(
@@ -92,7 +93,7 @@ export default function PictureFull(props: any) {
               {picdata.name?picdata.name:"untitled"}
             </Typography>
             <Box display="flex" alignItems="center">
-              <IconButton aria-label="fingerprint" color="secondary" onClick={handleLikedStatus}>
+              <IconButton aria-label="fingerprint" color="secondary" onClick={handleLikedStatus} disabled={disable}>
                 {picdata.liked_count?picdata.liked_count:0}{onliked?(<FavoriteIcon sx={{ width: "3rem", height: "3rem" }}/>):(<FavoriteBorderIcon  sx={{ width: "3rem", height: "3rem" }}/>) }
               </IconButton>
               <IconButton aria-label="fingerprintx" color="primary" onClick={()=>{}}>

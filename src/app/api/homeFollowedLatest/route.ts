@@ -18,7 +18,7 @@ export async function GET(request: Request) {
     // Query
     const likedUserIds = user.liked_user || [-1]; // Ensure this is always an array
 
-    const [followedLatestPicture] = await db
+    const followedLatestPicture = await db
       .select()
       .from(pictureTable)
       .where(inArray(pictureTable.author_id, likedUserIds))
