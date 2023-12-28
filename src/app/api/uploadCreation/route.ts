@@ -19,7 +19,7 @@ export async function POST(request: Request) {
 
     // Assume you have a user table where you want to update this information
     // and 'userId' is obtained from the session or some other source
-    const id = session?.user?.id; // Replace with actual way to get the user's ID
+    const session_id = session?.user?.id; // Replace with actual way to get the user's ID
 
     console.log("----------------------------------------------");
 
@@ -29,10 +29,10 @@ export async function POST(request: Request) {
     const User = await db
           .select({
             author: usersTable.name,
-            uid   : usersTable.id
+            id   : usersTable.id
           })
           .from(usersTable)
-          .where(eq(usersTable.displayId, id))
+          .where(eq(usersTable.displayId, session_id))
           .execute();
     // Update user profile in the database
     console.log("----------------------------------------------");
@@ -44,13 +44,17 @@ export async function POST(request: Request) {
         return new NextResponse("No author you bad guy", { status: 401 });
     }
     console.log("stage1 ")
+    const currentDate = new Date(); 
+
     const [updoadPicture] = await db
       .insert(pictureTable)
       .values({
         name: title,
         description: origin,
-        author : User[0].author,
+        author_id : User[0].id,
         url: previewUrl, // Ensure your database can handle this array format
+        post_date: String(currentDate), // 加入現在的時間
+        liked_count: Number(0),
         recommand_point: recommand,
         tags: value,
       })
