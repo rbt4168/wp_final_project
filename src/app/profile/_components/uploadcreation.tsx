@@ -1,14 +1,16 @@
 import { main_theme } from "@/lib/themes";
-import { Autocomplete, Box, Button, Chip, CssBaseline, Divider, Input, TextField, ThemeProvider, Typography, styled } from "@mui/material";
+import { Autocomplete, Box, Button, Chip, CssBaseline, 
+  Divider, Input, TextField, ThemeProvider, Typography } from "@mui/material";
 
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { useState } from "react";
-import axios from "axios";
-import { StyledRating } from "@/components/styledcomps";
+import { StyledRating, VisuallyHiddenInput } from "@/components/styledcomps";
 
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { default_tags } from "@/lib/utils";
+
+import { useState } from "react";
+import axios from "axios";
 
 export default function UploadCreation(props: any) {
   const [title, setTitle] = useState("");
@@ -23,9 +25,7 @@ export default function UploadCreation(props: any) {
 
   const handleSubmit = (e: any) => {
     // TODO: Update User Profile
-    
-    alert(value);
-    const data = {
+    const payload = {
       title,
       origin,
       previewUrl,
@@ -34,17 +34,14 @@ export default function UploadCreation(props: any) {
     };
   
     // Make the API call
-    axios.post("/api/uploadCreation", data)
+    axios.post("/api/uploadCreation", payload)
       .then(response => {
-        alert("success");
-      })
-      .catch((e) => {
-        // Handle error
-        alert("Error occurred while updating profile");
-      });
-
+        console.log(response);
+        alert("上傳成功!");
+      }).catch((e)=>console.error(e));
   };
 
+  // Preview
   const handleFileChange = (e:any) => {
     const file = e.target.files[0];
     if (file) {
@@ -56,17 +53,6 @@ export default function UploadCreation(props: any) {
     }
   };
 
-  const VisuallyHiddenInput = styled('input')({
-    clip: 'rect(0 0 0 0)',
-    clipPath: 'inset(50%)',
-    height: 1,
-    overflow: 'hidden',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    whiteSpace: 'nowrap',
-    width: 1,
-  });
   return(
     <ThemeProvider theme={main_theme}>
       <CssBaseline/>
@@ -119,7 +105,7 @@ export default function UploadCreation(props: any) {
         <Typography>標籤 Tags</Typography>
         <Autocomplete
           multiple
-          id="fixed-tags-demo"
+          id="taginput_component"
           value={value}
           onChange={(event, newValue) => {
             setValue([
@@ -167,12 +153,11 @@ export default function UploadCreation(props: any) {
         </Box>
         ) : (<></>)
       }
-      
 
       <Box mx={5} my={3}>
         <Button component="label" variant="outlined" onClick={handleSubmit}
           sx={{width: "60%"}}>
-          完成上傳
+          完成上傳 Submit
         </Button>
       </Box>
         

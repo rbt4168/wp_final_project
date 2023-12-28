@@ -11,9 +11,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { default_tags } from "@/lib/utils";
 
 export default function ModifyCreation(props: any) {
-
   const { pic_id } = props;
-  
 
   const [title, setTitle] = useState("");
   const [origin, setOrigin] = useState("");
@@ -26,13 +24,14 @@ export default function ModifyCreation(props: any) {
 
   const handleSubmit = (e: any) => {
     // TODO: Update User Profile
-    alert(title);
-    alert(origin);
+    alert("Not Yet Complete");
+    // alert(title);
+    // alert(origin);
     
-    const data = {
-      title,
-      origin,
-    };
+    // const payload = {
+    //   title,
+    //   origin,
+    // };
   
     // Make the API call
     // axios.post("/api/uploadCreation", data)

@@ -21,7 +21,7 @@ export default function SidebarComponent(props: any) {
                 border: "1px solid",
                 borderRadius: "50%"
               }}
-              alt="The house from the offer."
+              alt="UImg"
               src="https://upload.wikimedia.org/wikipedia/en/8/88/Bugcat_Capoo.jpg"
           />
           </ListItemIcon>

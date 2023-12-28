@@ -3,8 +3,7 @@ import { main_theme } from "@/lib/themes"
 import { Box, Button, CssBaseline, Divider, Input, TextField, ThemeProvider, Typography } from "@mui/material"
 import { useEffect, useState } from "react";
 import axios from "axios"
-// import axios from "axios";
-// import { useRouter } from "next/navigation";
+
 export default function UserProfile(props: any) {
   const { actionUser, trigger } = props;
 
@@ -71,7 +70,7 @@ export default function UserProfile(props: any) {
       
       <Divider />
       <Box mx={5} my={3}>
-        <Typography>名稱</Typography>
+        <Typography>名稱 Name</Typography>
         <Input
           id="name"
           placeholder="name"
@@ -82,7 +81,7 @@ export default function UserProfile(props: any) {
         />
       </Box>
       <Box mx={5} my={3}>
-        <Typography>座右銘</Typography>
+        <Typography>座右銘 Quote</Typography>
         <Input
           id="quote"
           placeholder="quote"
@@ -93,7 +92,7 @@ export default function UserProfile(props: any) {
         />
       </Box>
       <Box mx={5} my={3} sx={{ typography: 'subtitle2'}}>
-        <Typography>稱謂</Typography>
+        <Typography>稱謂 Title</Typography>
         <Input
           id="title"
           placeholder="title"
@@ -104,7 +103,7 @@ export default function UserProfile(props: any) {
         />
       </Box>
       <Box mx={5} my={3} sx={{ typography: 'subtitle2'}}>
-        <Typography>小屋介紹</Typography>
+        <Typography>小屋介紹 Bio</Typography>
         <TextField
           placeholder="介紹一下吧！"
           color="primary"
@@ -116,7 +115,7 @@ export default function UserProfile(props: any) {
         />
       </Box>
       <Box mx={5} my={3} sx={{ typography: 'subtitle2'}} >
-        <Typography>其他連結</Typography>
+        <Typography>其他連結 Links</Typography>
         <TextField
           id="link0"
           placeholder="link0"
