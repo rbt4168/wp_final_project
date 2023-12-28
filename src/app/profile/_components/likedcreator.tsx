@@ -4,6 +4,7 @@ import { Box, CssBaseline, Divider, ThemeProvider, Typography, List } from "@mui
 
 import { CreatorListItem } from "@/components/creatorcomponent";
 export default function LikedCreator(props: any) {
+  const { actionUser } = props;
   return (
     <ThemeProvider theme={main_theme}>
       <CssBaseline />
@@ -13,8 +14,8 @@ export default function LikedCreator(props: any) {
       <Divider />
       <Box>
         <List>
-          {Array.from(Array(2)).map((_, index) => (
-            <CreatorListItem key={index} user_id={0} />
+          {actionUser.liked_user?.map((user_id:any, index:any) => (
+            <CreatorListItem key={index} user_id={user_id} />
           ))}
         </List>
       </Box>

@@ -74,7 +74,7 @@ export default function Profile() {
     {
       title: "喜歡的創作者",
       icon: (<Diversity1Icon color="secondary"/>),
-      component: (<LikedCreator/>)
+      component: (<LikedCreator actionUser={actionUser}/>)
     }
   ];
 

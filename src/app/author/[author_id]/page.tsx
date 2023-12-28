@@ -28,9 +28,9 @@ export default function AuthorPage(props: any) {
     }).catch((e)=>console.error(e));
     
 
-    // let payload = {
-    //   author_id: author_id
-    // }
+    let payload = {
+      author_id: author_id
+    }
 
     // axios.post("/api/apiapaiaiiii", payload).then((e)=>{
     //   console.log(e);
