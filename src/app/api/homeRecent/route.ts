@@ -19,9 +19,9 @@ export async function GET(request: Request) {
       .orderBy(desc(pictureTable.pic_id))
       .limit(5)
       .execute();
-    console.log(recentpicture);
+    const pictureIds = recentpicture.map(picture => picture.pic_id);
     // Return the user information
-    return NextResponse.json({ recentpicture });
+    return NextResponse.json({ pictureIds });
   } catch (error) {
     console.error("Error in POST function: ", error);
     return new NextResponse("Internal Error", { status: 500 });
