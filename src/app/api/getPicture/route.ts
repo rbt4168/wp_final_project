@@ -9,12 +9,12 @@ export async function POST(request: Request) {
     // Authentication
    
     const body = await request.json();
-    const {PicId} = body;
+    const {pic_id} = body;
     // Query
     const picture = await db
       .select()
       .from(pictureTable)
-      .where(eq(pictureTable.pic_id, PicId))
+      .where(eq(pictureTable.pic_id, pic_id))
       .execute();
 
     
