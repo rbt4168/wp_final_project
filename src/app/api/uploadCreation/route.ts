@@ -46,6 +46,7 @@ export async function POST(request: Request) {
 
     console.log("stage1 ")
     const currentDate = new Date(); 
+    const DateFomate = currentDate.getFullYear()+"-"+currentDate.getMonth()+"-"+currentDate.getDate();
 
     const [ updoadPicture ] = await db
       .insert(pictureTable)
@@ -54,7 +55,7 @@ export async function POST(request: Request) {
         description: origin,
         author_id : User[0].id,
         url: previewUrl, // Ensure your database can handle this array format
-        post_date: String(currentDate), // 加入現在的時間
+        post_date: DateFomate, // 加入現在的時間
         liked_count: Number(0),
         recommand_point: recommand,
         tags: value,
