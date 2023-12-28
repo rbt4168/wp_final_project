@@ -21,7 +21,9 @@ export async function GET(request: Request) {
       .execute();
     //console.log(hotpicture);
     // Return the user information
-    return NextResponse.json({ hotpicture });
+    const pictureIds = hotpicture.map(picture => picture.pic_id);
+
+    return NextResponse.json({ pictureIds });
   } catch (error) {
     console.error("Error in POST function: ", error);
     return new NextResponse("Internal Error", { status: 500 });
