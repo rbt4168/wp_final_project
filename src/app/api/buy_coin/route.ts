@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { eq, and } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { auth } from "@/lib/auth";
-import { pictureTable, usersTable } from "@/db/schema"; // Import your UserTable if not already done
+import { transactionTable, usersTable } from "@/db/schema"; // Import your UserTable if not already done
 
 export async function POST(request: Request) {
   try {
@@ -27,21 +27,17 @@ export async function POST(request: Request) {
           .execute();
     
     // Update user profile in the database
-
-
     if (!User){
-        // console.log("fefefe");
         return new NextResponse("No author you bad guy", { status: 401 });
     }
 
-    console.log(User.coins);
-    console.log(body.coins);
-    if (User.coins === null){
-        return new NextResponse("No author you bad guy", { status: 403 });
+    let newcoin;
+    if (User.coins === null) {
+      newcoin = Number(body.coins);
+    } else {
+      newcoin = Number(body.coins) + Number(User.coins);
     }
-    const newcoin = Number(body.coins) + Number(User.coins);
- 
-    console.log(newcoin);
+
     // Update the user's record
     const [updatedUser] = await db
       .update(usersTable)
@@ -51,8 +47,17 @@ export async function POST(request: Request) {
       .where(eq(usersTable.username, session?.user?.username))
       .returning();
 
+    const [ newTx ] = await db
+      .insert(transactionTable)
+      .values({
+        to_user: updatedUser.username,
+        from_user: "system",
+        amount: body.coins,
+        timestamp: Date.now().toString()
+      }).returning()
+
     // Return the updated user information
-    return NextResponse.json({ newcoin });
+    return NextResponse.json({ updatedUser, newTx });
   } catch (error) {
     console.error("Error in POST function: ", error);
     return new NextResponse("Internal Error", { status: 500 });

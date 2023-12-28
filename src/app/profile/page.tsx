@@ -10,6 +10,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import Diversity1Icon from '@mui/icons-material/Diversity1';
 import PublishIcon from '@mui/icons-material/Publish';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 
 import SidebarComponent from "./_components/sidebar"
 import UserProfile from "./_components/userprofile"
@@ -20,6 +21,7 @@ import LikedCreator from "./_components/likedcreator"
 import UploadCreation from "./_components/uploadcreation"
 import ModifyCreation from "./_components/modifycreation"
 import axios from "axios"
+import Transactions from "./_components/txlists"
 
 export default function Profile() {
   const [ actionUser, setActionUser ] = useState({});
@@ -62,6 +64,11 @@ export default function Profile() {
       title: "修改作品",
       icon: (<ModeEditIcon color="secondary"/>),
       component: (<ModifyCreation pic_id={modifyID} trigger={trig}/>),
+    },
+    {
+      title: "交易紀錄",
+      icon: (<CurrencyExchangeIcon color="secondary"/>),
+      component: (<Transactions actionUser={actionUser}/>),
     },
     {
       title: "Divider"

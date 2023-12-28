@@ -45,4 +45,15 @@ export const pictureTable = pgTable(
     message: text("message"),
   },
 );
+export const transactionTable = pgTable(
+  "transaction",
+  {
+      tx_id: serial("tx_id").primaryKey(),
+      from_user: text("from_user"),
+      to_user: text("to_user"),
+      amount: integer("amount"),
+      timestamp: text("timestamp")
+  }
+)
+
 // Remaining code for relations and other tables remains unchanged

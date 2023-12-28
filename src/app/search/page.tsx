@@ -161,39 +161,19 @@ export default function SearchPage(props: any) {
         alignItems="center"
       >
         <Grid item xs={12} md={2}>
-          <WorkCardComponent  />
+          <WorkCardComponent pic_id={1} />
         </Grid>
         <Grid item xs={12} md={2}>
-          <RecWorkCard />
+          <WorkCardComponent pic_id={1} />
         </Grid>
         <Grid item xs={12} md={2}>
-          <RecWorkCard />
+          <WorkCardComponent pic_id={2} />
         </Grid>
         <Grid item xs={12} md={2}>
-          <RecWorkCard />
+          <WorkCardComponent pic_id={2} />
         </Grid>
         <Grid item xs={12} md={2}>
-          <RecWorkCard />
-        </Grid>
-      </Grid>
-      <Grid container 
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Grid item xs={12} md={2}>
-          <RecWorkCard />
-        </Grid>
-        <Grid item xs={12} md={2}>
-          <RecWorkCard />
-        </Grid>
-        <Grid item xs={12} md={2}>
-          <RecWorkCard />
-        </Grid>
-        <Grid item xs={12} md={2}>
-          <RecWorkCard />
-        </Grid>
-        <Grid item xs={12} md={2}>
-          <RecWorkCard />
+          <WorkCardComponent pic_id={2} />
         </Grid>
       </Grid>
       <Grid container 
@@ -201,19 +181,39 @@ export default function SearchPage(props: any) {
         alignItems="center"
       >
         <Grid item xs={12} md={2}>
-          <RecWorkCard />
+          <WorkCardComponent pic_id={1} />
         </Grid>
         <Grid item xs={12} md={2}>
-          <RecWorkCard />
+          <WorkCardComponent pic_id={1} />
         </Grid>
         <Grid item xs={12} md={2}>
-          <RecWorkCard />
+          <WorkCardComponent pic_id={2} />
         </Grid>
         <Grid item xs={12} md={2}>
-          <RecWorkCard />
+          <WorkCardComponent pic_id={2} />
         </Grid>
         <Grid item xs={12} md={2}>
-          <RecWorkCard />
+          <WorkCardComponent pic_id={2} />
+        </Grid>
+      </Grid>
+      <Grid container 
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Grid item xs={12} md={2}>
+          <WorkCardComponent pic_id={1} />
+        </Grid>
+        <Grid item xs={12} md={2}>
+          <WorkCardComponent pic_id={1} />
+        </Grid>
+        <Grid item xs={12} md={2}>
+          <WorkCardComponent pic_id={2} />
+        </Grid>
+        <Grid item xs={12} md={2}>
+          <WorkCardComponent pic_id={2} />
+        </Grid>
+        <Grid item xs={12} md={2}>
+          <WorkCardComponent pic_id={2} />
         </Grid>
       </Grid>
 
