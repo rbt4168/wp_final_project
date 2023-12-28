@@ -16,7 +16,7 @@ export default function UserProfile(props: any) {
   const [link1, setLink1] = useState("");
   const [link2, setLink2] = useState("");
   const [link3, setLink3] = useState("");
-
+  const [disable, setDisable] = useState(false);
   useEffect(()=>{
     setName(actionUser.name);
     setQuote(actionUser.quote);
@@ -39,6 +39,7 @@ export default function UserProfile(props: any) {
 
   const handleSubmit = (e: any) => {
     // TODO: Update User Profile
+    setDisable(true);
     const links = [link0, link1, link2, link3].join(",");
 
     const payload = {
@@ -57,7 +58,7 @@ export default function UserProfile(props: any) {
       }).catch((e) => {
         // Handle error
         alert("Error occurred while updating profile");
-      });
+      }).finally(() =>setDisable(false));
 
   };
 
@@ -78,6 +79,7 @@ export default function UserProfile(props: any) {
           sx={{width: "60%"}}
           value={name}
           onChange={(e:any)=>setName(e.target.value)}
+          disabled = {disable}
         />
       </Box>
       <Box mx={5} my={3}>
@@ -89,6 +91,7 @@ export default function UserProfile(props: any) {
           sx={{width: "60%"}}
           value={quote}
           onChange={(e:any)=>setQuote(e.target.value)}
+          disabled = {disable}
         />
       </Box>
       <Box mx={5} my={3} sx={{ typography: 'subtitle2'}}>
@@ -100,6 +103,7 @@ export default function UserProfile(props: any) {
           sx={{width: "60%"}}
           value={title}
           onChange={(e:any)=>setTitle(e.target.value)}
+          disabled = {disable}
         />
       </Box>
       <Box mx={5} my={3} sx={{ typography: 'subtitle2'}}>
@@ -112,6 +116,7 @@ export default function UserProfile(props: any) {
           sx={{width: "60%"}}
           value={bio}
           onChange={(e:any)=>setBio(e.target.value)}
+          disabled = {disable}
         />
       </Box>
       <Box mx={5} my={3} sx={{ typography: 'subtitle2'}} >
@@ -124,6 +129,7 @@ export default function UserProfile(props: any) {
           sx={{width: "60%"}}
           value={link0}
           onChange={(e:any)=>setLink0(e.target.value)}
+          disabled = {disable}
         />
         <TextField
           id="link1"
@@ -133,6 +139,7 @@ export default function UserProfile(props: any) {
           sx={{width: "60%"}}
           value={link1}
           onChange={(e:any)=>setLink1(e.target.value)}
+          disabled = {disable}
         />
         <TextField
           id="link2"
@@ -142,6 +149,7 @@ export default function UserProfile(props: any) {
           sx={{width: "60%"}}
           value={link2}
           onChange={(e:any)=>setLink2(e.target.value)}
+          disabled = {disable}
         />
         <TextField
           id="link3"
@@ -151,6 +159,7 @@ export default function UserProfile(props: any) {
           sx={{width: "60%"}}
           value={link3}
           onChange={(e:any)=>setLink3(e.target.value)}
+          disabled = {disable}
         />
         
       </Box>
