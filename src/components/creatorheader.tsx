@@ -12,8 +12,9 @@ export default function CreatorHeader(props: any) {
   const [ currentUser, setCurrentUser ] = useState({
     liked_user:[]
   });
-
+  const [disable, setDisable] = useState(false);
   function handleFollow(st: boolean) {
+    setDisable(true);
     let payload = {
       author_id: authorId,
       like: st,
@@ -22,7 +23,7 @@ export default function CreatorHeader(props: any) {
     axios.post("/api/likeAuthor", payload).then((e)=>{
       console.log(e.data.updatedUser);
       setCurrentUser(e.data.updatedUser);
-    }).catch((e)=>console.error(e));
+    }).catch((e)=>console.error(e)).finally(()=>(setDisable(false)));
   }
 
   useEffect(()=>{
@@ -95,6 +96,7 @@ export default function CreatorHeader(props: any) {
                 color="secondary" variant="contained"
                 sx={{ fontSize: "25px" }}
                 onClick={()=>handleFollow(false)}
+                disabled={disable}
               >
                 UnFollow
               </Button>
@@ -103,6 +105,7 @@ export default function CreatorHeader(props: any) {
                 color="primary" variant="contained"
                 sx={{ fontSize: "25px" }}
                 onClick={()=>handleFollow(true)}
+                disabled={disable}
               >
                 Follow
               </Button>
