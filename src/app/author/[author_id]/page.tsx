@@ -42,7 +42,7 @@ export default function AuthorPage(props: any) {
   <ThemeProvider theme={main_theme}>
     <CssBaseline />
     <NavigationBar />
-    <CreatorHeader activeAuthor={activeAuthor} authorId={author_id}/>
+    <CreatorHeader activeAuthor={activeAuthor} setActiveAuthor={setActiveAuthor} authorId={author_id}/>
 
     <DivLineCenter text="Top 3 Recommanded by Author"/>
     
