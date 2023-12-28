@@ -21,7 +21,7 @@ export async function POST(request: Request) {
     const username = session.user.username; // Replace with actual way to get the user's ID
 
     console.log("----------------------------------------------");
-    console.log(name);
+    console.log(session.user);
     console.log(quote);
     console.log(title);
     console.log(bio);

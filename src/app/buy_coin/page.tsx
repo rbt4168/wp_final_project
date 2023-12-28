@@ -16,6 +16,8 @@ import Container from '@mui/material/Container';
 import NavigationBar from '@/components/navbar';
 import { main_theme } from '@/lib/themes';
 import FooterComponent from '@/components/footer';
+import axios from "axios"
+import { useState } from 'react';
 
 const tiers = [
   {
@@ -56,6 +58,23 @@ const tiers = [
 ];
 
 export default function Pricing() {
+  const handleSubmit = (e: any) => {
+    // TODO: Update User Profile
+    const payload = {
+      coins: Number(e)
+    };
+    alert(payload)
+    // Make the API call
+    
+    axios.post("/api/buy_coin", payload)
+      .then(response => {
+        alert("儲值成功");
+      }).catch((e) => {
+        // Handle error
+        alert("Error occurred while paying");
+      });
+    
+  };
   return (
     <ThemeProvider theme={main_theme}>
       <CssBaseline />
@@ -136,6 +155,7 @@ export default function Pricing() {
                   <Button
                     fullWidth
                     variant={tier.buttonVariant as 'outlined' | 'contained'}
+                    onClick={() => handleSubmit(tier.price)}
                   >
                     {tier.buttonText}
                   </Button>
