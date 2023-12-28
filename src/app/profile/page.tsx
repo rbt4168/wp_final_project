@@ -50,7 +50,7 @@ export default function Profile() {
     {
       title: "作品管理",
       icon: (<ColorLensIcon color="secondary"/>),
-      component: (<RecommandWork setModifyID={setModifyID} setSelectName={setSelectName}/>)
+      component: (<RecommandWork setModifyID={setModifyID} setSelectName={setSelectName} actionUser={actionUser} />)
     },
     {
       title: "上傳作品",

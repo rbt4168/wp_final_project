@@ -3,6 +3,10 @@ import { Box, Card, CardActionArea, CardMedia, Grid, ListItem, ListItemButton, T
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { StyledRating } from "./styledcomps";
+
 async function workFetchHandler(pic_id: any) {
   try {
     let payload = {
@@ -98,5 +102,68 @@ export function WorkCardComponent(props: any) {
         </Card>
         <Typography>{picdata.post_date}</Typography>
       </Box>
+    );
+  }
+  export function ArtWorkListItem(props: any) {
+    const { pic_id, setid, redir } = props;
+
+    const [ picdata, setPicdata ] = useState({
+      url:"",
+      name:"untitled",
+      post_date: "",
+      recommand_point: 0,
+      liked_count: 0,
+    });
+
+    useEffect(()=>{
+      workFetchHandler(pic_id).then((e)=>{
+        e?setPicdata(e):0;
+      });
+    }, [pic_id]);
+
+    return (
+      <ListItem disablePadding>
+      <ListItemButton onClick={()=>{ setid(pic_id); redir("修改作品");}}>
+        <Grid container spacing={2}>
+          <Grid item>
+            <Box
+                component="img"
+                sx={{
+                  height: 128,
+                  width: 128,
+                }}
+                alt="a"
+                src={picdata.url}
+            />
+          </Grid>
+          <Grid item xs={12} sm container>
+            <Grid item xs container direction="column" spacing={2}>
+              <Grid item xs>
+                <Typography gutterBottom variant="h5" component="div">
+                  {picdata.name}
+                </Typography>
+                <Typography variant="body2" gutterBottom>
+                  ID: {pic_id}
+                </Typography>
+                <Typography variant="body2" gutterBottom>
+                  {picdata.liked_count} <FavoriteIcon color="secondary" />
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  <StyledRating
+                    name="customized-color"
+                    readOnly
+                    defaultValue={picdata.recommand_point}
+                    max={10}
+                    getLabelText={(value: number) => `${value} Heart${value !== 1 ? 's' : ''}`}
+                    icon={<FavoriteIcon fontSize="inherit" />}
+                    emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                  />
+                </Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </ListItemButton>
+      </ListItem>
     );
   }

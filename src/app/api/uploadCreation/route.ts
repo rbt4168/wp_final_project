@@ -59,14 +59,12 @@ export async function POST(request: Request) {
         liked_count: Number(0),
         recommand_point: recommand,
         tags: value,
-      })
-      .returning();
-    
+      }).returning();
 
-      const [currentUser] = await db
+    const [currentUser] = await db
       .select()
       .from(usersTable)
-      .where(eq(usersTable.username,(session?.user?.username)))
+      .where(eq(usersTable.username,(session?.user?.username)));
     
     // Check if the user has an existing post_picture array, if not, initialize it
     const currentPostPictures = currentUser.post_picture || [];
@@ -85,7 +83,7 @@ export async function POST(request: Request) {
       .returning();
 
     // Return the updated user information
-    return NextResponse.json({ updoadPicture });
+    return NextResponse.json({ updoadPicture, updatedUser });
   } catch (error) {
     console.error("Error in POST function: ", error);
     return new NextResponse("Internal Error", { status: 500 });
