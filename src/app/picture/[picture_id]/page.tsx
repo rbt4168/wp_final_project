@@ -58,8 +58,7 @@ export default function PictureFull(props: any) {
           <Box
               component="img"
               sx={{
-                width: "100%",
-                border: "1px solid"
+                width: "100%"
               }}
               alt="The Creation."
               src={picdata.url? picdata.url:""}
