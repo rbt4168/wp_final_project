@@ -11,7 +11,8 @@ export default function SidebarComponent(props: any) {
     <ThemeProvider theme={main_theme}>
       <CssBaseline />
       <List>
-      <ListItem>
+      <ListItem disablePadding>
+      <ListItemButton href={"/author/"+actionUser.id}>
           <ListItemIcon>
           <Box
               component="img"
@@ -25,7 +26,8 @@ export default function SidebarComponent(props: any) {
               src="https://upload.wikimedia.org/wikipedia/en/8/88/Bugcat_Capoo.jpg"
           />
           </ListItemIcon>
-          <ListItemText primary={actionUser.name} secondary={actionUser.quote} />
+          <ListItemText primary={actionUser.name} secondary={actionUser.quote} />   
+      </ListItemButton>
       </ListItem>
       </List>
       <Divider />
