@@ -6,6 +6,8 @@ import FooterComponent from "@/components/footer";
 import NavigationBar from "@/components/navbar";
 import { main_theme } from "@/lib/themes";
 import { Box, CssBaseline, Divider, Grid, List, ListItem, ListItemButton, ThemeProvider, Typography } from "@mui/material";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 function CostListItem(props: any) {
   const {text, cost} = props;
@@ -27,13 +29,32 @@ function CostListItem(props: any) {
 }
 
 export default function DonatePage(props: any) {
+  const { params } = props;
+  const { author_id } = params;
+  
   var tag_array=["嘎波 私人 Tire 1","嘎波 私人 Tire 2","嘎波 私人 Tire 3","嘎波 私人 Tire 4"];
   var cost_array=[50, 100, 150, 200];
+  
+  const [ activeAuthor, setActiveAuthor ] = useState({
+    name: "",
+    quote: "",
+    bio: "",
+    links: "",
+    works: []
+  })
+
+  useEffect(()=>{
+    axios.get("/api/getAuthorById?user_id="+author_id).then((e)=>{
+      console.log(e.data);
+      setActiveAuthor(e.data);
+    }).catch((e)=>console.error(e));
+  }, [])
+
   return(
     <ThemeProvider theme={main_theme}>
       <CssBaseline/>
       <NavigationBar/>
-      <CreatorHeader/>
+      <CreatorHeader activeAuthor={activeAuthor}/>
 
       <DivLineCenter text="Private Tags"/>
       

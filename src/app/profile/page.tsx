@@ -2,7 +2,7 @@
 import FooterComponent from "@/components/footer"
 import NavigationBar from "@/components/navbar"
 import { main_theme } from "@/lib/themes"
-import { CssBaseline, Divider, Grid, ThemeProvider} from "@mui/material"
+import { Box, CssBaseline, Divider, Grid, ThemeProvider} from "@mui/material"
 
 import Person2Icon from '@mui/icons-material/Person2';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
@@ -89,7 +89,7 @@ export default function Profile() {
         <Grid item xs={7} sm={8} md={9}>
           {list_items.map((e:any,id:any)=>{
               if(e.title === selectName) {
-                return e.component;
+                return (<Box key={id}>{e.component}</Box>);
               }
             })
           }

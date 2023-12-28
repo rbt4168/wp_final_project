@@ -17,6 +17,7 @@ import NavigationBar from '@/components/navbar';
 import { main_theme } from '@/lib/themes';
 import FooterComponent from '@/components/footer';
 import axios from "axios"
+import { useState } from 'react';
 
 const tiers = [
   {

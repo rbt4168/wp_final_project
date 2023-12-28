@@ -19,7 +19,7 @@ export default function RecommandWork(props: any) {
         <List>
           <DivLineCenterFull text="Recent"/>
           {actionUser?.post_picture?.map((pic_id: any, index:any) => (
-            <ArtWorkListItem pic_id={pic_id} setid={setModifyID} redir={setSelectName}/>
+            <ArtWorkListItem key={index} pic_id={pic_id} setid={setModifyID} redir={setSelectName}/>
           ))}
           {/* <DivLineCenterFull text="2023-11"/>
           {Array.from(Array(1)).map((_, index) => (
