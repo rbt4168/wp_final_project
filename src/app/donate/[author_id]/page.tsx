@@ -21,7 +21,8 @@ function CostListItem(props: any) {
     }
     // complete buying action
     axios.post("/api/buyTag", payload).then((e)=>{
-      console.log(e);
+      // console.log(e);
+      alert("購買成功!");
     }).catch((e)=>console.error(e));
   };
 

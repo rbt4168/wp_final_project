@@ -32,7 +32,7 @@ export default function Transactions(props: any) {
 
   useEffect(()=>{
     axios.get("/api/getTx").then((e)=>{
-      setTxs(e.data.txs);
+      setTxs(e.data.txs.reverse());
     })
     console.log(actionUser);
   }, [])

@@ -2,7 +2,7 @@
 import FooterComponent from "@/components/footer";
 import NavigationBar from "@/components/navbar";
 import { main_theme } from "@/lib/themes"
-import { CssBaseline, Grid, ThemeProvider } from "@mui/material"
+import { Box, Button, CssBaseline, Grid, ThemeProvider } from "@mui/material"
 import { useEffect, useState } from "react";
 import CreatorHeader from "@/components/creatorheader";
 import DivLineCenter from "@/components/divline";
@@ -62,6 +62,18 @@ export default function AuthorPage(props: any) {
     <CssBaseline />
     <NavigationBar />
     <CreatorHeader activeAuthor={activeAuthor} setActiveAuthor={setActiveAuthor} authorId={author_id}/>
+
+
+    <Grid container 
+      justifyContent="center"
+      alignItems="center"
+      mt={2}
+    >
+      <Button href={"/donate/"+author_id} component="a" variant="contained"
+        sx={{width: "60%"}}>
+        Donate
+      </Button>
+    </Grid>
 
     <DivLineCenter text="Top 3 Recommanded by Author"/>
     

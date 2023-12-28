@@ -42,7 +42,7 @@ export default function OwnedTags(props: any) {
           freeSolo
           sx={{ width: "80%" }}
           renderInput={(params) => (
-            <TextField {...params} placeholder="可愛的標籤們" />
+            <TextField {...params} placeholder="可愛的標籤們~" />
           )}
         />
       </Box>

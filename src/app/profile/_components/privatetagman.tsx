@@ -41,7 +41,8 @@ export default function PrivTagManange(props: any) {
     }
 
     axios.post("/api/savePrivateTags", payload).then((e)=>{
-      console.log(e.data);
+      // console.log(e.data);
+      alert("修改成功!")
     }).catch((e)=>console.error(e));
   }
 
