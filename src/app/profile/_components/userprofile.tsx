@@ -29,13 +29,13 @@ export default function UserProfile(props: any) {
         setLink0(linkx[0]);
       }
       if(linkx.length > 1) {
-        setLink0(linkx[1]);
+        setLink1(linkx[1]);
       }
       if(linkx.length > 2) {
-        setLink0(linkx[2]);
+        setLink2(linkx[2]);
       }
       if(linkx.length > 3) {
-        setLink0(linkx[3]);
+        setLink3(linkx[3]);
       }
     }).catch((e)=>{
       console.error(e);
