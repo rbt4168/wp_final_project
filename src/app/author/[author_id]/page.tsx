@@ -8,6 +8,7 @@ import CreatorHeader from "@/components/creatorheader";
 import DivLineCenter from "@/components/divline";
 import axios from "axios";
 import { WorkCardComponent } from "@/components/workcomponent";
+import { chunkArray } from "@/lib/utils";
 
 export default function AuthorPage(props: any) {
   const { params } = props;
@@ -21,6 +22,10 @@ export default function AuthorPage(props: any) {
     works: [],
   })
 
+  const [ recArr, setRecArr ] = useState([]);
+  const [ recentArr, setRecentArr ] = useState([]);
+  const [ latArr, setLatArr ] = useState([[]]);
+
   useEffect(()=>{
     axios.get("/api/getAuthorById?user_id="+author_id).then((e)=>{
       // console.log(e.data);
@@ -33,17 +38,22 @@ export default function AuthorPage(props: any) {
     }
 
     axios.post("/api/authorHighToLow", payload).then((e)=>{
-      console.log(e);
+      // console.log("HL"+e.data.pictureIds);
+      setRecentArr(e.data.pictureIds);
+      setLatArr(chunkArray(e.data.pictureIds, 5));
+      // console.log("LAT"+latArr)
     }).catch((e)=>console.error(e));
-    axios.post("/api/authorLowToHigh", payload).then((e)=>{
-      console.log(e);
-    }).catch((e)=>console.error(e));
+
+    // axios.post("/api/authorLowToHigh", payload).then((e)=>{
+    //   console.log("LH"+e.data.pictureIds);
+    // }).catch((e)=>console.error(e));
     axios.post("/api/authorRecommand", payload).then((e)=>{
-      console.log(e);
+      // console.log("REC"+e.data.pictureIds);
+      setRecArr(e.data.pictureIds);
     }).catch((e)=>console.error(e));
-    axios.post("/api/authorPopular", payload).then((e)=>{
-      console.log(e);
-    }).catch((e)=>console.error(e));
+    // axios.post("/api/authorPopular", payload).then((e)=>{
+    //   console.log("POP"+e.data.pictureIds);
+    // }).catch((e)=>console.error(e));
     
   }, [])
 
@@ -59,15 +69,14 @@ export default function AuthorPage(props: any) {
       justifyContent="center"
       alignItems="center"
     >
-      <Grid item xs={12} md={3}>
-        <WorkCardComponent pic_id={1} />
-      </Grid>
-      <Grid item xs={12} md={3}>
-        <WorkCardComponent pic_id={1} />
-      </Grid>
-      <Grid item xs={12} md={3}>
-        <WorkCardComponent pic_id={1} />
-      </Grid>
+      {recArr.map((e:any, id:any)=>{
+        if(id>=3) return(<></>);
+        return(
+        <Grid key={id} item xs={12} md={3}>
+          <WorkCardComponent pic_id={e} />
+        </Grid>
+        )
+      })}
     </Grid>
 
     <DivLineCenter text="Latest 5 Works"/>
@@ -76,86 +85,41 @@ export default function AuthorPage(props: any) {
       justifyContent="center"
       alignItems="center"
     >
-      <Grid item xs={12} md={2}>
-        <WorkCardComponent pic_id={1} />
-      </Grid>
-      <Grid item xs={12} md={2}>
-        <WorkCardComponent pic_id={1} />
-      </Grid>
-      <Grid item xs={12} md={2}>
-        <WorkCardComponent pic_id={1} />
-      </Grid>
-      <Grid item xs={12} md={2}>
-        <WorkCardComponent pic_id={1} />
-      </Grid>
-      <Grid item xs={12} md={2}>
-        <WorkCardComponent pic_id={1} />
-      </Grid>
+      {recentArr.map((e:any, id:any)=>{
+        if(id>=5) return(<></>);
+        return(
+        <Grid key={id} item xs={12} md={2}>
+          <WorkCardComponent pic_id={e} />
+        </Grid>
+        )
+      })}
     </Grid>
 
-    <DivLineCenter text="Previous Works"/>
+    {latArr.length > 1 ? (
+    <>
+      <DivLineCenter text="Previous Works"/>
+      {
+        latArr.map((e0:any[],idx:any)=>{
+          if(idx===0) return(<></>);
+          return(
+            <Grid container 
+              justifyContent="center"
+              alignItems="center"
+            >
+              {e0.map((e:any, id:any)=>{
+                return(
+                <Grid key={id} item xs={12} md={2}>
+                  <WorkCardComponent pic_id={e} />
+                </Grid>
+                )
+              })}
+            </Grid>
+          )
+        })
+      }
+    </>
+    ) : (<></>) }
 
-    <Grid container 
-      justifyContent="center"
-      alignItems="center"
-    >
-      <Grid item xs={12} md={2}>
-        <WorkCardComponent pic_id={2} />
-      </Grid>
-      <Grid item xs={12} md={2}>
-        <WorkCardComponent pic_id={3} />
-      </Grid>
-      <Grid item xs={12} md={2}>
-        <WorkCardComponent pic_id={4} />
-      </Grid>
-      <Grid item xs={12} md={2}>
-        <WorkCardComponent pic_id={5} />
-      </Grid>
-      <Grid item xs={12} md={2}>
-        <WorkCardComponent pic_id={6} />
-      </Grid>
-    </Grid>
-    <Grid container 
-      justifyContent="center"
-      alignItems="center"
-    >
-      <Grid item xs={12} md={2}>
-        <WorkCardComponent pic_id={0} />
-      </Grid>
-      <Grid item xs={12} md={2}>
-        <WorkCardComponent pic_id={0} />
-      </Grid>
-      <Grid item xs={12} md={2}>
-        <WorkCardComponent pic_id={0} />
-      </Grid>
-      <Grid item xs={12} md={2}>
-        <WorkCardComponent pic_id={0} />
-      </Grid>
-      <Grid item xs={12} md={2}>
-        <WorkCardComponent pic_id={0} />
-      </Grid>
-    </Grid>
-    <Grid container 
-      justifyContent="center"
-      alignItems="center"
-    >
-      <Grid item xs={12} md={2}>
-        <WorkCardComponent pic_id={0} />
-      </Grid>
-      <Grid item xs={12} md={2}>
-        <WorkCardComponent pic_id={0} />
-      </Grid>
-      <Grid item xs={12} md={2}>
-        <WorkCardComponent pic_id={0} />
-      </Grid>
-      <Grid item xs={12} md={2}>
-        <WorkCardComponent pic_id={0} />
-      </Grid>
-      <Grid item xs={12} md={2}>
-        <WorkCardComponent pic_id={0} />
-      </Grid>
-    </Grid>
-    
     <FooterComponent/>
   </ThemeProvider>
   )
