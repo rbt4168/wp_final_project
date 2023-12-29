@@ -16,7 +16,7 @@ import { main_theme } from "@/lib/themes";
 import axios from "axios";
 
 export default function UploadCreation(props: any) {
-  const { trigger } = props;
+  const { trigger, actionUser } = props;
 
   const [title, setTitle] = useState("");
   const [origin, setOrigin] = useState("");
@@ -26,6 +26,9 @@ export default function UploadCreation(props: any) {
   const fixedOptions: string[] = [];
   const [value, setValue] = useState(fixedOptions);
   const [disabled, setDisabled] = useState(false);
+
+  const all_tag = [ ...default_tags, ...actionUser.private_tags.map((e:any)=>("private-"+actionUser.username+"-"+e)) ]
+
   function handleSubmit() {
     setDisabled(true);
     const payload = {
@@ -126,7 +129,7 @@ export default function UploadCreation(props: any) {
             ]);
             console.log(value);
           }}
-          options={default_tags}
+          options={all_tag}
           getOptionLabel={(option:any) => option}
           renderTags={(tagValue:any, getTagProps:any) =>
             tagValue.map((option:any, index:number) => (
