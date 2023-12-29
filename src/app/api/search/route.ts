@@ -11,16 +11,12 @@ interface Tag {
 
 export async function POST(request: Request) {
   try {
-    // Authentication
-    
 
-    // Extract data from request body
     const body = await request.json();
     const { target, tags }: { target: string; tags: Tag[] } = body;
 
     // Assume you have a user table where you want to update this information
     // and 'userId' is obtained from the session or some other source
-    console.log(target);
     const targetPictures = await db
       .select({ 
         picture_id: pictureTable.pic_id,
@@ -30,8 +26,6 @@ export async function POST(request: Request) {
       .where(like(pictureTable.name, `%${target}%`))
       .orderBy(desc(pictureTable.pic_id))
       .execute();
-
-    
 
     // Check if targetPictures is an array and extract picture_ids
     

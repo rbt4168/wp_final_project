@@ -13,15 +13,11 @@ export async function GET(request: Request) {
       })
       .from(pictureTable)
       .execute();
-    //console.log(hotpicture);
     // Return the user information
     const filteredForPrivate = recentpicture.filter(picture => picture.tags && !picture.tags.some(tag => tag.startsWith('private')));
-
     const numberOfPicturesToExtract = Math.min(5, filteredForPrivate.length);
     const topPictures = filteredForPrivate.sort((a, b) => b.pic_id - a.pic_id).slice(0, numberOfPicturesToExtract);
     const pictureIds = topPictures.map(picture => picture.pic_id);
-
-    console.log(pictureIds);
     return NextResponse.json({ pictureIds });
   } catch (error) {
     console.error("Error in POST function: ", error);

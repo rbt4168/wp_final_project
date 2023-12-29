@@ -16,7 +16,7 @@ export async function GET(request: Request) {
     .from(usersTable)
     .where(eq(usersTable.username, session.user?.username))
     // Query
-    const likedUserIds = user.liked_user || [-1]; // Ensure this is always an array
+    const likedUserIds = user.liked_user || [-100]; // Ensure this is always an array
 
     const followedLatestPicture = await db
       .select()
@@ -24,7 +24,6 @@ export async function GET(request: Request) {
       .where(inArray(pictureTable.author_id, likedUserIds))
       .execute();
     const filteredForPrivate = followedLatestPicture.filter(picture => picture.tags && !picture.tags.some(tag => tag.startsWith('private')));
-
     const numberOfPicturesToExtract = Math.min(5, filteredForPrivate.length);
     const topPictures = filteredForPrivate.sort((a, b) => b.pic_id - a.pic_id).slice(0, numberOfPicturesToExtract);
     const pictureIds = topPictures.map(picture => picture.pic_id);

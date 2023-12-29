@@ -11,19 +11,14 @@ export async function POST(request: Request) {
     if (!session?.user?.email) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
+    const session_id = session?.user?.id; // Replace with actual way to get the user's ID
 
     // Extract data from request body
     const body = await request.json();
-
     const { pic_id, title, origin, recommand, value } = body;
 
     // Assume you have a user table where you want to update this information
     // and 'userId' is obtained from the session or some other source
-    const session_id = session?.user?.id; // Replace with actual way to get the user's ID
-
-    console.log("1111111111111111111111111");
-    console.log(pic_id)
-    console.log("1111111111111111111111111")
 
     const User = await db
           .select({
@@ -33,19 +28,11 @@ export async function POST(request: Request) {
           .from(usersTable)
           .where(eq(usersTable.displayId, session_id))
           .execute();
-    
-    // Update user profile in the database
-    console.log("----------------------------------------------");
-    console.log("value")
-    console.log(value);
-    console.log("----------------------------------------------");
 
     if (!User){
         // console.log("fefefe");
         return new NextResponse("No author you bad guy", { status: 401 });
     }
-
-    console.log("stage1 ")
 
     const [updoadPicture]  = await db
       .update(pictureTable)
@@ -58,16 +45,8 @@ export async function POST(request: Request) {
       .returning();
     
     if (!updoadPicture){
-        console.log("gi")
         return new NextResponse("No author you bad guy", { status: 401 });
     }
-
-
-    
-    // Check if the user has an existing post_picture array, if not, initialize it
-    
-
-    // Return the updated user information
     return NextResponse.json({ updoadPicture });
   } catch (error) {
     console.error("Error in POST function: ", error);
