@@ -15,7 +15,7 @@ import { default_tags } from "@/lib/utils";
 import axios from "axios";
 
 export default function ModifyCreation(props: any) {
-  const { pic_id , trigger } = props;
+  const { pic_id , trigger, actionUser } = props;
 
   const [title, setTitle] = useState("");
   const [origin, setOrigin] = useState("");
@@ -24,6 +24,8 @@ export default function ModifyCreation(props: any) {
 
   const fixedOptions: string[] = [];
   const [value, setValue] = useState(fixedOptions);
+  
+  const all_tag = actionUser.private_tags ? [ ...default_tags, ...actionUser?.private_tags?.map((e:any)=>("private-"+actionUser.username+"-"+e)) ] : default_tags;
 
   useEffect(()=>{
     const payload = {
@@ -147,7 +149,7 @@ export default function ModifyCreation(props: any) {
             ]);
             console.log(value);
           }}
-          options={default_tags}
+          options={all_tag}
           getOptionLabel={(option:any) => option}
           renderTags={(tagValue:any, getTagProps:any) =>
             tagValue.map((option:any, index:number) => (
