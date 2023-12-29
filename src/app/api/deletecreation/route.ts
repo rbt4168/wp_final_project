@@ -14,7 +14,7 @@ export async function POST(request: Request) {
 
     // Extract data from request body
     const body = await request.json();
-    console.log(body.pic_id);
+    const {pic_id} = body
 
     // Assume you have a user table where you want to update this information
     // and 'userId' is obtained from the session or some other source
@@ -36,7 +36,7 @@ export async function POST(request: Request) {
     }
     
     await db.delete(pictureTable)
-    .where(eq(pictureTable.pic_id, body.pic_id))
+    .where(eq(pictureTable.pic_id, pic_id))
     .returning();
     
     const [currentUser] = await db
@@ -50,7 +50,7 @@ export async function POST(request: Request) {
     // Check if the user has an existing post_picture array, if not, initialize it
     const currentPostPictures = currentUser.post_picture || [];
 // Remove the specified pic_id from the array
-    const updatedPostPictures = currentPostPictures.filter(id => id !== body.pic_id);
+    const updatedPostPictures = currentPostPictures.filter(id => id !== pic_id);
     
     // Update the user's record
     await db
@@ -62,7 +62,7 @@ export async function POST(request: Request) {
       .returning();
 
     // Return the updated user information
-    return NextResponse.json({ body });
+    return NextResponse.json({ pic_id });
   } catch (error) {
     console.error("Error in POST function: ", error);
     return new NextResponse("Internal Error", { status: 500 });

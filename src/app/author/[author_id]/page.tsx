@@ -30,6 +30,7 @@ export default function AuthorPage(props: any) {
   const [ recArr, setRecArr ] = useState([]);
   const [ recentArr, setRecentArr ] = useState([]);
   const [ latArr, setLatArr ] = useState([[]] as any[][]);
+  const [ priArr, setPriArr ] = useState([[]] as any[][]);
 
   useEffect(()=>{
     axios.get("/api/getAuthorById?user_id="+author_id).then((e)=>{
@@ -50,7 +51,8 @@ export default function AuthorPage(props: any) {
     }).catch((e)=>console.error(e));
     
     axios.post("/api/authorTag", payload).then((e)=>{
-      console.log("1");
+      //setPriArr(e.data.pictureIds);
+      setPriArr(chunkArray(e.data.pictureIds, 5));
     }).catch((e)=>console.error(e));
     /*
     axios.post("/api/authorRecommand", payload).then((e)=>{
@@ -73,7 +75,6 @@ export default function AuthorPage(props: any) {
       setRecArr(e.data.pictureIds);
     }).catch((e)=>console.error(e));
 */
-
   }, [])
 
   return(
@@ -93,6 +94,31 @@ export default function AuthorPage(props: any) {
         Sponsor Creator
       </Button>
     </Grid>
+    
+    
+    {priArr.length >= 1 ? (
+    <>
+      <DivLineCenter text="Private Works"/>
+      {
+        priArr.map((e0:any[],idx:any)=>{
+          return(
+            <Grid key={idx} container 
+              justifyContent="center"
+              alignItems="center"
+            >
+              {e0.map((e:any, id:any)=>{
+                return(
+                <Grid key={id} item xs={12} md={2}>
+                  <WorkCardComponent pic_id={e} />
+                </Grid>
+                )
+              })}
+            </Grid>
+          )
+        })
+      }
+    </>
+    ) : (<></>) }
 
     <DivLineCenter text="Top 3 Recommanded by Author"/>
     <Grid container 
@@ -124,12 +150,11 @@ export default function AuthorPage(props: any) {
       })}
     </Grid>
 
-    {latArr.length > 1 ? (
+    {latArr.length >= 1 ? (
     <>
       <DivLineCenter text="Previous Works"/>
       {
         latArr.map((e0:any[],idx:any)=>{
-          if(idx===0) return(<></>);
           return(
             <Grid key={idx} container 
               justifyContent="center"
@@ -148,6 +173,7 @@ export default function AuthorPage(props: any) {
       }
     </>
     ) : (<></>) }
+    
 
     <FooterComponent/>
   </ThemeProvider>

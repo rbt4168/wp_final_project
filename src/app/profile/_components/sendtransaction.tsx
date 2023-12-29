@@ -13,8 +13,9 @@ export default function TransactionCreat(props: any) {
 
   const [tacc, setTacc] = useState("");
   const [amount, setAmount] = useState("");
-
+  const [disabled, setDisable] = useState(false);
   function handleSubmit() {
+    setDisable(true)
     const payload = {
       tacc: tacc,
       amount: amount,
@@ -23,7 +24,7 @@ export default function TransactionCreat(props: any) {
     axios.post("/api/transferCoin", payload).then(()=>{
       alert("轉帳成功!");
       trigger();
-    }).catch((e)=>alert(e.response.data));
+    }).catch((e)=>alert(e.response.data)).finally(()=>{setDisable(false)});
   };
 
   return (
@@ -44,6 +45,7 @@ export default function TransactionCreat(props: any) {
       <Box mx={5} my={3}>
         <Typography>帳號 Account</Typography>
         <Input
+          disabled={disabled}
           id="title"
           placeholder="account"
           color="primary"
@@ -56,6 +58,7 @@ export default function TransactionCreat(props: any) {
       <Box mx={5} my={3}>
         <Typography>金額 Amount</Typography>
         <Input
+          disabled={disabled}
           id="title"
           placeholder="100"
           color="primary"
@@ -66,7 +69,7 @@ export default function TransactionCreat(props: any) {
       </Box>
 
       <Box mx={5} my={3}>
-        <Button component="label" variant="outlined" onClick={handleSubmit}
+        <Button component="label" variant="outlined" onClick={handleSubmit} disabled={disabled}
           sx={{width: "60%"}}>
           送出轉帳 Transfer
         </Button>

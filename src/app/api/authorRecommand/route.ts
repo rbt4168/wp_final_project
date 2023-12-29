@@ -18,8 +18,6 @@ export async function POST(request: Request) {
     if (!author){
       return new NextResponse("Internal Error", { status: 500 });
     }
-    const prefix = `private-${author.authorname}`;
-
 
     const pictureRecommand = await db
       .select()
@@ -27,8 +25,9 @@ export async function POST(request: Request) {
       .where(eq(pictureTable.author_id, author_id))
       .orderBy(desc(pictureTable.recommand_point))
       .execute();
-      const pictureIds = pictureRecommand.filter(picture => picture.tags &&
-        !picture.tags.some(tag => tag.startsWith(prefix))).map(picture => picture.pic_id);
+
+    const prefix = `private-${author.authorname}`;
+    const pictureIds = pictureRecommand.filter(picture => picture.tags && !picture.tags.some(tag => tag.startsWith(prefix))).map(picture => picture.pic_id);
     // Return the user information
     return NextResponse.json({ pictureIds });
   } catch (error) {

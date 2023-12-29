@@ -9,24 +9,25 @@ export async function POST(request: Request) {
     const body = await request.json();
     const {author_id} = body;
     // Query
-
     const [author] = await db.select({
       authorname: usersTable.username
     })
     .from(usersTable)
     .where(eq(usersTable.id, author_id));
+
     if (!author){
       return new NextResponse("Internal Error", { status: 500 });
     }
-    const prefix = `private-${author.authorname}`;
+
     const pictureLowToHigh = await db
       .select()
       .from(pictureTable)
       .where(eq(pictureTable.author_id, author_id))
       .orderBy(asc(pictureTable.pic_id))
       .execute();
-    const pictureIds = pictureLowToHigh.filter(picture =>
-    picture.tags && !picture.tags.some(tag => tag.startsWith(prefix))
+      
+    const prefix = `private-${author.authorname}`;
+    const pictureIds = pictureLowToHigh.filter(picture => picture.tags && !picture.tags.some(tag => tag.startsWith(prefix))
     ).map(picture => picture.pic_id);
     
     // Return the user information

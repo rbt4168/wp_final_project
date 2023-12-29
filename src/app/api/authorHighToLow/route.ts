@@ -14,6 +14,7 @@ export async function POST(request: Request) {
     })
     .from(usersTable)
     .where(eq(usersTable.id, author_id));
+    
     if (!author){
       return new NextResponse("Internal Error", { status: 500 });
     }
@@ -25,15 +26,10 @@ export async function POST(request: Request) {
       .where(eq(pictureTable.author_id, author_id))
       .orderBy(desc(pictureTable.pic_id))
       .execute();
-      
- 
-    const pictureIds = pictureHighToLow.filter(picture =>
-      picture.tags && !picture.tags.some(tag => tag.startsWith(prefix))
-     ).map(picture => picture.pic_id);
-     /*
-     console.log("High to Low");
-     console.log(pictureIds);*/
-    // Return the user information
+    
+    const pictureIds = pictureHighToLow.filter(picture => picture.tags && !picture.tags.some(tag => tag.startsWith(prefix))
+    ).map(picture => picture.pic_id);
+
     return NextResponse.json({ pictureIds });
   } catch (error) {
     console.error("Error in POST function: ", error);

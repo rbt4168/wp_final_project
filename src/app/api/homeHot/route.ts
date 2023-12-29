@@ -13,20 +13,24 @@ export async function GET(request: Request) {
     // Query
     const hotpicture = await db
       .select({
-        pic_id : pictureTable.pic_id,
-        tags   : pictureTable.tags
+        pic_id: pictureTable.pic_id,
+        tags: pictureTable.tags,
+        liked_count: pictureTable.liked_count
       })
       .from(pictureTable)
-      .orderBy(desc(pictureTable.liked_count))
-      .limit(5)
       .execute();
-    //console.log(hotpicture);
-    // Return the user information
-    const filteredForPrivate = hotpicture.filter(picture => 
-      picture.tags && !picture.tags.some(tag => tag.startsWith('private')));
-    const pictureIds = filteredForPrivate.map(picture => picture.pic_id);
-    
+
+    const filteredForPrivate = hotpicture.filter(picture => picture.tags && !picture.tags.some(tag => tag.startsWith('private')));
+    const numberOfPicturesToExtract = Math.min(5, filteredForPrivate.length);
+    const topPictures = filteredForPrivate.sort((a, b) => {
+      const likeA = a.liked_count ?? 0;
+      const likeB = b.liked_count ?? 0;
+      return likeB - likeA;
+    }).slice(0, numberOfPicturesToExtract);
+    const pictureIds = topPictures.map(picture => picture.pic_id);
     return NextResponse.json({ pictureIds });
+
+    
   } catch (error) {
     console.error("Error in POST function: ", error);
     return new NextResponse("Internal Error", { status: 500 });
