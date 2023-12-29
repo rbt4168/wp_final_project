@@ -26,6 +26,12 @@ export default function CreatorHeader(props: any) {
     }).catch((e)=>console.error(e)).finally(()=>(setDisable(false)));
   }
 
+  function handleOpenChat() {
+    axios.post("/api/openchat",{author: activeAuthor.account}).then((e)=>{
+      console.log(e);
+    }).catch((e)=>console.error(e));
+  }
+
   useEffect(()=>{
     console.log(activeAuthor.links)
     const linkx = activeAuthor.links?.split(",");
@@ -90,7 +96,7 @@ export default function CreatorHeader(props: any) {
           >
             {activeAuthor.quote}
           </Typography>
-          <Box display="flex" justifyContent="center" alignItems="center">
+          <Box display="flex" justifyContent="center" alignItems="center" gap="30px">
             {followed?(
               <Button component="label" 
                 color="secondary" variant="contained"
@@ -110,7 +116,15 @@ export default function CreatorHeader(props: any) {
                 Follow
               </Button>
             )}
-            
+
+            <Button component="label" 
+              color="secondary" variant="contained"
+              sx={{ fontSize: "25px" }}
+              onClick={handleOpenChat}
+              disabled={disable}
+            >
+              Message
+            </Button>
           </Box>
         </Box>
       </Paper>

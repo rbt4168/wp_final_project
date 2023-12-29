@@ -1,11 +1,14 @@
-import { Button, Grid, Input, TextField } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, 
+  DialogContentText, DialogTitle, Grid, Input, TextField } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
 
 export default function InputStable( props: any ) {
-  const {user, cid, oppouid} = props;
+  const {user, cid, oppouid, oppo} = props;
 
   const [text, setText] = useState("");
+  const [dval, setDval] = useState(0);
+
 
   const handleSend = async () => {
     console.log(cid, oppouid);
@@ -14,6 +17,24 @@ export default function InputStable( props: any ) {
       setText("");
     })
   };
+
+  function handleDonate() {
+    let payload = {
+      tacc: oppo,
+      amount: dval,
+    }
+
+    axios.post("/api/transferCoin", payload).then((e)=>{
+      console.log(e);
+      axios.post("/api/msg/message", {uid: user.uid, cid: cid, content: "已轉帳: "+e.data.newTx.amount, oppo: oppouid}).then((res)=>{
+        console.log(res);
+        setText("");
+        setOpendia(false);
+      })
+    }).catch((e)=>console.error(e));
+  }
+
+  const [opendia, setOpendia] = useState(false);
 
   const handleKeyPress = (event: any) => {
     if(event.key === 'Enter'){
@@ -29,6 +50,7 @@ export default function InputStable( props: any ) {
   }
 
   return (
+    <>
     <Grid container sx={{ width: "100%"}}>
       <Grid item md={10}>
         <Input
@@ -44,10 +66,34 @@ export default function InputStable( props: any ) {
         <Button onClick={handleSend} component="label" variant="contained">
           Send
         </Button>
-        <Button onClick={handleSend} component="label" variant="contained">
+        <Button onClick={()=>setOpendia(true)} component="label" variant="contained">
           Donate
         </Button>
       </Grid>
     </Grid>
+    <Dialog open={opendia} onClose={()=>{}}>
+        <DialogTitle>Donate</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Confirm donat to {oppo} ?
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="amount"
+            type="email"
+            fullWidth
+            variant="standard"
+            value={dval}
+            onChange={(e:any)=>setDval(parseInt(e.target.value) || 0)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={()=>setOpendia(false)}>Cancel</Button>
+          <Button onClick={handleDonate}>Donate</Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };

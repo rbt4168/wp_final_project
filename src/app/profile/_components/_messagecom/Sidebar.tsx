@@ -13,7 +13,7 @@ export const pusherClient = new PusherClient(NEXT_PUBLIC_PUSHER_KEY, {
 });
 
 export default function Sidebar(props:any) {
-  const {user, setCid, setOppo, oppouid, setOppouid} = props;
+  const {user, setCid, setOppo, oppo, oppouid, setOppouid} = props;
   const [oppos, setOppos] = useState([]);
 
   useEffect(()=>{
@@ -47,7 +47,7 @@ export default function Sidebar(props:any) {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <ChatList selfuid={user.uid} users={oppos} setCid={setCid} setOppo={setOppo} oppouid={oppouid} setOppouid={setOppouid}/>
+      <ChatList selfuid={user.uid} users={oppos} seluser={oppo} setCid={setCid} setOppo={setOppo} oppouid={oppouid} setOppouid={setOppouid}/>
     </Box>
   );
 };

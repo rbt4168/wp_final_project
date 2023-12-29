@@ -14,7 +14,7 @@ export default function ChatView ( props: any ) {
         </ListItem>
         <Divider />
         <ListItem>
-          <InputStable user={user} cid={cid} oppouid={oppouid}/>
+          <InputStable user={user} cid={cid} oppo={oppo} oppouid={oppouid}/>
         </ListItem>
       </List>
     </>
