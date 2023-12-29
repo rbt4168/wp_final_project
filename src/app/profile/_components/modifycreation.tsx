@@ -2,7 +2,7 @@ import { main_theme } from "@/lib/themes";
 import { Autocomplete, Box, Button, Chip, CssBaseline, Divider, Input, TextField, ThemeProvider, Typography, styled } from "@mui/material";
 
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { StyledRating } from "@/components/styledcomps";
 
@@ -18,10 +18,27 @@ export default function ModifyCreation(props: any) {
   const [origin, setOrigin] = useState("");
   
   const [recommand, setRecommand] = useState(5);
+  const [previewUrl, setPreviewUrl] = useState("");
 
   const fixedOptions: string[] = [];
   const [value, setValue] = useState(fixedOptions);
 
+  useEffect(()=>{
+    let payload = {
+      pic_id: pic_id,
+    }
+
+    axios.post("/api/getPicture", payload).then((e)=>{
+      console.log(e.data.picture[0]);
+      let pic = e.data.picture[0];
+      setTitle(pic.name);
+      setOrigin(pic.description);
+      setRecommand(pic.recommand_point);
+      setValue(pic.tags);
+      setPreviewUrl(pic.url);
+    }).catch((e)=>console.error(e));
+
+  }, [pic_id]);
 
   const handleSubmit = (e: any) => {
     // TODO: Update User Profile
@@ -37,11 +54,10 @@ export default function ModifyCreation(props: any) {
     axios.post("/api/modifycreation", payload)
       .then(response => {
         console.log(response);
-        alert("刪除作品成功!");
+        alert("修改成功!");
         // Redirect to the homepage
       }).catch(()=>alert("修改作品失敗 "));
   };
-
 
   const handleDelete = (e: any) => {
     // TODO: Update User Profile
@@ -70,6 +86,19 @@ export default function ModifyCreation(props: any) {
       <Box mx={5} my={3}>
         <Typography>ID: {pic_id}</Typography>
       </Box>
+
+      {previewUrl?(
+        <Box mx={5} my={3} >
+          <Box component="img"
+            sx={{
+              width: "60%",
+            }}
+            alt="preview"
+            src={previewUrl}
+          />
+        </Box>
+        ) : (<></>)
+      }
 
       <Box mx={5} my={3}>
         <Typography>作品名稱 Title</Typography>
@@ -145,14 +174,14 @@ export default function ModifyCreation(props: any) {
       <Box mx={5} my={3}>
         <Button component="label" variant="outlined" onClick={handleSubmit}
           sx={{width: "60%"}}>
-          完成上傳
+          完成修改 Submit
         </Button>
       </Box>
 
       <Box mx={5} my={3}>
-        <Button component="label" variant="outlined" onClick={handleDelete}
+        <Button component="label" variant="contained" color="secondary" onClick={handleDelete}
           sx={{width: "60%"}}>
-          刪除作品
+          刪除作品 Delete
         </Button>
       </Box>
       
