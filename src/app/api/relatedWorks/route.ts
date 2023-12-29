@@ -1,25 +1,30 @@
 import { NextResponse } from "next/server";
-import { eq, desc } from "drizzle-orm";
 import { db } from "@/db";
-import { auth } from "@/lib/auth";
 import { pictureTable } from "@/db/schema"; // Import your UserTable if not already done
 
 export async function GET(request: Request) {
   try {
-    const recentpicture = await db
+    // Authentication
+    
+
+    // Query
+    const allPicture = await db
       .select({
         pic_id : pictureTable.pic_id,
         tags   : pictureTable.tags
       })
       .from(pictureTable)
-      .orderBy(desc(pictureTable.liked_count))
-      .limit(5)
       .execute();
     //console.log(hotpicture);
     // Return the user information
-    const filteredForPrivate = recentpicture.filter(picture => 
+    const filteredForPrivate = allPicture.filter(picture => 
       picture.tags && !picture.tags.some(tag => tag.startsWith('private')));
-    const pictureIds = filteredForPrivate.map(picture => picture.pic_id);
+    const numberOfPicturesToSelect = Math.min(5, filteredForPrivate.length);
+
+    const shuffledPictures = filteredForPrivate.sort(() => 0.5 - Math.random());
+    const selectedPictures = shuffledPictures.slice(0, numberOfPicturesToSelect);
+
+    const pictureIds = selectedPictures.map(picture => picture.pic_id);
     console.log(pictureIds);
     return NextResponse.json({ pictureIds });
   } catch (error) {

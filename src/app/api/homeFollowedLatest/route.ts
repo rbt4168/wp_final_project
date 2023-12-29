@@ -25,8 +25,9 @@ export async function GET(request: Request) {
       .orderBy(desc(pictureTable.pic_id))
       .limit(5)
       .execute();
-
-    const pictureIds = followedLatestPicture.map(picture => picture.pic_id);
+    const filteredForPrivate = followedLatestPicture.filter(picture => 
+      picture.tags && !picture.tags.some(tag => tag.startsWith('private')));
+    const pictureIds = filteredForPrivate.map(picture => picture.pic_id);
     // Return the user information
     return NextResponse.json({ pictureIds });
   } catch (error) {

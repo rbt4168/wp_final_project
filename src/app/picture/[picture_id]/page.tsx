@@ -43,6 +43,9 @@ export default function PictureFull(props: any) {
   
   const [onliked, setonliked] = useState(false);
 
+  const [ relatedArr, setRelatedArr ] = useState([0,0,0,0,0]);
+
+
   useEffect(()=> {
     console.log(currentUser?.liked_picture, picture_id);
     const pic_int = parseInt(picture_id);
@@ -59,6 +62,9 @@ export default function PictureFull(props: any) {
     }).catch((e)=>console.error(e));
     axios.get('/api/getNowUser').then((e)=>{
       setCurrentUser(e.data.user[0]);
+    }).catch((e)=>console.error(e));
+    axios.get('/api/relatedWorks').then((e)=>{
+      setRelatedArr(e.data.pictureIds);
     }).catch((e)=>console.error(e));
   }, [])
 
@@ -176,7 +182,7 @@ export default function PictureFull(props: any) {
               </Typography>
               <Divider>What's Next</Divider>
               <List>
-                {[1,2,3,4,5].map((e:any, id:any)=>{
+                {relatedArr.map((e:any, id:any)=>{
                   return(<RelatedWorkListItem key={id} pic_id={e}/>)
                 })}
               </List>
