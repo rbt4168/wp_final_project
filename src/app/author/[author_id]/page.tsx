@@ -51,7 +51,8 @@ export default function AuthorPage(props: any) {
     }).catch((e)=>console.error(e));
     
     axios.post("/api/authorTag", payload).then((e)=>{
-      console.log("1");
+      //setPriArr(e.data.pictureIds);
+      setPriArr(chunkArray(e.data.pictureIds, 5));
     }).catch((e)=>console.error(e));
     /*
     axios.post("/api/authorRecommand", payload).then((e)=>{
@@ -94,6 +95,7 @@ export default function AuthorPage(props: any) {
       </Button>
     </Grid>
     
+    
     {priArr.length >= 1 ? (
     <>
       <DivLineCenter text="Previous Works"/>
@@ -117,7 +119,6 @@ export default function AuthorPage(props: any) {
       }
     </>
     ) : (<></>) }
-
 
     <DivLineCenter text="Top 3 Recommanded by Author"/>
     <Grid container 
@@ -172,6 +173,7 @@ export default function AuthorPage(props: any) {
       }
     </>
     ) : (<></>) }
+    
 
     <FooterComponent/>
   </ThemeProvider>

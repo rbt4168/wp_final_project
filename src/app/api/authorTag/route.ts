@@ -45,22 +45,24 @@ export async function POST(request: Request) {
       
       })
       .from(pictureTable)
-      .where(eq(pictureTable.pic_id, author_id))
+      .where(eq(pictureTable.author_id, author_id))
       .orderBy(desc(pictureTable.pic_id))
       .execute();
       if (!User.owned_private_tag || User.owned_private_tag.length === 0) {
         return NextResponse.json("No picture", { status: 404 });
       }
-    
     // Return the user information
-    const matchedPictureIDs = pictures.filter(picture =>
+    const pictureArray = pictures as { pic_id: number; tags: string[] | null }[];
+
+    // Filter and map the pictures
+    const pictureIds = pictureArray.filter(picture =>
       picture.tags && picture.tags.some(tag => User.owned_private_tag && User.owned_private_tag.includes(tag))
     ).map(picture => picture.pic_id);
     
     console.log("match");
-    console.log(matchedPictureIDs);
+    console.log(pictureIds);
     console.log("match");
-    return NextResponse.json({ matchedPictureIDs });
+    return NextResponse.json({ pictureIds });
   } catch (error) {
     console.error("Error in POST function: ", error);
     return new NextResponse("Internal Error", { status: 500 });
