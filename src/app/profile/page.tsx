@@ -14,6 +14,7 @@ import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import LoyaltyIcon from '@mui/icons-material/Loyalty';
+import ChatIcon from '@mui/icons-material/Chat';
 
 import FooterComponent from "@/components/footer"
 import NavigationBar from "@/components/navbar"
@@ -34,6 +35,7 @@ import OwnedTags from "./_components/ownedtag"
 
 import axios from "axios"
 import { useRouter } from "next/navigation";
+import MessageSystem from "./_components/messagesys";
 
 export default function Profile() {
   const [ actionUser, setActionUser ] = useState({});
@@ -112,6 +114,11 @@ export default function Profile() {
     },
     {
       title: "Divider"
+    },
+    {
+      title: "私訊",
+      icon: (<ChatIcon color="secondary"/>),
+      component: (<MessageSystem actionUser={actionUser}/>)
     },
     {
       title: "喜歡的作品",

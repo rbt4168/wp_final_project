@@ -36,5 +36,12 @@ function generateRandomString(length:number) {
 
 export var PICTURE_SERVER_URL = "http://localhost:8000/get/";
 
+export var MONGO_URL="mongodb+srv://rbt4168:dev@cluster0.ikzhlb9.mongodb.net/?retryWrites=true&w=majority"
+
+export var PUSHER_ID="1708261"
+export var NEXT_PUBLIC_PUSHER_KEY="b216af17f871b60bb0fb"
+export var PUSHER_SECRET="931808d4b933a71b4589"
+export var NEXT_PUBLIC_PUSHER_CLUSTER="ap3"
+
 export var default_tags = ["Happy", "Sad", "Angry", "Excited", "Anxious", "Relaxed", "Confident", "Nervous", "Playful", "Thoughtful", "Content", "Bored", "Energetic", "Tired", "Curious", "Surprised", "Motivated", "Inspired", "Grateful", "Hopeful", "Enthusiastic", "Pensive", "Reflective", "Inquisitive", "Amused", "Disappointed", "Overwhelmed", "Peaceful", "Irritated", "Proud", "Guilty", "Jealous", "Apathetic", "Sentimental", "Optimistic", "Melancholic", "Frustrated", "Sympathetic", "Anticipating", "Cautious", "Disgusted", "Amazed", "Blissful", "Defiant", "Humble", "Insecure", "Regretful", "Satisfied", "Serious", "Whimsical"];
   

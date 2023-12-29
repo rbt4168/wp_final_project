@@ -38,8 +38,10 @@ export default function SignInSide() {
     signIn("credentials", {
       email,
       password,
-      callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/`,
-    });
+      callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/login`,
+    }).then((e)=>{
+
+    }).catch((e)=>console.error(e));
   };
 
   return (
