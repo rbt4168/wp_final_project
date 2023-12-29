@@ -1,16 +1,16 @@
 "use client"
-import GlobalChip from "@/components/chipglobal";
-import DivLineCenter from "@/components/divline";
-import FooterComponent from "@/components/footer";
-import NavigationBar from "@/components/navbar";
-import { main_theme } from "@/lib/themes";
-import { chunkArray, dnd_handler, generateRandomColor } from "@/lib/utils";
-import { Autocomplete, Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Chip, CssBaseline, Divider, Grid, IconButton, List, ListItem, TextField, ThemeProvider, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
 
+import { CssBaseline, Grid, ThemeProvider } from "@mui/material";
+
+import { main_theme } from "@/lib/themes";
+import { chunkArray } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 import { WorkCardComponent } from "@/components/workcomponent";
 import SearchBar from "@/components/searchbarcom";
+import DivLineCenter from "@/components/divline";
+import FooterComponent from "@/components/footer";
+import NavigationBar from "@/components/navbar";
 
 export default function SearchPage(props: any) {
   const [ consequence, setConsequence ] = useState([])

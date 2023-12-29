@@ -1,20 +1,20 @@
 "use client"
+
+import { useState, useEffect } from "react";
+import { CssBaseline, Grid, ThemeProvider } from "@mui/material";
+
 import DivLineCenter from "@/components/divline";
 import FooterComponent from "@/components/footer";
 import NavigationBar from "@/components/navbar";
+import SearchBar from "@/components/searchbarcom";
+import { WorkCardComponent } from "@/components/workcomponent";
+
 import { main_theme } from "@/lib/themes";
 
-import { CssBaseline, Grid, ThemeProvider } from "@mui/material";
-
-import { useState, useEffect } from "react";
-import { WorkCardComponent } from "@/components/workcomponent";
-import SearchBar from "@/components/searchbarcom";
-
-// import { useNavigate } from "react-router-dom";
+import { useRouter } from 'next/navigation';
 
 import axios from "axios"
 
-import { useRouter } from 'next/navigation';
 export default function Home() {
   const [ foArr, setFoArr ] = useState([0,0,0,0,0]);
   const [ hotArr, setHotArr ] = useState([0,0,0,0,0]);
@@ -37,9 +37,7 @@ export default function Home() {
 
   }, []);
 
-  // const navigate = useNavigate();
   const callback = (payload:any) => {
-    console.log();
     localStorage.setItem("payload", JSON.stringify(payload));
     router.push('/search');
   };
@@ -48,10 +46,10 @@ export default function Home() {
     <ThemeProvider theme={main_theme}>
       <CssBaseline/>
       <NavigationBar/>
+      
       <SearchBar callback={callback} setConsequence={()=>{}}/>
 
       <DivLineCenter text="Followed Latest"/>
-
       <Grid container 
         justifyContent="center"
         alignItems="center"
@@ -66,7 +64,6 @@ export default function Home() {
       </Grid>
 
       <DivLineCenter text="Recent"/>
-
       <Grid container 
         justifyContent="center"
         alignItems="center"
@@ -81,7 +78,6 @@ export default function Home() {
       </Grid>
 
       <DivLineCenter text="Hot!"/>
-
       <Grid container 
         justifyContent="center"
         alignItems="center"
