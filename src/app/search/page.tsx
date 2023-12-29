@@ -28,7 +28,6 @@ export default function SearchPage(props: any) {
       <SearchBar callback={()=>{}} setConsequence={setConsequence}/>
 
       <DivLineCenter text={"Consequence ("+consequence?.length + ")"}/>
-
       {latArr.map((e0:any[],idx:any)=>{
           return(
             <Grid key={idx} container 
