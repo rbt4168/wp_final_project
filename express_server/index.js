@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
-app.use(express.json({ limit: "10mb" }));
+app.use(express.json({ limit: "50mb" }));
 
 const UPLOAD_FOLDER = path.join(__dirname, 'uploads');
 
