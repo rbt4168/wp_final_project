@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { StyledRating } from "./styledcomps";
+import { publicEnv } from "@/lib/env/public";
+import { PICTURE_SERVER_URL } from "@/lib/utils";
 
 async function creatorFetchHandler(user_id: any) {
   try {
@@ -69,7 +71,7 @@ export function RelatedWorkListItem(props: any) {
                 width: 128,
               }}
               alt="Related Work."
-              src={picdata.url?picdata.url:""}
+              src={(picdata.url?picdata.url:"")}
           />
         </Grid>
         <Grid item xs={12} sm container>
@@ -154,7 +156,7 @@ export function WorkCardComponent(props: any) {
                   width: 128,
                 }}
                 alt="a"
-                src={picdata.url}
+                src={PICTURE_SERVER_URL+"get/" + picdata.url}
             />
           </Grid>
           <Grid item xs={12} sm container>

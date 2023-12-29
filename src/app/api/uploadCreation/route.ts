@@ -3,6 +3,7 @@ import { eq, and } from "drizzle-orm";
 import { db } from "@/db";
 import { auth } from "@/lib/auth";
 import { pictureTable, usersTable } from "@/db/schema"; // Import your UserTable if not already done
+import axios from "axios";
 
 export async function POST(request: Request) {
   try {
@@ -50,6 +51,8 @@ export async function POST(request: Request) {
 
     const DateFomate = `${currentDate.getFullYear()}-${padWithZero(currentDate.getMonth() + 1)}-${padWithZero(currentDate.getDate())}`;
 
+    let res = await axios.post(process.env.PICTURE_SERVER_URL+"upload", {img: previewUrl})
+    console.log(res.data.original, res.data.compress);
 
     const [ updoadPicture ] = await db
       .insert(pictureTable)
@@ -57,7 +60,7 @@ export async function POST(request: Request) {
         name: title,
         description: origin,
         author_id : User[0].id,
-        url: previewUrl, // Ensure your database can handle this array format
+        url: res.data.compress, // Ensure your database can handle this array format
         post_date: DateFomate, // 加入現在的時間
         liked_count: Number(0),
         recommand_point: recommand,

@@ -43,7 +43,7 @@ export default function CreatorHeader(props: any) {
   }, [])
 
   useEffect(()=>{
-    setFollowed(currentUser?.liked_user?.includes(parseInt(authorId)));
+    setFollowed(currentUser?.liked_user?.includes(parseInt(authorId) as never));
   }, [currentUser]);
 
   return(
