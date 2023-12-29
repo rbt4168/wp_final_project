@@ -1,7 +1,6 @@
 import { main_theme } from "@/lib/themes";
 import { Autocomplete, Box, Button, Chip, CssBaseline, Divider, Input, TextField, ThemeProvider, Typography, styled } from "@mui/material";
 
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { StyledRating } from "@/components/styledcomps";
@@ -9,7 +8,6 @@ import { StyledRating } from "@/components/styledcomps";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { default_tags } from "@/lib/utils";
-import { useRouter } from 'next/navigation';
 
 export default function ModifyCreation(props: any) {
   const { pic_id , trigger } = props;
