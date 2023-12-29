@@ -56,7 +56,7 @@ export default function Transactions(props: any) {
           </ListItem>
           <Divider />
           {txs.map((e: any, index:any) => (
-            <TxListItem item={e} username={actionUser.username}/>
+            <TxListItem key={index} item={e} username={actionUser.username}/>
           ))}
           <Divider />
         </List>
