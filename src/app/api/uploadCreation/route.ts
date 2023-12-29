@@ -61,6 +61,7 @@ export async function POST(request: Request) {
         description: origin,
         author_id : User[0].id,
         url: res.data.compress, // Ensure your database can handle this array format
+        origin_url: res.data.original,
         post_date: DateFomate, // 加入現在的時間
         liked_count: Number(0),
         recommand_point: recommand,
