@@ -65,7 +65,7 @@ export default function PictureFull(props: any) {
     axios.get('/api/getNowUser').then((e)=>{
       setCurrentUser(e.data.user[0]);
     }).catch((e)=>console.error(e));
-    axios.get('/api/relatedWorks').then((e)=>{
+    axios.post('/api/relatedWorks',payload).then((e)=>{
       setRelatedArr(e.data.pictureIds);
     }).catch((e)=>console.error(e));
   }, [])
