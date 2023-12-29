@@ -1,3 +1,5 @@
+import { main_theme } from "@/lib/themes";
+import { Box } from "@mui/material";
 import React from "react";
 
 var urlRegex = /((http[s]?|ftp):\/)\/?([^:\/\s]+)(?::([0-9]+))?((\/\w+)*\/)?([\w\-\.]*)?([#?\w\=]+)?([\&\w=\w]+.*)?([\w\+\-\/\%]*)?[A-Za-z0-9_\/]/g;
@@ -16,19 +18,19 @@ const Message = ({ message, uid, opendia }) => {
   return (
     <>
       {show() ? (
-        <div>
+        <Box sx={{ width: "100%" }}>
           <p
             onMouseDown={(e)=>{opendia(message._id, message.uid === uid)}}
             onClick={(e)=>{opendia(message._id, message.uid === uid)}}
-            style={{ padding: "10px", border: "1px solid black", borderRadius: "10px" ,textAlign: ((message.uid === uid) ? "right" : "left")}}>
+            style={{ padding: "10px", background: (message.uid === uid) ? main_theme.palette.primary.light : main_theme.palette.secondary.light, borderRadius: "10px" ,textAlign: ((message.uid === uid) ? "right" : "left")}}>
             {message.content.match(urlRegex)?<a target="_blank" href={message.content}>{message.content}</a>:message.content}
           </p>
-        </div>
-      ) : ( <div>
-        <p style={{ color: "grey", padding: "10px", border: "1px solid black", borderRadius: "10px" ,textAlign: ((message.uid === uid) ? "right" : "left")}}>
+        </Box>
+      ) : ( <Box sx={{ width: "100%" }}>
+        <p style={{ color: "grey", padding: "10px", borderRadius: "10px" ,textAlign: ((message.uid === uid) ? "right" : "left")}}>
             訊息已不可見
         </p>
-      </div> )}
+      </Box> )}
     </>
   );
 };

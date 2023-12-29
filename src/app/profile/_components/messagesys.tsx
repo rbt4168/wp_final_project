@@ -179,12 +179,6 @@ import HomeAA from "./_messagecom/homex";
 
 export default function MessageSystem(props: any) {
   const { actionUser } = props;
-  
-  const [user, setUser] = useState({account:"", uid:""})
-  const [cid, setCid] = useState("");
-  const [oppo, setOppo] = useState("");
-  const [oppouid, setOppouid] = useState("");
-
 
   return (
     <ThemeProvider theme={main_theme}>
@@ -195,10 +189,7 @@ export default function MessageSystem(props: any) {
       <Divider />
 
       <Box display="flex">
-        <HomeAA />
-        {/* <SideBar user={user} setCid={setCid} setOppo={setOppo} oppouid={oppouid} setOppouid={setOppouid}/>
-        <ChatView user={user} cid={cid} oppo={oppo} oppouid={oppouid}/> */}
-        <Divider orientation="vertical" flexItem/>
+        <HomeAA username={actionUser.username}/>
       </Box>
       <Divider orientation="vertical" flexItem/>
     </ThemeProvider>

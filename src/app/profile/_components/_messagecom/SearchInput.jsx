@@ -35,12 +35,11 @@ const SearchInput = ( {user} ) => {
             }
           }
         })
+
       } else if (res.data.message === "n") {
         alert("No such user.");
       }
-    }).catch((e)=>{
-      console.error(e);
-    })
+    }).catch((e)=>console.error(e));
   };
 
   const handleCreat = async () => {

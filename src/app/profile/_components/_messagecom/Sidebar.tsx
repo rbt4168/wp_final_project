@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import SearchInput from "./SearchInput";
 import ChatList from "./ChatList";
+import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 
 import axios from "axios";
 
@@ -12,7 +12,8 @@ export const pusherClient = new PusherClient(NEXT_PUBLIC_PUSHER_KEY, {
   cluster: NEXT_PUBLIC_PUSHER_CLUSTER,
 });
 
-const Sidebar = ( {user, setCid, setOppo, oppouid, setOppouid} ) => {
+export default function Sidebar(props:any) {
+  const {user, setCid, setOppo, oppouid, setOppouid} = props;
   const [oppos, setOppos] = useState([]);
 
   useEffect(()=>{
@@ -24,13 +25,13 @@ const Sidebar = ( {user, setCid, setOppo, oppouid, setOppouid} ) => {
 
     const channel = pusherClient.subscribe(`ch_${user.uid}`);
 
-    pusherClient.connection.bind("state_change", function (states) {
+    pusherClient.connection.bind("state_change", function (states:any) {
       if(states.current === "disconnected") {
         pusherClient.connect();
       }
     });
 
-    channel.bind("evt", data => {
+    channel.bind("evt", (data:any) => {
       console.log(data);
       axios.post("/api/msg/chats", {uid: user.uid}).then((res)=>{
         let iuser = JSON.parse(res.data.message);
@@ -42,15 +43,11 @@ const Sidebar = ( {user, setCid, setOppo, oppouid, setOppouid} ) => {
     return ()=>{
       pusherClient.unsubscribe(`ch_${user.uid}`);
     }
-
   }, [user])
 
   return (
-    <div className="sidebar" style={{ marginLeft: "20px", border: "1px solid black", width: "300px", padding:"15px" }}>
-       <SearchInput user={user} />
-       <ChatList selfuid={user.uid} users={oppos} setCid={setCid} setOppo={setOppo} oppouid={oppouid} setOppouid={setOppouid}/>
-    </div>
+    <Box sx={{ width: "100%" }}>
+      <ChatList selfuid={user.uid} users={oppos} setCid={setCid} setOppo={setOppo} oppouid={oppouid} setOppouid={setOppouid}/>
+    </Box>
   );
 };
-
-export default Sidebar;
