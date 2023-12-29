@@ -1,14 +1,19 @@
 "use client"
-import FooterComponent from "@/components/footer";
-import NavigationBar from "@/components/navbar";
-import { main_theme } from "@/lib/themes"
-import { Box, Button, CssBaseline, Grid, ThemeProvider } from "@mui/material"
+
 import { useEffect, useState } from "react";
+import { Button, CssBaseline, Grid } from "@mui/material";
+import { ThemeProvider } from '@mui/material/styles';
+
 import CreatorHeader from "@/components/creatorheader";
 import DivLineCenter from "@/components/divline";
-import axios from "axios";
+import FooterComponent from "@/components/footer";
+import NavigationBar from "@/components/navbar";
 import { WorkCardComponent } from "@/components/workcomponent";
+
 import { chunkArray } from "@/lib/utils";
+import { main_theme } from "@/lib/themes"
+
+import axios from "axios";
 
 export default function AuthorPage(props: any) {
   const { params } = props;
@@ -28,41 +33,30 @@ export default function AuthorPage(props: any) {
 
   useEffect(()=>{
     axios.get("/api/getAuthorById?user_id="+author_id).then((e)=>{
-      // console.log(e.data);
       setActiveAuthor(e.data);
     }).catch((e)=>console.error(e));
-    
 
     const payload = {
       author_id: author_id
     }
 
     axios.post("/api/authorHighToLow", payload).then((e)=>{
-      // console.log("HL"+e.data.pictureIds);
       setRecentArr(e.data.pictureIds);
       setLatArr(chunkArray(e.data.pictureIds, 5));
-      // console.log("LAT"+latArr)
     }).catch((e)=>console.error(e));
 
-    // axios.post("/api/authorLowToHigh", payload).then((e)=>{
-    //   console.log("LH"+e.data.pictureIds);
-    // }).catch((e)=>console.error(e));
     axios.post("/api/authorRecommand", payload).then((e)=>{
-      // console.log("REC"+e.data.pictureIds);
       setRecArr(e.data.pictureIds);
     }).catch((e)=>console.error(e));
-    // axios.post("/api/authorPopular", payload).then((e)=>{
-    //   console.log("POP"+e.data.pictureIds);
-    // }).catch((e)=>console.error(e));
-    
+
   }, [])
 
   return(
   <ThemeProvider theme={main_theme}>
     <CssBaseline />
     <NavigationBar />
-    <CreatorHeader activeAuthor={activeAuthor} setActiveAuthor={setActiveAuthor} authorId={author_id}/>
 
+    <CreatorHeader activeAuthor={activeAuthor} setActiveAuthor={setActiveAuthor} authorId={author_id}/>
 
     <Grid container 
       justifyContent="center"
@@ -76,7 +70,6 @@ export default function AuthorPage(props: any) {
     </Grid>
 
     <DivLineCenter text="Top 3 Recommanded by Author"/>
-    
     <Grid container 
       justifyContent="center"
       alignItems="center"
@@ -92,7 +85,6 @@ export default function AuthorPage(props: any) {
     </Grid>
 
     <DivLineCenter text="Latest 5 Works"/>
-
     <Grid container 
       justifyContent="center"
       alignItems="center"
