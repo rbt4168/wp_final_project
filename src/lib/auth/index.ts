@@ -88,6 +88,6 @@ export const {
     },
   },
   pages: {
-    signIn: "/",
+    signIn: "/login",
   },
 });

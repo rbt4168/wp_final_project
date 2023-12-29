@@ -22,11 +22,16 @@ import { useState } from "react";
 // Run: npx shadcn-ui@latest add card
 import { publicEnv } from "@/lib/env/public";
 import { signIn } from "next-auth/react";
+import { useSearchParams } from 'next/navigation';
 
 
 export default function SignInSide() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
+  const searchParams = useSearchParams();
+ 
+  const error_msg = searchParams.get('error')
 
   const handleSubmit = () => {
     // TODO: sign in logic
@@ -78,6 +83,7 @@ export default function SignInSide() {
                 name="email"
                 autoComplete="email"
                 value={email}
+                error={!!error_msg}
                 onChange={(e:any) => setEmail(e.target.value)}
                 autoFocus
               />
@@ -90,6 +96,7 @@ export default function SignInSide() {
                 type="password"
                 id="password"
                 value={password}
+                error={!!error_msg}
                 onChange={(e:any) => setPassword(e.target.value)}
                 autoComplete="current-password"
               />
