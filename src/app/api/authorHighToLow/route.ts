@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { eq, desc } from "drizzle-orm";
 import { db } from "@/db";
-import { pictureTable } from "@/db/schema"; // Import your UserTable if not already done
+import { usersTable,pictureTable} from "@/db/schema"; // Import your UserTable if not already done
 
 export async function POST(request: Request) {
   try {
@@ -9,7 +9,16 @@ export async function POST(request: Request) {
     const body = await request.json();
     const {author_id} = body;
     // Query
-    console.log(author_id);
+    const [author] = await db.select({
+      authorname: usersTable.username
+    })
+    .from(usersTable)
+    .where(eq(usersTable.id, author_id));
+    if (!author){
+      return new NextResponse("Internal Error", { status: 500 });
+    }
+    const prefix = `private-${author.authorname}`;
+
     const pictureHighToLow = await db
       .select()
       .from(pictureTable)
@@ -17,12 +26,13 @@ export async function POST(request: Request) {
       .orderBy(desc(pictureTable.pic_id))
       .execute();
       
-
-    const pictureIds = pictureHighToLow.map(picture => picture.pic_id);
-    console.log("--------------==================");
-    console.log("High")
-    console.log(pictureIds);
-    console.log("--------------==================");
+ 
+    const pictureIds = pictureHighToLow.filter(picture =>
+      picture.tags && !picture.tags.some(tag => tag.startsWith(prefix))
+     ).map(picture => picture.pic_id);
+     /*
+     console.log("High to Low");
+     console.log(pictureIds);*/
     // Return the user information
     return NextResponse.json({ pictureIds });
   } catch (error) {

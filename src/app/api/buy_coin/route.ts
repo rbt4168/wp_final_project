@@ -14,18 +14,15 @@ export async function POST(request: Request) {
 
     // Extract data from request body
     const body = await request.json();
-    
     // Assume you have a user table where you want to update this information
     // and 'userId' is obtained from the session or some other source
     const session_id = session?.user?.id; // Replace with actual way to get the user's ID
-
 
     const [User] = await db
           .select({coins: usersTable.coins})
           .from(usersTable)
           .where(eq(usersTable.displayId, session_id))
           .execute();
-    
     // Update user profile in the database
     if (!User){
         return new NextResponse("No author you bad guy", { status: 401 });
@@ -37,7 +34,6 @@ export async function POST(request: Request) {
     } else {
       newcoin = Number(body.coins) + Number(User.coins);
     }
-
     // Update the user's record
     const [updatedUser] = await db
       .update(usersTable)
@@ -46,7 +42,7 @@ export async function POST(request: Request) {
       })
       .where(eq(usersTable.username, session?.user?.username))
       .returning();
-
+      
     const [ newTx ] = await db
       .insert(transactionTable)
       .values({
@@ -55,7 +51,6 @@ export async function POST(request: Request) {
         amount: body.coins,
         timestamp: Date.now().toString()
       }).returning()
-
     // Return the updated user information
     return NextResponse.json({ updatedUser, newTx });
   } catch (error) {

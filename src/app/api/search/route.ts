@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { eq, and, like } from "drizzle-orm";
+import { eq, and, like, desc } from "drizzle-orm";
 import { db } from "@/db";
 import { auth } from "@/lib/auth";
 import { pictureTable, usersTable } from "@/db/schema"; // Import your UserTable if not already done
@@ -20,15 +20,6 @@ export async function POST(request: Request) {
 
     // Assume you have a user table where you want to update this information
     // and 'userId' is obtained from the session or some other source
-
-    
-
-    
-
-    console.log("stage1 ")
-
-
-
     console.log(target);
     const targetPictures = await db
       .select({ 
@@ -37,54 +28,36 @@ export async function POST(request: Request) {
       })
       .from(pictureTable)
       .where(like(pictureTable.name, `%${target}%`))
+      .orderBy(desc(pictureTable.pic_id))
       .execute();
 
-    console.log(targetPictures);
+    
 
     // Check if targetPictures is an array and extract picture_ids
     
+    const filteredForPrivate = targetPictures.filter(picture => 
+      picture.tags && !picture.tags.some(tag => tag.startsWith('private')));
 
-    // Return the updated user information
-    
+    let finalFilteredPictures = [];
     if (tags && tags.length > 0) {
-      console.log("tags is: ");
-      console.log(tags);
-      const positiveTags = tags.filter(tag => tag.positive === true).map(tag => tag.tagname);
-      const negativeTags = tags.filter(tag => tag.positive === false).map(tag => tag.tagname);
-      console.log("positiveTags");
-      console.log(positiveTags);
-      console.log("negativeTags");
-      console.log(negativeTags);
-      // Filter pictures
-      const filteredPictures = targetPictures.filter(picture => {
-        const pictureTags = picture.tags || []; // Assuming tags are an array of strings
-        console.log("Pic Tags");
-        console.log(pictureTags);
-        // Check for negative tags
-        const hasNegativeTag = negativeTags.some((negativeTag : any) => pictureTags.includes(negativeTag));
+      const positiveTags = tags.filter(tag => tag.positive).map(tag => tag.tagname);
+      const negativeTags = tags.filter(tag => !tag.positive).map(tag => tag.tagname);
+
+      finalFilteredPictures = filteredForPrivate.filter(picture => {
+        const pictureTags = picture.tags || [];
+        const hasNegativeTag = negativeTags.some(negativeTag => pictureTags.includes(negativeTag));
         if (hasNegativeTag) return false;
-        // Check for positive tags
-        return positiveTags.every((positiveTag : any)=> pictureTags.includes(positiveTag));
+        return positiveTags.every(positiveTag => pictureTags.includes(positiveTag));
       });
-      // Extract picture_ids and tags from filtered pictures
-      const targetPictureIDs = filteredPictures.map(picture => {
-        return picture.picture_id;
-      });
-      console.log(targetPictureIDs);
-      // Return the picture details
-      return NextResponse.json({ tids: targetPictureIDs });
-      }
-      else{
-        const targetPictureIds = Array.isArray(targetPictures)
-        ? targetPictures.map(picture => picture.picture_id)
-        : [];
-    
-        console.log("=================================");
-        console.log(targetPictureIds);
-        console.log("=================================");
-        console.log("tags is null")
-        return NextResponse.json({ tids: targetPictureIds});
-      }
+    } else {
+      finalFilteredPictures = filteredForPrivate;
+    }
+
+    // 提取最終過濾後的圖片ID
+    const targetPictureIDs = finalFilteredPictures.map(picture => picture.picture_id);
+    console.log(targetPictureIDs);
+    // 返回結果
+    return NextResponse.json({ tids: targetPictureIDs });
   } catch (error) {
     console.error("Error in POST function: ", error);
     return new NextResponse("Internal Error", { status: 500 });

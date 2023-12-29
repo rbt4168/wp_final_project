@@ -48,6 +48,31 @@ export default function AuthorPage(props: any) {
     axios.post("/api/authorRecommand", payload).then((e)=>{
       setRecArr(e.data.pictureIds);
     }).catch((e)=>console.error(e));
+    
+    axios.post("/api/authorTag", payload).then((e)=>{
+      console.log("1");
+    }).catch((e)=>console.error(e));
+    /*
+    axios.post("/api/authorRecommand", payload).then((e)=>{
+      setRecArr(e.data.pictureIds);
+    }).catch((e)=>console.error(e));
+
+    axios.post("/api/authorRecommand", payload).then((e)=>{
+      setRecArr(e.data.pictureIds);
+    }).catch((e)=>console.error(e));
+
+    axios.post("/api/authorRecommand", payload).then((e)=>{
+      setRecArr(e.data.pictureIds);
+    }).catch((e)=>console.error(e));
+
+    axios.post("/api/authorRecommand", payload).then((e)=>{
+      setRecArr(e.data.pictureIds);
+    }).catch((e)=>console.error(e));
+
+    axios.post("/api/authorRecommand", payload).then((e)=>{
+      setRecArr(e.data.pictureIds);
+    }).catch((e)=>console.error(e));
+*/
 
   }, [])
 

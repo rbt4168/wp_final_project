@@ -11,7 +11,7 @@ export default function OwnedTags(props: any) {
   const { actionUser } = props;
 
   const fixedOptions: string[] = [];
-  const [value, setValue] = useState([...actionUser.owned_private_tag]);
+  const [value, setValue] = useState([...actionUser?.owned_private_tag]);
 
   return (
     <ThemeProvider theme={main_theme}>
