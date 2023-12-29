@@ -22,12 +22,9 @@ export async function POST(request: Request) {
       picture.tags && !picture.tags.some(tag => tag.startsWith('private')));
     const filteredForPicId = filteredForPrivate.filter(picture => {picture.pic_id !== Number(pic_id)});
     const numberOfPicturesToSelect = Math.min(5, filteredForPicId.length);
-
     const shuffledPictures = filteredForPicId.sort(() => 0.5 - Math.random());
     const selectedPictures = shuffledPictures.slice(0, numberOfPicturesToSelect);
-
     const pictureIds = selectedPictures.map(picture => picture.pic_id);
-   
     return NextResponse.json({ pictureIds });
   } catch (error) {
     console.error("Error in POST function: ", error);

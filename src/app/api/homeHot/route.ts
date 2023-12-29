@@ -7,10 +7,6 @@ import OwnedTags from "@/app/profile/_components/ownedtag";
 
 export async function GET(request: Request) {
   try {
-    // Authentication
-    
-
-    // Query
     const hotpicture = await db
       .select({
         pic_id: pictureTable.pic_id,
@@ -30,7 +26,6 @@ export async function GET(request: Request) {
     const pictureIds = topPictures.map(picture => picture.pic_id);
     return NextResponse.json({ pictureIds });
 
-    
   } catch (error) {
     console.error("Error in POST function: ", error);
     return new NextResponse("Internal Error", { status: 500 });
