@@ -98,7 +98,7 @@ export default function AuthorPage(props: any) {
     
     {priArr.length >= 1 ? (
     <>
-      <DivLineCenter text="Previous Works"/>
+      <DivLineCenter text="Private Works"/>
       {
         priArr.map((e0:any[],idx:any)=>{
           return(

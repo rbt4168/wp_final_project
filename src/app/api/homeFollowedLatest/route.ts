@@ -22,12 +22,12 @@ export async function GET(request: Request) {
       .select()
       .from(pictureTable)
       .where(inArray(pictureTable.author_id, likedUserIds))
-      .orderBy(desc(pictureTable.pic_id))
-      .limit(5)
       .execute();
-    const filteredForPrivate = followedLatestPicture.filter(picture => 
-      picture.tags && !picture.tags.some(tag => tag.startsWith('private')));
-    const pictureIds = filteredForPrivate.map(picture => picture.pic_id);
+    const filteredForPrivate = followedLatestPicture.filter(picture => picture.tags && !picture.tags.some(tag => tag.startsWith('private')));
+
+    const numberOfPicturesToExtract = Math.min(5, filteredForPrivate.length);
+    const topPictures = filteredForPrivate.sort((a, b) => b.pic_id - a.pic_id).slice(0, numberOfPicturesToExtract);
+    const pictureIds = topPictures.map(picture => picture.pic_id);
     // Return the user information
     return NextResponse.json({ pictureIds });
   } catch (error) {
