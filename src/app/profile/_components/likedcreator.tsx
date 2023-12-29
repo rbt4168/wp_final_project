@@ -1,10 +1,15 @@
 "use client"
-import { main_theme } from "@/lib/themes"
-import { Box, CssBaseline, Divider, ThemeProvider, Typography, List } from "@mui/material"
+
+import { Box, CssBaseline, Divider, Typography, List } from "@mui/material"
+import { ThemeProvider } from "@mui/material/styles";
 
 import { CreatorListItem } from "@/components/creatorcomponent";
+
+import { main_theme } from "@/lib/themes"
+
 export default function LikedCreator(props: any) {
   const { actionUser } = props;
+  
   return (
     <ThemeProvider theme={main_theme}>
       <CssBaseline />

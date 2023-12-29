@@ -1,10 +1,14 @@
 "use client"
-import { main_theme } from "@/lib/themes"
-import { Box, CssBaseline, Divider, Grid, ThemeProvider, Typography } from "@mui/material"
+import { Box, CssBaseline, Divider, Grid, Typography } from "@mui/material"
+import { ThemeProvider } from "@mui/material/styles";
+
 import { WorkCardComponent } from "@/components/workcomponent";
+
+import { main_theme } from "@/lib/themes"
 
 export default function LikedWork(props: any) {
   const { actionUser } = props;
+
   return (
     <ThemeProvider theme={main_theme}>
       <CssBaseline />
@@ -21,7 +25,6 @@ export default function LikedWork(props: any) {
           ))}
         </Grid>
       </Box>
-      
     </ThemeProvider>
   )
 }

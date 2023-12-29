@@ -1,20 +1,24 @@
-import { main_theme } from "@/lib/themes";
-import { Autocomplete, Box, Button, Chip, CssBaseline, Divider, Input, TextField, ThemeProvider, Typography, styled } from "@mui/material";
-
+"use client"
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { StyledRating } from "@/components/styledcomps";
+import { Autocomplete, Box, Button, Chip, CssBaseline,
+  Divider, Input, TextField, Typography } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
 
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+
+import { StyledRating } from "@/components/styledcomps";
+
+import { main_theme } from "@/lib/themes";
 import { default_tags } from "@/lib/utils";
+
+import axios from "axios";
 
 export default function ModifyCreation(props: any) {
   const { pic_id , trigger } = props;
 
   const [title, setTitle] = useState("");
   const [origin, setOrigin] = useState("");
-  
   const [recommand, setRecommand] = useState(5);
   const [previewUrl, setPreviewUrl] = useState("");
 
@@ -29,56 +33,49 @@ export default function ModifyCreation(props: any) {
     axios.post("/api/getPicture", payload).then((e)=>{
       console.log(e.data.picture[0]);
       let pic = e.data.picture[0];
+
       setTitle(pic.name);
       setOrigin(pic.description);
       setRecommand(pic.recommand_point);
       setValue(pic.tags);
       setPreviewUrl(pic.url);
     }).catch((e)=>console.error(e));
-
   }, [pic_id]);
 
-  const handleSubmit = (e: any) => {
-    // TODO: Update User Profile
+  function handleSubmit() {
     const payload = {
-      pic_id,
-      title,
-      origin,
-      recommand,
-      value,
+      pic_id: pic_id,
+      title: title,
+      origin: origin,
+      recommand: recommand,
+      value: value,
     };
   
-    // Make the API call
     axios.post("/api/modifycreation", payload)
-      .then(response => {
-        console.log(response);
+      .then((e) => {
         alert("修改成功!");
-        // Redirect to the homepage
-      }).catch(()=>alert("修改作品失敗 "));
+      }).catch((e) => alert("修改作品失敗 "));
   };
 
-  const handleDelete = (e: any) => {
-    // TODO: Update User Profile
+  function handleDelete() {
     const payload = {
-      pic_id,
+      pic_id: pic_id,
     };
-  
-    // Make the API call
+
     axios.post("/api/deletecreation", payload)
-      .then(response => {
-        console.log(response);
+      .then((e) => {
         alert("刪除作品成功!");
         trigger();
-      }).catch(()=>alert("刪除作品失敗 "));
+      }).catch(() => alert("刪除作品失敗 "));
   };
 
   return pic_id ? (
     <ThemeProvider theme={main_theme}>
       <CssBaseline/>
+
       <Typography component="h1" variant="h5" m={3} sx={{ fontWeight: 600 }}>
         修改作品 Modify Creation
       </Typography>
-        
       <Divider />
 
       <Box mx={5} my={3}>
@@ -143,17 +140,17 @@ export default function ModifyCreation(props: any) {
           multiple
           id="fixed-tags-demo"
           value={value}
-          onChange={(event, newValue) => {
+          onChange={(event:any, newValue:any) => {
             setValue([
               ...fixedOptions,
-              ...newValue.filter((option) => fixedOptions.indexOf(option) === -1),
+              ...newValue.filter((option:any) => fixedOptions.indexOf(option) === -1),
             ]);
             console.log(value);
           }}
           options={default_tags}
-          getOptionLabel={(option) => option}
-          renderTags={(tagValue, getTagProps) =>
-            tagValue.map((option, index) => (
+          getOptionLabel={(option:any) => option}
+          renderTags={(tagValue:any, getTagProps:any) =>
+            tagValue.map((option:any, index:any) => (
               <Chip
                 label={option}
                 {...getTagProps({ index })}
@@ -163,7 +160,7 @@ export default function ModifyCreation(props: any) {
             ))
           }
           style={{ width: "60%" }}
-          renderInput={(params) => (
+          renderInput={(params:any) => (
             <TextField {...params} placeholder="這是什麼樣的作品呢？" />
           )}
         />
@@ -183,7 +180,6 @@ export default function ModifyCreation(props: any) {
         </Button>
       </Box>
       
-        
     </ThemeProvider>
   ) : (
   <ThemeProvider theme={main_theme}>
@@ -191,7 +187,6 @@ export default function ModifyCreation(props: any) {
     <Typography component="h1" variant="h5" m={3} sx={{ fontWeight: 600 }}>
       修改作品 Modify Creation
     </Typography>
-      
     <Divider />
     <Box mx={5} my={3} sx={{ typography: 'subtitle2'}}>
       <Typography>Select Creation To Modify ...</Typography>
