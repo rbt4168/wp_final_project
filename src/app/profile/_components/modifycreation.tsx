@@ -24,7 +24,7 @@ export default function ModifyCreation(props: any) {
 
   const fixedOptions: string[] = [];
   const [value, setValue] = useState(fixedOptions);
-  
+  const [disabled, setDisable] = useState(false);
   const all_tag = actionUser?.private_tags ? [ ...default_tags, ...actionUser?.private_tags?.map((e:any)=>("private-"+actionUser.username+"-"+e)) ] : default_tags;
 
   useEffect(()=>{
@@ -46,6 +46,7 @@ export default function ModifyCreation(props: any) {
   }, [pic_id]);
 
   function handleSubmit() {
+    setDisable(true);
     const payload = {
       pic_id: pic_id,
       title: title,
@@ -57,10 +58,12 @@ export default function ModifyCreation(props: any) {
     axios.post("/api/modifycreation", payload)
       .then(() => {
         alert("修改成功!");
-      }).catch(() => alert("修改作品失敗 "));
+      }).catch(() => alert("修改作品失敗 "))
+      .finally(()=>{setDisable(false)});
   };
 
   function handleDelete() {
+    setDisable(true);
     const payload = {
       pic_id: pic_id,
     };
@@ -69,7 +72,8 @@ export default function ModifyCreation(props: any) {
       .then(() => {
         alert("刪除作品成功!");
         trigger();
-      }).catch(() => alert("刪除作品失敗 "));
+      }).catch(() => alert("刪除作品失敗 "))
+      .finally(()=>{setDisable(false)});
   };
 
   return pic_id ? (
@@ -107,6 +111,7 @@ export default function ModifyCreation(props: any) {
           sx={{width: "60%"}}
           value={title}
           onChange={(e:any)=>setTitle(e.target.value)}
+          disabled={disabled}
         />
       </Box>
 
@@ -120,6 +125,7 @@ export default function ModifyCreation(props: any) {
           sx={{width: "60%"}}
           value={origin}
           onChange={(e:any)=>setOrigin(e.target.value)}
+          disabled={disabled}
         />
       </Box>
 
@@ -134,6 +140,7 @@ export default function ModifyCreation(props: any) {
           emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
           value={recommand}
           onChange={(e:any)=>setRecommand(e.target.value)}
+          disabled={disabled}
         />
       </Box>
 
@@ -143,6 +150,7 @@ export default function ModifyCreation(props: any) {
           multiple
           id="fixed-tags-demo"
           value={value}
+          disabled={disabled}
           onChange={(event:any, newValue:any) => {
             setValue([
               ...fixedOptions,
@@ -171,14 +179,14 @@ export default function ModifyCreation(props: any) {
       </Box>
 
       <Box mx={5} my={3}>
-        <Button component="label" variant="outlined" onClick={handleSubmit}
+        <Button component="label" variant="outlined" onClick={handleSubmit} disabled={disabled}
           sx={{width: "60%"}}>
           完成修改 Submit
         </Button>
       </Box>
 
       <Box mx={5} my={3}>
-        <Button component="label" variant="contained" color="secondary" onClick={handleDelete}
+        <Button component="label" variant="contained" color="secondary" onClick={handleDelete} disabled={disabled}
           sx={{width: "60%"}}>
           刪除作品 Delete
         </Button>
