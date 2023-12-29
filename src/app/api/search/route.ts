@@ -68,11 +68,11 @@ export async function POST(request: Request) {
       });
       // Extract picture_ids and tags from filtered pictures
       const targetPictureIDs = filteredPictures.map(picture => {
-        return { id: picture.picture_id};
+        return picture.picture_id;
       });
       console.log(targetPictureIDs);
       // Return the picture details
-      return NextResponse.json({ targetPictureIDs });
+      return NextResponse.json({ tids: targetPictureIDs });
       }
       else{
         const targetPictureIds = Array.isArray(targetPictures)
@@ -83,7 +83,7 @@ export async function POST(request: Request) {
         console.log(targetPictureIds);
         console.log("=================================");
         console.log("tags is null")
-        return NextResponse.json({ targetPictureIds});
+        return NextResponse.json({ tids: targetPictureIds});
       }
   } catch (error) {
     console.error("Error in POST function: ", error);

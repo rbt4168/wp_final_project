@@ -10,22 +10,24 @@ import { useState, useEffect } from "react";
 import { WorkCardComponent } from "@/components/workcomponent";
 import SearchBar from "@/components/searchbarcom";
 
-import axios from "axios"
-export default function Home() {
-  // const [ searchText, setSearchText ] = useState("");
+// import { useNavigate } from "react-router-dom";
 
+import axios from "axios"
+
+import { useRouter } from 'next/navigation';
+export default function Home() {
   const [ foArr, setFoArr ] = useState([0,0,0,0,0]);
   const [ hotArr, setHotArr ] = useState([0,0,0,0,0]);
   const [ recentArr, setRecentArr ] = useState([0,0,0,0,0]);
 
+  const router = useRouter();
+
   useEffect(()=>{
     axios.get("/api/homeFollowedLatest").then((e:any)=>{
-      // console.log(e.data);
       setFoArr(e.data.pictureIds);
     }).catch((e:any)=>console.error(e));
 
     axios.get("/api/homeRecent").then((e:any)=>{
-      // console.log(e.data);
       setRecentArr(e.data.pictureIds);
     }).catch((e:any)=>console.error(e));
 
@@ -34,25 +36,20 @@ export default function Home() {
     }).catch((e:any)=>console.error(e));
 
   }, []);
-  
-  const handleSubmit = () => {
-    // TODO: search api
-    // const payload = {
-    //   keyword: searchText,
-    // }
-    // alert(payload);
-    // axios.post("/api/search", payload).then((e:any)=>{
-    //   setHotArr(e.data.pictureIds);
-    // }).catch((e:any)=>console.error(e));
+
+  // const navigate = useNavigate();
+  const callback = (payload:any) => {
+    console.log();
+    localStorage.setItem("payload", JSON.stringify(payload));
+    router.push('/search');
   };
 
   return (
     <ThemeProvider theme={main_theme}>
       <CssBaseline/>
       <NavigationBar/>
+      <SearchBar callback={callback} setConsequence={()=>{}}/>
 
-      <SearchBar />
-      
       <DivLineCenter text="Followed Latest"/>
 
       <Grid container 

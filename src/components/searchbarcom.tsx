@@ -5,29 +5,45 @@ import DivLineCenter from "./divline";
 
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { default_tags } from "@/lib/utils";
 import axios from "axios"
 export default function SearchBar(props: any) {
-  
+  const { callback, setConsequence } = props;
   const posOptions: string[] = [];
   const [posvalue, setPosValue] = useState(posOptions);
   
   const negOptions: string[] = [];
   const [negvalue, setNegValue] = useState(negOptions);
 
-  const [ searchText, setSearchText ] = useState(""); 
+  const [ searchText, setSearchText ] = useState("");
+
+  useEffect(()=>{
+    let pload = JSON.parse(localStorage.getItem("payload") || "{}");
+    if(pload !== undefined) {
+      console.log(pload);
+      if(pload.text) setSearchText(pload.text);
+      if(pload.ptag) setPosValue(pload.ptag);
+      if(pload.ntag) setNegValue(pload.ntag);
+      if(pload.seq) setConsequence(pload.seq);
+    }
+    localStorage.setItem("payload", "{}");
+  }, [])
 
   function handleClick() {
     let payload = {
       target: searchText,
-      tags: [ ...posvalue.map((e)=>({tagname: e, positive: true})),
-              ...negvalue.map((e)=>({tagname: e, positive: false})) ]
+      tags: [ ...posvalue.map((e:string)=>({tagname: e, positive: true})),
+              ...negvalue.map((e:string)=>({tagname: e, positive: false})) ]
     }
 
     axios.post("/api/search", payload)
-    .then((e) =>(console.log(e.data)))
-    .catch((e)=>(console.log(e)));
+    .then((e:any) => {
+      let seq = e.data.tids;
+      console.log(e.data.tids);
+      setConsequence(seq);
+      callback({text: searchText, ptag: posvalue, ntag: negvalue, seq: seq});
+    }).catch((e:any) => (console.error(e)));
   }
 
   return (
@@ -47,7 +63,7 @@ export default function SearchBar(props: any) {
             size="small"
             sx={{width: "90%"}}
             value={searchText}
-            onChange={(e)=>setSearchText(e.target.value)}
+            onChange={(e:any)=>setSearchText(e.target.value)}
           />
           <Button sx={{width: "10%"}} variant="outlined" onClick={handleClick}>
             Search
@@ -55,7 +71,7 @@ export default function SearchBar(props: any) {
         </Grid>
       </Grid>
       
-      <DivLineCenter text="Search Restriction Priority List"/>
+      <DivLineCenter text="Tag Restrictions"/>
       <Grid
         mt={1}
         container
@@ -67,17 +83,17 @@ export default function SearchBar(props: any) {
         <Autocomplete
           multiple
           value={posvalue}
-          onChange={(event, newValue) => {
+          onChange={(event:any, newValue:any) => {
             setPosValue([
               ...posOptions,
-              ...newValue.filter((option) => posOptions.indexOf(option) === -1),
+              ...newValue?.filter((option:any) => posOptions.indexOf(option) === -1),
             ]);
             console.log(posvalue);
           }}
-          options={default_tags.filter((option) => !negvalue.includes(option))}
+          options={default_tags?.filter((option) => !negvalue?.includes(option))}
           // getOptionLabel={(option) => option}
-          renderTags={(tagValue, getTagProps) =>
-            tagValue.map((option, index) => (
+          renderTags={(tagValue:any, getTagProps:any) =>
+            tagValue.map((option:any, index:number) => (
               <Chip
                 label={option}
                 {...getTagProps({ index })}
@@ -87,7 +103,7 @@ export default function SearchBar(props: any) {
             ))
           }
           sx={{ width: "100%" }}
-          renderInput={(params) => (
+          renderInput={(params:any) => (
             <TextField {...params} placeholder="可愛的標籤們~" />
           )}
         />
@@ -97,21 +113,21 @@ export default function SearchBar(props: any) {
         </Grid>
         <Grid item xs={4} md={4}>
           
-        <Typography><CloseIcon color="secondary"/> No Tag</Typography>
+        <Typography><CloseIcon color="secondary"/> Block Tag</Typography>
         <Autocomplete
           multiple
           value={negvalue}
-          onChange={(event, newValue) => {
+          onChange={(event:any, newValue:any) => {
             setNegValue([
               ...negOptions,
-              ...newValue.filter((option) => negOptions.indexOf(option) === -1),
+              ...newValue?.filter((option:any) => negOptions.indexOf(option) === -1),
             ]);
             console.log(negvalue);
           }}
-          options={default_tags.filter((option) => !posvalue.includes(option))}
-          getOptionLabel={(option) => option}
-          renderTags={(tagValue, getTagProps) =>
-            tagValue.map((option, index) => (
+          options={default_tags?.filter((option) => !posvalue?.includes(option))}
+          getOptionLabel={(option:any) => option}
+          renderTags={(tagValue:any, getTagProps:any) =>
+            tagValue.map((option:any, index:number) => (
               <Chip
                 label={option}
                 {...getTagProps({ index })}
@@ -121,7 +137,7 @@ export default function SearchBar(props: any) {
             ))
           }
           sx={{ width: "100%" }}
-          renderInput={(params) => (
+          renderInput={(params:any) => (
             <TextField {...params} placeholder="可愛的標籤們~" />
           )}
         />

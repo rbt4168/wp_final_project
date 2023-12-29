@@ -16,8 +16,10 @@ export function dnd_handler(arr:any[], fr_idx:number, to_idx:number) {
 
 export function chunkArray(array:any[], chunkSize:number) {
   const result = [];
-  for (let i = 0; i < array.length; i += chunkSize) {
-    result.push(array.slice(i, i + chunkSize));
+  if(array) {
+    for (let i = 0; i < array.length; i += chunkSize) {
+      result.push(array.slice(i, i + chunkSize));
+    }
   }
   return result;
 }
