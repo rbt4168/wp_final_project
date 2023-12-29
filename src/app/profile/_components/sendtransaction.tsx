@@ -1,8 +1,12 @@
-import { main_theme } from "@/lib/themes";
-import { Box, Button, CssBaseline, Divider, Input, List, ListItem, ListItemButton, ThemeProvider, Typography } from "@mui/material";
-import axios from "axios";
+"use client"
 
 import { useState } from "react";
+import { Box, Button, CssBaseline, Divider, Input, Typography } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
+
+import { main_theme } from "@/lib/themes";
+
+import axios from "axios";
 
 export default function TransactionCreat(props: any) {
   const { actionUser, trigger } = props;
@@ -10,16 +14,15 @@ export default function TransactionCreat(props: any) {
   const [tacc, setTacc] = useState("");
   const [amount, setAmount] = useState("");
 
-  const handleSubmit = (e: any) => {
-    // TODO: Update User Profile
+  function handleSubmit() {
     let payload = {
       tacc: tacc,
       amount: amount,
     }
+
     axios.post("/api/transferCoin", payload).then((e)=>{
-      console.log(e);
-      trigger();
       alert("轉帳成功!");
+      trigger();
     }).catch((e)=>alert(e.response.data));
   };
 
@@ -29,7 +32,6 @@ export default function TransactionCreat(props: any) {
       <Typography component="h1" variant="h5" m={3} sx={{ fontWeight: 600 }}>
         轉帳 Transfer
       </Typography>
-        
       <Divider />
 
       <Box mx={5} my={3}>
@@ -51,7 +53,6 @@ export default function TransactionCreat(props: any) {
         />
       </Box>
 
-      
       <Box mx={5} my={3}>
         <Typography>金額 Amount</Typography>
         <Input
@@ -70,8 +71,6 @@ export default function TransactionCreat(props: any) {
           送出轉帳 Transfer
         </Button>
       </Box>
-      
-        
     </ThemeProvider>
   );
 }

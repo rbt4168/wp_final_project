@@ -1,10 +1,12 @@
 "use client"
-import { main_theme } from "@/lib/themes"
-import { Box, CssBaseline, Divider, ThemeProvider,
-    Typography, List, ListItem, ListItemButton} from "@mui/material"
-import { DivLineCenterFull } from "@/components/divline";
-import { ArtWorkListItem } from "@/components/workcomponent";
+
 import { useEffect, useState } from "react";
+import { Box, CssBaseline, Divider, Typography,
+  List, ListItem, ListItemButton} from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
+
+import { main_theme } from "@/lib/themes";
+
 import axios from "axios";
 
 function TxListItem(props: any) {
@@ -12,29 +14,28 @@ function TxListItem(props: any) {
 
     return(
       <>
-      <Divider textAlign="left">{"TX:"+item.timestamp}</Divider>
-      <ListItem disablePadding>
-      <ListItemButton>
-        <Box display="flex" justifyContent="space-between" sx={{ width: "100%" }}>
-          <Box>From: <Typography variant="h6" color={item.from_user===username?"primary":"grey.600"}>{item.from_user}</Typography></Box>
-          <Box>To: <Typography variant="h6" color={item.to_user===username?"primary":"grey.600"}>{item.to_user}</Typography></Box>
-          <Box>Amount: <Typography variant="h6" color="error">{item.amount}</Typography></Box>
-        </Box>
-      </ListItemButton>
-      </ListItem>
+        <Divider textAlign="left">{"TX:"+item.timestamp}</Divider>
+        <ListItem disablePadding>
+        <ListItemButton>
+          <Box display="flex" justifyContent="space-between" sx={{ width: "100%" }}>
+            <Box>From: <Typography variant="h6" color={item.from_user===username?"primary":"grey.600"}>{item.from_user}</Typography></Box>
+            <Box>To: <Typography variant="h6" color={item.to_user===username?"primary":"grey.600"}>{item.to_user}</Typography></Box>
+            <Box>Amount: <Typography variant="h6" color="error">{item.amount}</Typography></Box>
+          </Box>
+        </ListItemButton>
+        </ListItem>
       </>
     )
 }
 
 export default function Transactions(props: any) {
-  const { setModifyID, setSelectName, actionUser } = props;
+  const { actionUser } = props;
   const [ txs, setTxs ] = useState([]);
 
   useEffect(()=>{
     axios.get("/api/getTx").then((e)=>{
       setTxs(e.data.txs.reverse());
-    })
-    console.log(actionUser);
+    });
   }, [])
 
   return (
@@ -44,6 +45,7 @@ export default function Transactions(props: any) {
         交易紀錄 Transactions
       </Typography>
       <Divider />
+
       <Box>
         <List>
           <ListItem disablePadding>
@@ -54,11 +56,13 @@ export default function Transactions(props: any) {
             </Box>
             </ListItemButton>
           </ListItem>
+
           <Divider />
           {txs.map((e: any, index:any) => (
             <TxListItem key={index} item={e} username={actionUser.username}/>
           ))}
           <Divider />
+          
         </List>
       </Box>
     </ThemeProvider>

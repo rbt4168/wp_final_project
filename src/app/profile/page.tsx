@@ -70,7 +70,7 @@ export default function Profile() {
     {
       title: "上傳作品",
       icon: (<PublishIcon color="secondary"/>),
-      component: (<UploadCreation />)
+      component: (<UploadCreation trigger={trig}/>)
     },
     {
       title: "修改作品",

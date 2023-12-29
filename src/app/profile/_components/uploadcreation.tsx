@@ -1,48 +1,49 @@
-import { main_theme } from "@/lib/themes";
+"use client"
+import { useState } from "react";
 import { Autocomplete, Box, Button, Chip, CssBaseline, 
-  Divider, Input, TextField, ThemeProvider, Typography } from "@mui/material";
+  Divider, Input, TextField, Typography } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
 
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { StyledRating, VisuallyHiddenInput } from "@/components/styledcomps";
-
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { default_tags } from "@/lib/utils";
 
-import { useState } from "react";
+import { StyledRating, VisuallyHiddenInput } from "@/components/styledcomps";
+
+import { default_tags } from "@/lib/utils";
+import { main_theme } from "@/lib/themes";
+
 import axios from "axios";
 
 export default function UploadCreation(props: any) {
+  const { trigger } = props;
+
   const [title, setTitle] = useState("");
   const [origin, setOrigin] = useState("");
   const [previewUrl, setPreviewUrl] = useState("");
-  
   const [recommand, setRecommand] = useState(5);
 
   const fixedOptions: string[] = [];
   const [value, setValue] = useState(fixedOptions);
-  
 
-  const handleSubmit = (e: any) => {
-    // TODO: Update User Profile
+  function handleSubmit() {
     const payload = {
-      title,
-      origin,
-      previewUrl,
-      recommand,
-      value,
+      title: title,
+      origin: origin,
+      previewUrl: previewUrl,
+      recommand: recommand,
+      value: value,
     };
-  
-    // Make the API call
+
     axios.post("/api/uploadCreation", payload)
       .then(response => {
-        console.log(response);
         alert("上傳成功!");
+        trigger();
       }).catch((e)=>console.error(e));
   };
 
   // Preview
-  const handleFileChange = (e:any) => {
+  function handleFileChange(e:any) {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -59,7 +60,6 @@ export default function UploadCreation(props: any) {
       <Typography component="h1" variant="h5" m={3} sx={{ fontWeight: 600 }}>
         上傳作品 Creation
       </Typography>
-        
       <Divider />
 
       <Box mx={5} my={3}>
@@ -107,17 +107,17 @@ export default function UploadCreation(props: any) {
           multiple
           id="taginput_component"
           value={value}
-          onChange={(event, newValue) => {
+          onChange={(event:any, newValue:any) => {
             setValue([
               ...fixedOptions,
-              ...newValue.filter((option) => fixedOptions.indexOf(option) === -1),
+              ...newValue.filter((option:any) => fixedOptions.indexOf(option) === -1),
             ]);
             console.log(value);
           }}
           options={default_tags}
-          getOptionLabel={(option) => option}
-          renderTags={(tagValue, getTagProps) =>
-            tagValue.map((option, index) => (
+          getOptionLabel={(option:any) => option}
+          renderTags={(tagValue:any, getTagProps:any) =>
+            tagValue.map((option:any, index:number) => (
               <Chip
                 label={option}
                 {...getTagProps({ index })}
@@ -127,7 +127,7 @@ export default function UploadCreation(props: any) {
             ))
           }
           style={{ width: "60%" }}
-          renderInput={(params) => (
+          renderInput={(params:any) => (
             <TextField {...params} placeholder="這是什麼樣的作品呢？" />
           )}
         />
@@ -160,7 +160,6 @@ export default function UploadCreation(props: any) {
           完成上傳 Submit
         </Button>
       </Box>
-        
     </ThemeProvider>
   )
 }

@@ -1,7 +1,11 @@
 "use client"
-import { main_theme } from "@/lib/themes"
-import { Box, Button, CssBaseline, Divider, Input, TextField, ThemeProvider, Typography } from "@mui/material"
+
 import { useEffect, useState } from "react";
+import { Box, Button, CssBaseline, Divider, Input, TextField, Typography } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
+
+import { main_theme } from "@/lib/themes";
+
 import axios from "axios"
 
 export default function UserProfile(props: any) {
@@ -17,31 +21,23 @@ export default function UserProfile(props: any) {
   const [link2, setLink2] = useState("");
   const [link3, setLink3] = useState("");
   const [disable, setDisable] = useState(false);
+
   useEffect(()=>{
     setName(actionUser.name);
     setQuote(actionUser.quote);
     setTitle(actionUser.title);
     setBio(actionUser.bio);
     const linkx = actionUser.links?.split(",");
-    if(linkx?.length > 0) {
-      setLink0(linkx[0]);
-    }
-    if(linkx?.length > 1) {
-      setLink1(linkx[1]);
-    }
-    if(linkx?.length > 2) {
-      setLink2(linkx[2]);
-    }
-    if(linkx?.length > 3) {
-      setLink3(linkx[3]);
-    }
+    if(linkx?.length > 0) setLink0(linkx[0]);
+    if(linkx?.length > 1) setLink1(linkx[1]);
+    if(linkx?.length > 2) setLink2(linkx[2]);
+    if(linkx?.length > 3) setLink3(linkx[3]);
   }, [actionUser]);
 
   const handleSubmit = (e: any) => {
-    // TODO: Update User Profile
     setDisable(true);
-    const links = [link0, link1, link2, link3].join(",");
 
+    const links = [link0, link1, link2, link3].join(",");
     const payload = {
       name: name,
       quote: quote,
@@ -50,16 +46,13 @@ export default function UserProfile(props: any) {
       links: links
     };
   
-    // Make the API call
     axios.post("/api/userprofile", payload)
-      .then(response => {
+      .then((e) => {
         alert("修改成功");
         trigger();
       }).catch((e) => {
-        // Handle error
-        alert("Error occurred while updating profile");
+        alert("修改失敗");
       }).finally(() =>setDisable(false));
-
   };
 
   return (
@@ -68,8 +61,8 @@ export default function UserProfile(props: any) {
       <Typography component="h1" variant="h5" m={3} sx={{ fontWeight: 600 }}>
         帳號資料 Account
       </Typography>
-      
       <Divider />
+
       <Box mx={5} my={3}>
         <Typography>名稱 Name</Typography>
         <Input
@@ -82,6 +75,7 @@ export default function UserProfile(props: any) {
           disabled = {disable}
         />
       </Box>
+
       <Box mx={5} my={3}>
         <Typography>座右銘 Quote</Typography>
         <Input
@@ -94,6 +88,7 @@ export default function UserProfile(props: any) {
           disabled = {disable}
         />
       </Box>
+
       <Box mx={5} my={3} sx={{ typography: 'subtitle2'}}>
         <Typography>稱謂 Title</Typography>
         <Input
@@ -106,6 +101,7 @@ export default function UserProfile(props: any) {
           disabled = {disable}
         />
       </Box>
+
       <Box mx={5} my={3} sx={{ typography: 'subtitle2'}}>
         <Typography>小屋介紹 Bio</Typography>
         <TextField
@@ -119,6 +115,7 @@ export default function UserProfile(props: any) {
           disabled = {disable}
         />
       </Box>
+
       <Box mx={5} my={3} sx={{ typography: 'subtitle2'}} >
         <Typography>其他連結 Links</Typography>
         <TextField
@@ -161,8 +158,8 @@ export default function UserProfile(props: any) {
           onChange={(e:any)=>setLink3(e.target.value)}
           disabled = {disable}
         />
-        
       </Box>
+      
       <Box mx={5} my={3} sx={{ typography: 'subtitle2'}}>
         <Button
           type="submit"
