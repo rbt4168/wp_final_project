@@ -1,8 +1,8 @@
 "use client"
-import FooterComponent from "@/components/footer"
-import NavigationBar from "@/components/navbar"
-import { main_theme } from "@/lib/themes"
-import { Box, CssBaseline, Divider, Grid, ThemeProvider} from "@mui/material"
+
+import { useEffect, useState } from "react"
+import { Box, CssBaseline, Divider, Grid } from "@mui/material"
+import { ThemeProvider } from "@mui/material/styles";
 
 import Person2Icon from '@mui/icons-material/Person2';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
@@ -15,19 +15,24 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import LoyaltyIcon from '@mui/icons-material/Loyalty';
 
+import FooterComponent from "@/components/footer"
+import NavigationBar from "@/components/navbar"
+
+import { main_theme } from "@/lib/themes"
+
 import SidebarComponent from "./_components/sidebar"
 import UserProfile from "./_components/userprofile"
-import { useEffect, useState } from "react"
 import RecommandWork from "./_components/recommand"
 import LikedWork from "./_components/likedwork"
 import LikedCreator from "./_components/likedcreator"
 import UploadCreation from "./_components/uploadcreation"
 import ModifyCreation from "./_components/modifycreation"
-import axios from "axios"
 import Transactions from "./_components/txlists"
 import TransactionCreat from "./_components/sendtransaction"
 import PrivTagManange from "./_components/privatetagman"
 import OwnedTags from "./_components/ownedtag"
+
+import axios from "axios"
 
 export default function Profile() {
   const [ actionUser, setActionUser ] = useState({});
@@ -50,6 +55,7 @@ export default function Profile() {
 
   const [ modifyID, setModifyID ] = useState(0);
   const [ selectName, setSelectName ] = useState("帳號資料");
+
   const list_items = [
     {
       title: "帳號資料",
@@ -116,7 +122,7 @@ export default function Profile() {
         </Grid>
         <Divider orientation="vertical" flexItem />
         <Grid item xs={7} sm={8} md={9}>
-          {list_items.map((e:any,id:any)=>{
+          {list_items.map((e:any,id:number)=>{
               if(e.title === selectName) {
                 return (<Box key={id}>{e.component}</Box>);
               }
