@@ -1,30 +1,38 @@
 "use client"
+
+import { useEffect, useState } from "react";
+import { Box, Button, CssBaseline, Dialog, DialogActions,
+  DialogContent, DialogContentText, DialogTitle, Divider,
+  Grid, List, ListItem, ListItemButton, Typography } from "@mui/material";
+  import { ThemeProvider } from '@mui/material/styles';
+
 import GlobalChip from "@/components/chipglobal";
 import CreatorHeader from "@/components/creatorheader";
 import DivLineCenter from "@/components/divline";
 import FooterComponent from "@/components/footer";
 import NavigationBar from "@/components/navbar";
+
 import { main_theme } from "@/lib/themes";
-import { Box, Button, CssBaseline, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Grid, List, ListItem, ListItemButton, ThemeProvider, Typography } from "@mui/material";
+
 import axios from "axios";
-import { useEffect, useState } from "react";
 
 function CostListItem(props: any) {
   const {text, cost, author} = props;
+
   const [open, setOpen] = useState(false);
 
-  const handleAgree = () => {
+  function handleAgree() {
     setOpen(false);
+
     let payload = {
       tagname: text,
       authorname: author, 
     }
-    // complete buying action
+
     axios.post("/api/buyTag", payload).then((e)=>{
-      // console.log(e);
       alert("購買成功!");
     }).catch((e)=>console.error(e));
-  };
+  }
 
   return(
     <>
@@ -38,6 +46,7 @@ function CostListItem(props: any) {
             </Typography>
           </Box>
         </ListItemButton>
+
         <Dialog
           open={open}
           onClose={()=>setOpen(false)}
@@ -59,6 +68,7 @@ function CostListItem(props: any) {
             </Button>
           </DialogActions>
         </Dialog>
+
       </ListItem>
     </>
   )
@@ -84,16 +94,16 @@ export default function DonatePage(props: any) {
       console.log(e.data);
       setActiveAuthor(e.data);
     }).catch((e)=>console.error(e));
-  }, [])
+  }, [author_id])
 
   return(
     <ThemeProvider theme={main_theme}>
       <CssBaseline/>
       <NavigationBar/>
-      <CreatorHeader activeAuthor={activeAuthor} setActiveAuthor={setActiveAuthor} authorId={author_id}/>
 
-      <DivLineCenter text="Private Tags"/>
+      <CreatorHeader activeAuthor={activeAuthor} setActiveAuthor={setActiveAuthor} authorId={author_id}/>
       
+      <DivLineCenter text="Private Tags"/>
       <Grid
         mt={3}
         container
@@ -102,7 +112,11 @@ export default function DonatePage(props: any) {
       >
         <Grid item xs={7} md={7}>
           <List >
-            {activeAuthor.tags?.map((e:any, id:any)=>(<CostListItem author={activeAuthor.account} text={e} cost={activeAuthor.costs[id]}/>))}
+            {activeAuthor.tags?.map((e:any, id:any)=>(
+              <CostListItem author={activeAuthor.account}
+                text={e} cost={activeAuthor.costs[id]}
+              />
+            ))}
             <Divider />
           </List>
         </Grid>
