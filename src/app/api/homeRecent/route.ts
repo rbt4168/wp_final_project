@@ -12,7 +12,7 @@ export async function GET(request: Request) {
         tags   : pictureTable.tags
       })
       .from(pictureTable)
-      .orderBy(desc(pictureTable.liked_count))
+      .orderBy(desc(pictureTable.pic_id))
       .limit(5)
       .execute();
     //console.log(hotpicture);

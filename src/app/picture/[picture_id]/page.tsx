@@ -1,6 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react";
+import { useRouter } from 'next/navigation';
+
 import { Box, CssBaseline, Divider, Grid,
   IconButton, List, Paper, Typography } from "@mui/material";
 import { ThemeProvider } from '@mui/material/styles';
@@ -24,6 +26,7 @@ import { PICTURE_SERVER_URL } from "@/lib/utils";
 export default function PictureFull(props: any) {
   const { params } = props;
   const { picture_id } = params;
+  const router = useRouter();
 
   const [disable, setDisable] = useState(false);
   const [ picdata, setPicdata ] = useState({
@@ -59,9 +62,13 @@ export default function PictureFull(props: any) {
       pic_id: picture_id,
     }
 
-    axios.post('/api/getPicture',payload).then((e)=>{
+    axios.post('/api/getOriginalPicture',payload).then((e)=>{
       setPicdata(e.data.picture[0]);
-    }).catch((e)=>console.error(e));
+    }).catch((e) => {
+      console.error(e);
+      router.push('https://http.cat/404');
+    });
+  
     axios.get('/api/getNowUser').then((e)=>{
       setCurrentUser(e.data.user[0]);
     }).catch((e)=>console.error(e));

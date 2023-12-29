@@ -15,7 +15,7 @@ export async function POST(request: Request) {
       .from(pictureTable)
       .where(eq(pictureTable.pic_id, pic_id))
       .execute();
-    
+
     
     // Return the picture information
     return NextResponse.json({ picture });
