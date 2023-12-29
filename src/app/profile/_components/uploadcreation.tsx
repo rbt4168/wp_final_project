@@ -27,7 +27,7 @@ export default function UploadCreation(props: any) {
   const [value, setValue] = useState(fixedOptions);
   const [disabled, setDisabled] = useState(false);
 
-  const all_tag = actionUser.private_tags ? [ ...default_tags, ...actionUser?.private_tags?.map((e:any)=>("private-"+actionUser.username+"-"+e)) ] : default_tags
+  const all_tag = actionUser?.private_tags ? [ ...default_tags, ...actionUser?.private_tags?.map((e:any)=>("private-"+actionUser.username+"-"+e)) ] : default_tags
 
   function handleSubmit() {
     setDisabled(true);

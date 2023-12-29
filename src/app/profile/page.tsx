@@ -33,10 +33,23 @@ import PrivTagManange from "./_components/privatetagman"
 import OwnedTags from "./_components/ownedtag"
 
 import axios from "axios"
+import { useRouter } from "next/navigation";
 
 export default function Profile() {
   const [ actionUser, setActionUser ] = useState({});
   const [ tirgger, setTrigger ] = useState(false);
+
+  const [ isLogin, setIsLogin ] = useState(false);
+
+  const router = useRouter();
+
+  useEffect(()=>{
+    if(!isLogin) {
+      axios.get("/api/getNowUser").then(()=>{
+        setIsLogin(true);
+      }).catch(()=>{router.push("/login")});
+    }
+  }, []);
 
   useEffect(()=>{
     axios.get("/api/getNowUser").then((e)=>{

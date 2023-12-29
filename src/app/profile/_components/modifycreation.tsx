@@ -25,7 +25,7 @@ export default function ModifyCreation(props: any) {
   const fixedOptions: string[] = [];
   const [value, setValue] = useState(fixedOptions);
   
-  const all_tag = actionUser.private_tags ? [ ...default_tags, ...actionUser?.private_tags?.map((e:any)=>("private-"+actionUser.username+"-"+e)) ] : default_tags;
+  const all_tag = actionUser?.private_tags ? [ ...default_tags, ...actionUser?.private_tags?.map((e:any)=>("private-"+actionUser.username+"-"+e)) ] : default_tags;
 
   useEffect(()=>{
     const payload = {

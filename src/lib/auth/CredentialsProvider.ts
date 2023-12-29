@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import { eq ,and, or} from "drizzle-orm";
 
 import { db } from "@/db";
-import { usersTable } from "@/db/schema";
+import { transactionTable, usersTable } from "@/db/schema";
 import { authSchema } from "@/validators/auth";
 
 export default CredentialsProvider({
@@ -54,7 +54,19 @@ export default CredentialsProvider({
           hashedPassword,
           provider: "credentials",
           username: username,
+          name: username,
+          quote: "安安~~",
+          coins: 100
         }).returning();
+
+      const [ newTx ] = await db
+        .insert(transactionTable)
+        .values({
+          to_user: username,
+          from_user: "system",
+          amount: 100,
+          timestamp: Date.now().toString()
+        }).returning()
         
       return {
         email: createdUser.email,

@@ -6,7 +6,21 @@ import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import { ThemeProvider } from '@mui/material/styles';
 import { main_theme } from '../lib/themes';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 export default function NavigationBar(props: any) {
+  const [ isLogin, setIsLogin ] = useState(false);
+
+  useEffect(()=>{
+    if(!isLogin) {
+      axios.get("/api/getNowUser").then(()=>{
+        setIsLogin(true);
+      }).catch(()=>{setIsLogin(false)});
+    }
+  }, [])
+
   return(
     <ThemeProvider theme={main_theme}>
       <AppBar
@@ -46,9 +60,18 @@ export default function NavigationBar(props: any) {
                 Support
             </Link>
           </nav>
-          <Button component="a" href="/login" color="secondary" variant="contained" sx={{ my: 1, mx: 1.5 }}>
-            Login
-          </Button>
+          { isLogin ? (
+            <Button component="a" onClick={()=>{
+              signOut()
+            }} color="secondary" variant="contained" sx={{ my: 1, mx: 1.5 }}>
+              Logout
+            </Button>
+          ) : (
+            <Button component="a" href="/login" color="secondary" variant="contained" sx={{ my: 1, mx: 1.5 }}>
+              Login
+            </Button>
+          )}
+          
         </Toolbar>
       </AppBar>
     </ThemeProvider>

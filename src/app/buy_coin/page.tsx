@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Button, Card, CardActions, CardContent, 
   CardHeader, Container, CssBaseline, Grid, Typography } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
@@ -11,6 +11,7 @@ import FooterComponent from '@/components/footer';
 import { main_theme } from '@/lib/themes';
 
 import axios from "axios"
+import { useRouter } from 'next/navigation';
 
 const tiers = [
   {
@@ -50,8 +51,20 @@ const tiers = [
   },
 ];
 
-export default function Pricing() {
+export default function Pricing(props: any) {
   const [isDisabled, setIsDisabled] = useState(false);
+  
+  const [ isLogin, setIsLogin ] = useState(false);
+
+  const router = useRouter();
+
+  useEffect(()=>{
+    if(!isLogin) {
+      axios.get("/api/getNowUser").then(()=>{
+        setIsLogin(true);
+      }).catch(()=>{router.push("/login")});
+    }
+  }, []);
 
   function handleSubmit(amount:number){
     setIsDisabled(true);

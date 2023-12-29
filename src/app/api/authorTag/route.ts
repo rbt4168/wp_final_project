@@ -51,6 +51,7 @@ export async function POST(request: Request) {
       if (!User.owned_private_tag || User.owned_private_tag.length === 0) {
         return NextResponse.json("No picture", { status: 404 });
       }
+    
     // Return the user information
     const matchedPictureIDs = pictures.filter(picture =>
       picture.tags && picture.tags.some(tag => User.owned_private_tag && User.owned_private_tag.includes(tag))
