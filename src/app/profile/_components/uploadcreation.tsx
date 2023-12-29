@@ -25,8 +25,9 @@ export default function UploadCreation(props: any) {
 
   const fixedOptions: string[] = [];
   const [value, setValue] = useState(fixedOptions);
-
+  const [disabled, setDisabled] = useState(false);
   function handleSubmit() {
+    setDisabled(true);
     const payload = {
       title: title,
       origin: origin,
@@ -39,7 +40,14 @@ export default function UploadCreation(props: any) {
       .then(() => {
         alert("上傳成功!");
         trigger();
-      }).catch((e)=>console.error(e));
+      }).catch((e)=>console.error(e)).finally(() =>{
+        setTitle("");
+        setOrigin("");
+        setPreviewUrl("");
+        setRecommand(5);
+        setValue(fixedOptions);
+        setDisabled(false);
+      });
   };
 
   // Preview
@@ -70,6 +78,7 @@ export default function UploadCreation(props: any) {
           color="primary"
           sx={{width: "60%"}}
           value={title}
+          disabled={disabled}
           onChange={(e:any)=>setTitle(e.target.value)}
         />
       </Box>
@@ -81,6 +90,7 @@ export default function UploadCreation(props: any) {
           color="primary"
           multiline
           rows={5}
+          disabled={disabled}
           sx={{width: "60%"}}
           value={origin}
           onChange={(e:any)=>setOrigin(e.target.value)}
@@ -96,6 +106,7 @@ export default function UploadCreation(props: any) {
           getLabelText={(value: number) => `${value} Heart${value !== 1 ? 's' : ''}`}
           icon={<FavoriteIcon fontSize="inherit" />}
           emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+          disabled={disabled}
           value={recommand}
           onChange={(e:any)=>setRecommand(e.target.value)}
         />
@@ -107,6 +118,7 @@ export default function UploadCreation(props: any) {
           multiple
           id="taginput_component"
           value={value}
+          disabled={disabled}
           onChange={(event:any, newValue:any) => {
             setValue([
               ...fixedOptions,
@@ -136,6 +148,7 @@ export default function UploadCreation(props: any) {
 
       <Box mx={5} my={3} >
         <Button component="label" variant="contained" 
+          disabled={disabled}
           sx={{width: "60%"}} startIcon={<CloudUploadIcon />}>
           Upload Creation
           <VisuallyHiddenInput type="file" accept="image/*" onChange={handleFileChange}/>
@@ -156,7 +169,7 @@ export default function UploadCreation(props: any) {
       }
 
       <Box mx={5} my={3}>
-        <Button component="label" variant="outlined" onClick={handleSubmit}
+        <Button component="label" variant="outlined" onClick={handleSubmit} disabled={disabled}
           sx={{width: "60%"}}>
           完成上傳 Submit
         </Button>
