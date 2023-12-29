@@ -35,6 +35,7 @@ export const pictureTable = pgTable(
   {
     pic_id: serial("pic_id").primaryKey(),
     url: text("url"),
+    origin_url: text("origin_url"),
     author_id: integer("author"),
     name: text("name"),
     description: text("description"),
