@@ -20,10 +20,7 @@ import { main_theme } from '@/lib/themes';
 import { useState } from "react";
 
 import { signIn } from "next-auth/react";
-import Image from "next/image";
 
-// Run: npx shadcn-ui@latest add button
-import { MyButton } from "../../components/button";
 // Run: npx shadcn-ui@latest add card
 import { publicEnv } from "@/lib/env/public";
 
@@ -31,11 +28,8 @@ import { publicEnv } from "@/lib/env/public";
 export default function SignInSide() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [isSignUp, setIsSignUp] = useState<boolean>(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     // TODO: sign in logic
     signIn("credentials", {
       email,
@@ -78,7 +72,7 @@ export default function SignInSide() {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
@@ -112,56 +106,62 @@ export default function SignInSide() {
                 label="Remember me"
               />
               <Button
-                type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                onClick={handleSubmit}
               >
                 Sign In
               </Button>
-              
             </Box>
-            <MyButton
-                onClick={async () => {
-                  // TODO: sign in with github
-                  signIn("github", {
-                    callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/`,
-                  });
-                }}
-                className="flex w-full"
-                variant={"outline"}
-              >
-                {/* Remember to copy "github.png" to ./public folder */}
-                <Image src="/github.png" alt="github icon" width={20} height={20} />
-                <span className="grow">Sign In with Github</span>
-            </MyButton>
-            <MyButton
-                onClick={async () => {
-                  // TODO: sign in with github
-                  signIn("google", {
-                    callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/`,
-                  });
-                }}
-                className="flex w-full"
-                variant={"outline"}
-              >
-                {/* Remember to copy "github.png" to ./public folder */}
-                <Image src="/google.jpg" alt="google icon" width={20} height={20} />
-                <span className="grow">Sign In with Google</span>
-            </MyButton>
+            <Button
+              onClick={async () => {
+                signIn("github", {
+                  callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/`,
+                });
+              }}
+              className="flex w-full"
+              variant="contained"
+            >
+              <Box component="img"
+                width={20}
+                height={20}
+                alt="github icon"
+                src="/github.png"
+              />
+              <Typography className="grow">Sign In with Github</Typography>
+            </Button>
+            <Button
+              onClick={async () => {
+                signIn("google", {
+                  callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/`,
+                });
+              }}
+              className="flex w-full"
+              variant="contained"
+            >
+              <Box component="img"
+                width={20}
+                height={20}
+                alt="google icon"
+                src="/google.jpg"
+              />
+              <Typography className="grow">Sign In with Google</Typography>
+            </Button>
+            
             <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="/register" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Forgot password?
+                </Link>
               </Grid>
-              <Copyright sx={{ mt: 5 }} />
+              <Grid item>
+                <Link href="/register" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
+            <Copyright sx={{ mt: 5 }} />
           </Box>
         </Grid>
       </Grid>

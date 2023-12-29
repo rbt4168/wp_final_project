@@ -19,20 +19,14 @@ import { main_theme } from '@/lib/themes';
 
 import { useState } from "react";
 
-import { signIn } from "next-auth/react";
-import Image from "next/image";
-
-// Run: npx shadcn-ui@latest add button
-import { MyButton } from "../../components/button";
-// Run: npx shadcn-ui@latest add card
 import { publicEnv } from "@/lib/env/public";
+import { signIn } from "next-auth/react";
 
 
 export default function SignInSide() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [username, setName] = useState<string>("");
-  const [isSignUp, setIsSignUp] = useState<boolean>(false);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -134,6 +128,41 @@ export default function SignInSide() {
               >
                 Register
               </Button>
+              <Button
+                onClick={async () => {
+                  signIn("github", {
+                    callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/`,
+                  });
+                }}
+                className="flex w-full"
+                variant="contained"
+              >
+                <Box component="img"
+                  width={20}
+                  height={20}
+                  alt="github icon"
+                  src="/github.png"
+                />
+              <Typography className="grow">Sign In with Github</Typography>
+              </Button>
+              <Button
+                onClick={async () => {
+                  signIn("google", {
+                    callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/`,
+                  });
+                }}
+                className="flex w-full"
+                variant="contained"
+              >
+                <Box component="img"
+                  width={20}
+                  height={20}
+                  alt="google icon"
+                  src="/google.jpg"
+                />
+                <Typography className="grow">Sign In with Google</Typography>
+              </Button>
+              
               <Grid container>
                 <Grid item>
                   <Link href="/login" variant="body2">
@@ -143,34 +172,6 @@ export default function SignInSide() {
               </Grid>
               <Copyright sx={{ mt: 5 }} />
             </Box>
-              <MyButton
-                onClick={async () => {
-                  // TODO: sign in with github
-                  signIn("github", {
-                    callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/`,
-                  });
-                }}
-                className="flex w-full"
-                variant={"outline"}
-              >
-                {/* Remember to copy "github.png" to ./public folder */}
-                <Image src="/github.png" alt="github icon" width={20} height={20} />
-                <span className="grow">Sign Up with Github</span>
-            </MyButton>
-              <MyButton
-                onClick={async () => {
-                  // TODO: sign in with github
-                  signIn("google", {
-                    callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/`,
-                  });
-                }}
-                className="flex w-full"
-                variant={"outline"}
-              >
-                {/* Remember to copy "github.png" to ./public folder */}
-                <Image src="/google.jpg" alt="google icon" width={20} height={20} />
-                <span className="grow">Sign Up with Google</span>
-              </MyButton>
           </Box>
         </Grid>
       </Grid>
