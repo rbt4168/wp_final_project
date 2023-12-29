@@ -5,11 +5,11 @@ import { ThemeProvider } from "@mui/material/styles";
 
 import { CreatorListItem } from "@/components/creatorcomponent";
 
-import { main_theme } from "@/lib/themes"
+import { main_theme } from "@/lib/themes";
 
 export default function LikedCreator(props: any) {
   const { actionUser } = props;
-  
+
   return (
     <ThemeProvider theme={main_theme}>
       <CssBaseline />

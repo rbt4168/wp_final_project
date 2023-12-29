@@ -1,32 +1,35 @@
 "use client"
-import { main_theme } from "@/lib/themes"
-import { Box, CssBaseline, Divider, ThemeProvider,
-    Typography, List, ListItem, ListItemButton, Input, Button} from "@mui/material"
+
 import { useEffect, useState } from "react";
+import { Box, CssBaseline, Divider,
+    Typography, List, ListItem, ListItemButton, Input, Button} from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
+
 import GlobalChip from "@/components/chipglobal";
-import { QueryBuilder } from "drizzle-orm/sqlite-core";
-import { Quicksand } from "next/font/google";
+
+import { main_theme } from "@/lib/themes"
+
 import axios from "axios";
 
-function TxListItem(props: any) {
+function PrivateTagListItem(props: any) {
     const {item, price, username, ikey, setsel} = props;
     return(
       <>
-      <ListItem disablePadding>
-      <ListItemButton onClick={()=>setsel(ikey)}>
-        <Box display="flex" justifyContent="space-between" sx={{ width: "100%" }}>
-          <Box>Tag: <Typography><GlobalChip text={"private-"+username+"-"+item}/></Typography></Box>
-          <Box>Price: <Typography variant="h6" color="grey.600">{price}</Typography></Box>
-        </Box>
-      </ListItemButton>
-      </ListItem>
-      <Divider />
+        <ListItem disablePadding>
+        <ListItemButton onClick={()=>setsel(ikey)}>
+          <Box display="flex" justifyContent="space-between" sx={{ width: "100%" }}>
+            <Box>Tag: <Typography><GlobalChip text={"private-"+username+"-"+item}/></Typography></Box>
+            <Box>Price: <Typography variant="h6" color="grey.600">{price}</Typography></Box>
+          </Box>
+        </ListItemButton>
+        </ListItem>
+        <Divider />
       </>
     )
 }
 
 export default function PrivTagManange(props: any) {
-  const { setModifyID, setSelectName, actionUser } = props;
+  const { actionUser, trigger } = props;
 
   const [ tags, setTags ] = useState(["level-1", "level-2", "level-3", "level-4"]);
   const [ priArr, setPriArr ] = useState([50, 100, 150, 300]);
@@ -34,15 +37,14 @@ export default function PrivTagManange(props: any) {
   const [selid, setSelid] = useState(0);
 
   function handleSubmit() {
-    console.log(actionUser);
     let payload = {
       tags: tags,
       prices: priArr,
     }
 
     axios.post("/api/savePrivateTags", payload).then((e)=>{
-      // console.log(e.data);
-      alert("修改成功!")
+      alert("修改成功!");
+      trigger();
     }).catch((e)=>console.error(e));
   }
 
@@ -53,7 +55,7 @@ export default function PrivTagManange(props: any) {
     if(actionUser.private_tags_cost) {
       setPriArr(actionUser.private_tags_cost);
     }
-  }, [])
+  }, [actionUser])
 
   return (
     <ThemeProvider theme={main_theme}>
@@ -108,12 +110,14 @@ export default function PrivTagManange(props: any) {
           <List>
             <Divider />
             {tags.map((e: any, index:any) => (
-              <TxListItem setsel={setSelid} key={index} ikey={index} item={e} price={priArr[index]} username={actionUser.username}/>
+              <PrivateTagListItem setsel={setSelid} key={index}
+                ikey={index} item={e} price={priArr[index]}
+                username={actionUser.username}  
+              />
             ))}
           </List>
         </Box>
       </Box>
-      
 
       <Box mx={5} my={3}>
         <Button component="label" variant="outlined" onClick={handleSubmit}

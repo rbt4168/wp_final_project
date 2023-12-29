@@ -4,7 +4,7 @@ import { ThemeProvider } from "@mui/material/styles";
 
 import { WorkCardComponent } from "@/components/workcomponent";
 
-import { main_theme } from "@/lib/themes"
+import { main_theme } from "@/lib/themes";
 
 export default function LikedWork(props: any) {
   const { actionUser } = props;

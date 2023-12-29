@@ -1,9 +1,15 @@
-import { main_theme } from "@/lib/themes";
-import { Autocomplete, Box, Chip, CssBaseline, Divider, TextField, ThemeProvider, Typography } from "@mui/material";
+"use client"
+
 import { useState } from "react";
+import { Autocomplete, Box, Chip, CssBaseline, Divider,
+  TextField, Typography } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
+
+import { main_theme } from "@/lib/themes";
 
 export default function OwnedTags(props: any) {
   const { actionUser } = props;
+
   const fixedOptions: string[] = [];
   const [value, setValue] = useState([...actionUser.owned_private_tag]);
 
@@ -13,23 +19,22 @@ export default function OwnedTags(props: any) {
       <Typography component="h1" variant="h5" m={3} sx={{ fontWeight: 600 }}>
         擁有的標籤 Owned Private
       </Typography>
-        
       <Divider />
         
       <Box mx={5} my={3} sx={{ typography: 'subtitle2'}}>
         <Autocomplete
           multiple
           value={value}
-          onChange={(event, newValue) => {
+          onChange={(event:any, newValue:any) => {
             setValue([
               ...fixedOptions,
-              ...newValue.filter((option) => fixedOptions.indexOf(option) === -1),
+              ...newValue.filter((option:any) => fixedOptions.indexOf(option) === -1),
             ]);
             console.log(value);
           }}
           options={[]}
-          renderTags={(tagValue, getTagProps) =>
-            tagValue.map((option, index) => (
+          renderTags={(tagValue:any, getTagProps:any) =>
+            tagValue.map((option:any, index:any) => (
               <Chip
                 label={option}
                 {...getTagProps({ index })}
@@ -41,7 +46,7 @@ export default function OwnedTags(props: any) {
           readOnly
           freeSolo
           sx={{ width: "80%" }}
-          renderInput={(params) => (
+          renderInput={(params:any) => (
             <TextField {...params} placeholder="可愛的標籤們~" />
           )}
         />
