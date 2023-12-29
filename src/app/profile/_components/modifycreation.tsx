@@ -10,7 +10,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { StyledRating } from "@/components/styledcomps";
 
 import { main_theme } from "@/lib/themes";
-import { default_tags } from "@/lib/utils";
+import { PICTURE_SERVER_URL, default_tags } from "@/lib/utils";
 
 import axios from "axios";
 
@@ -41,6 +41,7 @@ export default function ModifyCreation(props: any) {
       setRecommand(pic.recommand_point);
       setValue(pic.tags);
       setPreviewUrl(pic.url);
+      console.log(pic.url);
     }).catch((e)=>console.error(e));
   }, [pic_id]);
 
@@ -91,7 +92,7 @@ export default function ModifyCreation(props: any) {
               width: "60%",
             }}
             alt="preview"
-            src={previewUrl}
+            src={PICTURE_SERVER_URL+previewUrl}
           />
         </Box>
         ) : (<></>)
