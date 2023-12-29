@@ -5,11 +5,8 @@ import FooterComponent from "@/components/footer";
 import NavigationBar from "@/components/navbar";
 import { main_theme } from "@/lib/themes";
 import { dnd_handler, generateRandomColor } from "@/lib/utils";
-import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, CssBaseline, Divider, Grid, IconButton, List, ListItem, TextField, ThemeProvider, Typography } from "@mui/material";
+import { Autocomplete, Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Chip, CssBaseline, Divider, Grid, IconButton, List, ListItem, TextField, ThemeProvider, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
@@ -20,6 +17,8 @@ import {
   Draggable,
 } from 'react-beautiful-dnd';
 import { WorkCardComponent } from "@/components/workcomponent";
+import { StyledRating } from "@/components/styledcomps";
+import SearchBar from "@/components/searchbarcom";
 
 function DragComponent(props:any) {
   const { cid, idx, text } = props;
@@ -68,60 +67,22 @@ export default function SearchPage(props: any) {
       text: 'Jannet',
     },
   ])
+  
+  const fixedOptions: string[] = [];
+  const [value, setValue] = useState(fixedOptions);
 
-  const [dgid, setDgid] = useState("dg0");
-  useEffect(()=>{
-    setDgid(generateRandomColor());
-  }, [])
+  // const [dgid, setDgid] = useState("dg0");
+  
+  // useEffect(()=>{
+  //   setDgid(generateRandomColor());
+  // }, [])
 
   return(
     <ThemeProvider theme={main_theme}>
       <CssBaseline/>
       <NavigationBar/>
-      <Grid
-        mt={3}
-        container
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Grid item xs={9} md={9} alignItems="center">
-          <TextField
-            id="search"
-            placeholder="search"
-            color="primary"
-            size="small"
-            sx={{width: "90%"}}
-          />
-          <Button sx={{width: "10%"}} variant="outlined">
-            Search
-          </Button>
-        </Grid>
-      </Grid>
 
-      <DivLineCenter text="Search Restriction Priority List"/>
-
-      <Grid
-        mt={3}
-        container
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Grid item xs={5} md={5}>
-          <DragDropContext onDragEnd={(val)=>{setStateList(dnd_handler(stateList, val.source.index, val.destination?.index || val.source.index) as [])}}>
-            <Droppable key={dgid} droppableId={dgid}>
-              {(provided) => (
-                <div ref={provided.innerRef} {...provided.droppableProps}>
-                  <List>
-                    <Divider />
-                    {stateList.map((e,id)=>{return (<DragComponent cid={id} idx={id} text={e.text}/>)})}
-                  </List>
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-          </DragDropContext>
-        </Grid>
-      </Grid>
+      <SearchBar />
 
       <DivLineCenter text="Consequence"/>
 

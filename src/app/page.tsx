@@ -9,6 +9,7 @@ import { Button, CssBaseline, Grid, TextField, ThemeProvider } from "@mui/materi
 import { useState, useEffect } from "react";
 import { WorkCardComponent } from "@/components/workcomponent";
 import axios from "axios"
+import SearchBar from "@/components/searchbarcom";
 export default function Home() {
   const [ searchText, setSearchText ] = useState("");
 
@@ -48,27 +49,7 @@ export default function Home() {
       <CssBaseline/>
       <NavigationBar/>
 
-      <Grid
-        mt={3}
-        container
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Grid item xs={9} md={9} alignItems="center">
-          <TextField
-            id="search"
-            placeholder="search"
-            color="primary"
-            size="small"
-            sx={{width: "90%"}}
-            value={searchText}
-            onChange={(e:any)=>setSearchText(e.target.value)}
-          />
-          <Button sx={{width: "10%"}} variant="outlined" onClick={handleSubmit}>
-            Search
-          </Button>
-        </Grid>
-      </Grid>
+      <SearchBar />
       
       <DivLineCenter text="Followed Latest"/>
 
