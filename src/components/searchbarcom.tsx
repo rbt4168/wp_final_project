@@ -1,3 +1,4 @@
+"use client"
 import { main_theme } from "@/lib/themes";
 import { Autocomplete, Button, Chip, CssBaseline, Grid, TextField, ThemeProvider, Typography } from "@mui/material";
 import DivLineCenter from "./divline";
@@ -6,6 +7,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import { useState } from "react";
 import { default_tags } from "@/lib/utils";
+import axios from "axios"
 export default function SearchBar(props: any) {
   
   const posOptions: string[] = [];
@@ -19,11 +21,13 @@ export default function SearchBar(props: any) {
   function handleClick() {
     let payload = {
       target: searchText,
-      tags: [ ...posvalue.map((e)=>({tagname: e, postive: true})),
-              ...negvalue.map((e)=>({tagname: e, postive: false})) ]
+      tags: [ ...posvalue.map((e)=>({tagname: e, positive: true})),
+              ...negvalue.map((e)=>({tagname: e, positive: false})) ]
     }
 
-    console.log(payload);
+    axios.post("/api/search", payload)
+    .then((e) =>(console.log(e.data)))
+    .catch((e)=>(console.log(e)));
   }
 
   return (
