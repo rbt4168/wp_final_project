@@ -40,7 +40,8 @@ export default function PictureFull(props: any) {
 
   useEffect(()=> {
     console.log(currentUser?.liked_picture, picture_id);
-    setonliked(currentUser?.liked_picture?.includes(parseInt(picture_id)));
+    let pic_int = parseInt(picture_id);
+    setonliked(currentUser?.liked_picture?.includes(pic_int));
   }, [currentUser])
 
   useEffect(()=>{

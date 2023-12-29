@@ -24,7 +24,7 @@ export default function AuthorPage(props: any) {
 
   const [ recArr, setRecArr ] = useState([]);
   const [ recentArr, setRecentArr ] = useState([]);
-  const [ latArr, setLatArr ] = useState([[]]);
+  const [ latArr, setLatArr ] = useState([[]] as any[][]);
 
   useEffect(()=>{
     axios.get("/api/getAuthorById?user_id="+author_id).then((e)=>{
