@@ -19,6 +19,7 @@ import { RelatedWorkListItem } from "@/components/workcomponent";
 import { main_theme } from "@/lib/themes";
 
 import axios from "axios"
+import { PICTURE_SERVER_URL } from "@/lib/utils";
 
 export default function PictureFull(props: any) {
   const { params } = props;
@@ -98,7 +99,7 @@ export default function PictureFull(props: any) {
                 width: "100%"
               }}
               alt="The Creation."
-              src={picdata.origin_url? picdata.origin_url:""}
+              src={PICTURE_SERVER_URL + (picdata.origin_url? picdata.origin_url:"")}
           />
 
           <Box display="flex" justifyContent="space-between" >
