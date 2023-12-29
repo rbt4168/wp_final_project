@@ -83,7 +83,7 @@ export default function SignInSide() {
                 name="email"
                 autoComplete="email"
                 value={email}
-                onChange={(e) => {
+                onChange={(e:any) => {
                   setEmail(e.target.value);
                 }}
                 autoFocus
@@ -97,7 +97,7 @@ export default function SignInSide() {
                 type="password"
                 id="password"
                 value={password}
-                onChange={(e) => {
+                onChange={(e:any) => {
                   setPassword(e.target.value);
                 }}
                 autoComplete="current-password"
@@ -110,7 +110,7 @@ export default function SignInSide() {
                 label="Username"
                 id="username"
                 value={username}
-                onChange={(e) => {
+                onChange={(e:any) => {
                   setName(e.target.value);
                 }}
                 autoComplete="current-password"
