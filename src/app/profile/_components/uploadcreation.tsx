@@ -36,7 +36,7 @@ export default function UploadCreation(props: any) {
     };
 
     axios.post("/api/uploadCreation", payload)
-      .then(response => {
+      .then(() => {
         alert("上傳成功!");
         trigger();
       }).catch((e)=>console.error(e));
@@ -119,6 +119,7 @@ export default function UploadCreation(props: any) {
           renderTags={(tagValue:any, getTagProps:any) =>
             tagValue.map((option:any, index:number) => (
               <Chip
+                key={index}
                 label={option}
                 {...getTagProps({ index })}
                 disabled={fixedOptions.indexOf(option) !== -1}

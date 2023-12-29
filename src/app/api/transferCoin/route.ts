@@ -49,7 +49,7 @@ export async function POST(request: Request) {
 
     let user1count = (User.coins || 0);
     let user2count = (User2.coins || 0);
-    let amount_int = parseInt(amount);
+    const amount_int = parseInt(amount);
 
     if(amount_int <= 0) {
       return new NextResponse("Negtive or zero amount", { status: 400 });

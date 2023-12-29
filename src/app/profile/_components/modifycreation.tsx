@@ -26,13 +26,13 @@ export default function ModifyCreation(props: any) {
   const [value, setValue] = useState(fixedOptions);
 
   useEffect(()=>{
-    let payload = {
+    const payload = {
       pic_id: pic_id,
     }
 
     axios.post("/api/getPicture", payload).then((e)=>{
       console.log(e.data.picture[0]);
-      let pic = e.data.picture[0];
+      const pic = e.data.picture[0];
 
       setTitle(pic.name);
       setOrigin(pic.description);
@@ -52,9 +52,9 @@ export default function ModifyCreation(props: any) {
     };
   
     axios.post("/api/modifycreation", payload)
-      .then((e) => {
+      .then(() => {
         alert("修改成功!");
-      }).catch((e) => alert("修改作品失敗 "));
+      }).catch(() => alert("修改作品失敗 "));
   };
 
   function handleDelete() {
@@ -63,7 +63,7 @@ export default function ModifyCreation(props: any) {
     };
 
     axios.post("/api/deletecreation", payload)
-      .then((e) => {
+      .then(() => {
         alert("刪除作品成功!");
         trigger();
       }).catch(() => alert("刪除作品失敗 "));
@@ -150,8 +150,9 @@ export default function ModifyCreation(props: any) {
           options={default_tags}
           getOptionLabel={(option:any) => option}
           renderTags={(tagValue:any, getTagProps:any) =>
-            tagValue.map((option:any, index:any) => (
+            tagValue.map((option:any, index:number) => (
               <Chip
+                key={index}
                 label={option}
                 {...getTagProps({ index })}
                 disabled={fixedOptions.indexOf(option) !== -1}

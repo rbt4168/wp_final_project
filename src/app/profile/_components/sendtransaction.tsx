@@ -15,12 +15,12 @@ export default function TransactionCreat(props: any) {
   const [amount, setAmount] = useState("");
 
   function handleSubmit() {
-    let payload = {
+    const payload = {
       tacc: tacc,
       amount: amount,
     }
 
-    axios.post("/api/transferCoin", payload).then((e)=>{
+    axios.post("/api/transferCoin", payload).then(()=>{
       alert("轉帳成功!");
       trigger();
     }).catch((e)=>alert(e.response.data));

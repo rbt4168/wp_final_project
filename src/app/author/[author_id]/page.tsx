@@ -106,7 +106,7 @@ export default function AuthorPage(props: any) {
         latArr.map((e0:any[],idx:any)=>{
           if(idx===0) return(<></>);
           return(
-            <Grid container 
+            <Grid key={idx} container 
               justifyContent="center"
               alignItems="center"
             >

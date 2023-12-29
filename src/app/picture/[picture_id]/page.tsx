@@ -45,7 +45,7 @@ export default function PictureFull(props: any) {
 
   useEffect(()=> {
     console.log(currentUser?.liked_picture, picture_id);
-    let pic_int = parseInt(picture_id);
+    const pic_int = parseInt(picture_id);
     setonliked(currentUser?.liked_picture?.includes(pic_int as never));
   }, [currentUser])
 
@@ -123,7 +123,7 @@ export default function PictureFull(props: any) {
           <Divider textAlign="left">Tags</Divider>
 
           <List>
-            {picdata.tags?.map((e:any, id:any)=>(<GlobalChip text={e}/>))}
+            {picdata.tags?.map((e:any, id:number)=>(<GlobalChip key={id} text={e}/>))}
           </List>
 
           <Box mt={1}></Box>

@@ -34,8 +34,9 @@ export default function OwnedTags(props: any) {
           }}
           options={[]}
           renderTags={(tagValue:any, getTagProps:any) =>
-            tagValue.map((option:any, index:any) => (
+            tagValue.map((option:any, index:number) => (
               <Chip
+                key={index}
                 label={option}
                 {...getTagProps({ index })}
                 disabled={fixedOptions.indexOf(option) !== -1}

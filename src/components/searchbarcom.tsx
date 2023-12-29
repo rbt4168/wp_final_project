@@ -19,7 +19,7 @@ export default function SearchBar(props: any) {
   const [ searchText, setSearchText ] = useState("");
 
   useEffect(()=>{
-    let pload = JSON.parse(localStorage.getItem("payload") || "{}");
+    const pload = JSON.parse(localStorage.getItem("payload") || "{}");
     if(pload !== undefined) {
       console.log(pload);
       if(pload.text) setSearchText(pload.text);
@@ -31,7 +31,7 @@ export default function SearchBar(props: any) {
   }, [])
 
   function handleClick() {
-    let payload = {
+    const payload = {
       target: searchText,
       tags: [ ...posvalue.map((e:string)=>({tagname: e, positive: true})),
               ...negvalue.map((e:string)=>({tagname: e, positive: false})) ]
@@ -39,7 +39,7 @@ export default function SearchBar(props: any) {
 
     axios.post("/api/search", payload)
     .then((e:any) => {
-      let seq = e.data.tids;
+      const seq = e.data.tids;
       console.log(e.data.tids);
       setConsequence(seq);
       callback({text: searchText, ptag: posvalue, ntag: negvalue, seq: seq});

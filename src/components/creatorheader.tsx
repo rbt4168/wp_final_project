@@ -5,7 +5,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function CreatorHeader(props: any) {
-  const { activeAuthor, setActiveAuthor, authorId } = props;
+  const { activeAuthor, authorId } = props;
   const [ linkArr, setLinkArr ] = useState(["", "", "", ""])
 
   const [ followed, setFollowed ] = useState(false);

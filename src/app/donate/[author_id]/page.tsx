@@ -24,7 +24,7 @@ function CostListItem(props: any) {
   function handleAgree() {
     setOpen(false);
 
-    let payload = {
+    const payload = {
       tagname: text,
       authorname: author, 
     }
@@ -112,8 +112,8 @@ export default function DonatePage(props: any) {
       >
         <Grid item xs={7} md={7}>
           <List >
-            {activeAuthor.tags?.map((e:any, id:any)=>(
-              <CostListItem author={activeAuthor.account}
+            {activeAuthor.tags?.map((e:any, id:number)=>(
+              <CostListItem key={id} author={activeAuthor.account}
                 text={e} cost={activeAuthor.costs[id]}
               />
             ))}

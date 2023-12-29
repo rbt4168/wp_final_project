@@ -34,7 +34,7 @@ export default function UserProfile(props: any) {
     if(linkx?.length > 3) setLink3(linkx[3]);
   }, [actionUser]);
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = () => {
     setDisable(true);
 
     const links = [link0, link1, link2, link3].join(",");
@@ -47,10 +47,10 @@ export default function UserProfile(props: any) {
     };
   
     axios.post("/api/userprofile", payload)
-      .then((e) => {
+      .then(() => {
         alert("修改成功");
         trigger();
-      }).catch((e) => {
+      }).catch(() => {
         alert("修改失敗");
       }).finally(() =>setDisable(false));
   };

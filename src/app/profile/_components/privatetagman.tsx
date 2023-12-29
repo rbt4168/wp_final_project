@@ -37,12 +37,12 @@ export default function PrivTagManange(props: any) {
   const [selid, setSelid] = useState(0);
 
   function handleSubmit() {
-    let payload = {
+    const payload = {
       tags: tags,
       prices: priArr,
     }
 
-    axios.post("/api/savePrivateTags", payload).then((e)=>{
+    axios.post("/api/savePrivateTags", payload).then(()=>{
       alert("修改成功!");
       trigger();
     }).catch((e)=>console.error(e));
@@ -96,7 +96,7 @@ export default function PrivTagManange(props: any) {
           value={priArr[selid]}
           onChange={(e:any)=>{setPriArr(priArr.map((e0:any,id:any)=>{
             if(id === selid) {
-              let q = parseInt(e.target.value);
+              const q = parseInt(e.target.value);
               if(Number.isNaN(q))
                 return 0;
               else return q;

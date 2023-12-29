@@ -42,7 +42,7 @@ export async function POST(request: Request) {
       return new NextResponse("Author Not Exist", { status: 400 });
     }
 
-    let usercoin = User.coins || 0;
+    const usercoin = User.coins || 0;
     let tagcost = -1;
     
     if(Author.private_tags && Author.private_tags_cost) {
