@@ -19,10 +19,9 @@ import { main_theme } from '@/lib/themes';
 
 import { useState } from "react";
 
-import { signIn } from "next-auth/react";
-
 // Run: npx shadcn-ui@latest add card
 import { publicEnv } from "@/lib/env/public";
+import { signIn } from "next-auth/react";
 
 
 export default function SignInSide() {
