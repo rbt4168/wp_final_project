@@ -21,11 +21,10 @@ export default function UploadCreation(props: any) {
 
   const fixedOptions: string[] = [];
   const [value, setValue] = useState(fixedOptions);
-  const [disabled, setDisabled] = useState(false);
+  
 
   const handleSubmit = (e: any) => {
     // TODO: Update User Profile
-    setDisabled(true);
     const payload = {
       title,
       origin,
@@ -39,13 +38,7 @@ export default function UploadCreation(props: any) {
       .then(response => {
         console.log(response);
         alert("上傳成功!");
-        setTitle("");
-        setOrigin("");
-        setPreviewUrl("");
-        setRecommand(5);
-        setValue(fixedOptions);
-      }).catch((e)=>console.error(e))
-      .finally(()=>(setDisabled(false)));
+      }).catch((e)=>console.error(e));
   };
 
   // Preview
@@ -78,7 +71,6 @@ export default function UploadCreation(props: any) {
           sx={{width: "60%"}}
           value={title}
           onChange={(e:any)=>setTitle(e.target.value)}
-          disabled={disabled}
         />
       </Box>
 
@@ -92,7 +84,6 @@ export default function UploadCreation(props: any) {
           sx={{width: "60%"}}
           value={origin}
           onChange={(e:any)=>setOrigin(e.target.value)}
-          disabled={disabled}
         />
       </Box>
 
@@ -107,14 +98,12 @@ export default function UploadCreation(props: any) {
           emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
           value={recommand}
           onChange={(e:any)=>setRecommand(e.target.value)}
-          disabled={disabled}
         />
       </Box>
 
       <Box mx={5} my={3} sx={{ typography: 'subtitle2'}}>
         <Typography>標籤 Tags</Typography>
         <Autocomplete
-          disabled={disabled}
           multiple
           id="taginput_component"
           value={value}
@@ -146,7 +135,6 @@ export default function UploadCreation(props: any) {
 
       <Box mx={5} my={3} >
         <Button component="label" variant="contained" 
-          disabled={disabled}
           sx={{width: "60%"}} startIcon={<CloudUploadIcon />}>
           Upload Creation
           <VisuallyHiddenInput type="file" accept="image/*" onChange={handleFileChange}/>
@@ -167,7 +155,7 @@ export default function UploadCreation(props: any) {
       }
 
       <Box mx={5} my={3}>
-        <Button component="label" variant="outlined" onClick={handleSubmit} disabled={disabled}
+        <Button component="label" variant="outlined" onClick={handleSubmit}
           sx={{width: "60%"}}>
           完成上傳 Submit
         </Button>

@@ -31,13 +31,16 @@ export default function Home() {
     }).catch((e)=>console.error(e));
 
   }, []);
+  
   const handleSubmit = () => {
     // TODO: search api
     const payload = {
       keyword: searchText,
     }
     alert(payload);
-    
+    axios.post("/api/search", payload).then((e)=>{
+      setHotArr(e.data.pictureIds);
+    }).catch((e)=>console.error(e));
   };
 
   return (
