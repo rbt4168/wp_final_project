@@ -1,7 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react";
-import { CssBaseline, Grid, ThemeProvider } from "@mui/material";
+import { CssBaseline, Grid } from "@mui/material";
+import { ThemeProvider } from '@mui/material/styles';
 
 import DivLineCenter from "@/components/divline";
 import FooterComponent from "@/components/footer";
@@ -46,7 +47,7 @@ export default function Home() {
     <ThemeProvider theme={main_theme}>
       <CssBaseline/>
       <NavigationBar/>
-      
+
       <SearchBar callback={callback} setConsequence={()=>{}}/>
 
       <DivLineCenter text="Followed Latest"/>

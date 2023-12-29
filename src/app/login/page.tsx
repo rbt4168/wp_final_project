@@ -41,11 +41,7 @@ export default function SignInSide() {
     <ThemeProvider theme={main_theme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
+        <Grid item xs={false} sm={4} md={7}
           sx={{
             backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
             backgroundRepeat: 'no-repeat',
@@ -71,6 +67,7 @@ export default function SignInSide() {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
+
             <Box sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
@@ -81,9 +78,7 @@ export default function SignInSide() {
                 name="email"
                 autoComplete="email"
                 value={email}
-                onChange={(e:any) => {
-                  setEmail(e.target.value);
-                }}
+                onChange={(e:any) => setEmail(e.target.value)}
                 autoFocus
               />
               <TextField
@@ -95,15 +90,15 @@ export default function SignInSide() {
                 type="password"
                 id="password"
                 value={password}
-                onChange={(e:any) => {
-                  setPassword(e.target.value);
-                }}
+                onChange={(e:any) => setPassword(e.target.value)}
                 autoComplete="current-password"
               />
+
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
+
               <Button
                 fullWidth
                 variant="contained"
@@ -161,6 +156,7 @@ export default function SignInSide() {
               </Grid>
             </Grid>
             <Copyright sx={{ mt: 5 }} />
+
           </Box>
         </Grid>
       </Grid>

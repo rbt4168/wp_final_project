@@ -1,37 +1,24 @@
 "use client"
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import { ThemeProvider } from '@mui/material/styles';
-
-import Copyright from '@/components/copyright';
-import { main_theme } from '@/lib/themes';
 
 import { useState } from "react";
+import { Avatar, Box, Button, Checkbox, CssBaseline,
+  FormControlLabel, Grid, Link, Paper, TextField, Typography } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
 
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+
+import Copyright from '@/components/copyright';
+
+import { main_theme } from '@/lib/themes';
 import { publicEnv } from "@/lib/env/public";
+
 import { signIn } from "next-auth/react";
-
-
 export default function SignInSide() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [username, setName] = useState<string>("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // TODO: sign in logic
-    console.log(username)
+  const handleSubmit = () => {
     signIn("credentials", {
       username,
       email,
@@ -39,19 +26,16 @@ export default function SignInSide() {
       callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/`,
     });
   };
+
   return (
     <ThemeProvider theme={main_theme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
+        <Grid item xs={false} sm={4} md={7}
           sx={{
             backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
             backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) =>
+            backgroundColor: (t:any) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
             backgroundSize: 'cover',
             backgroundPosition: 'center',
@@ -59,9 +43,7 @@ export default function SignInSide() {
         />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
-            sx={{
-              my: 8,
-              mx: 4,
+            sx={{ my: 8, mx: 4,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -73,7 +55,7 @@ export default function SignInSide() {
             <Typography component="h1" variant="h5">
               Register
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
@@ -82,11 +64,9 @@ export default function SignInSide() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                value={email}
-                onChange={(e:any) => {
-                  setEmail(e.target.value);
-                }}
                 autoFocus
+                value={email}
+                onChange={(e:any) => setEmail(e.target.value)}
               />
               <TextField
                 margin="normal"
@@ -96,11 +76,9 @@ export default function SignInSide() {
                 label="Password"
                 type="password"
                 id="password"
-                value={password}
-                onChange={(e:any) => {
-                  setPassword(e.target.value);
-                }}
                 autoComplete="current-password"
+                value={password}
+                onChange={(e:any) => setPassword(e.target.value)}
               />
               <TextField
                 margin="normal"
@@ -110,20 +88,18 @@ export default function SignInSide() {
                 label="Username"
                 id="username"
                 value={username}
-                onChange={(e:any) => {
-                  setName(e.target.value);
-                }}
+                onChange={(e:any) => setName(e.target.value)}
                 autoComplete="current-password"
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="I agree the user policy."
               />
-              
+
               <Button
-                type="submit"
                 fullWidth
                 variant="contained"
+                onClick={handleSubmit}
                 sx={{ mt: 3, mb: 2 }}
               >
                 Register
@@ -143,7 +119,7 @@ export default function SignInSide() {
                   alt="github icon"
                   src="/github.png"
                 />
-              <Typography className="grow">Sign In with Github</Typography>
+                <Typography className="grow">Sign In with Github</Typography>
               </Button>
               <Button
                 onClick={async () => {
@@ -171,6 +147,7 @@ export default function SignInSide() {
                 </Grid>
               </Grid>
               <Copyright sx={{ mt: 5 }} />
+              
             </Box>
           </Box>
         </Grid>
