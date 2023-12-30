@@ -23,7 +23,7 @@ const Message = ({ message, uid, opendia }) => {
             onMouseDown={(e)=>{opendia(message._id, message.uid === uid)}}
             onClick={(e)=>{opendia(message._id, message.uid === uid)}}
             style={{ padding: "10px", background: (message.uid === uid) ? main_theme.palette.primary.light : main_theme.palette.secondary.light, borderRadius: "10px" ,textAlign: ((message.uid === uid) ? "right" : "left")}}>
-            {message.content.match(urlRegex)?<a target="_blank" href={message.content}>{message.content}</a>:message.content}
+            {message?.content?.match(urlRegex)?<a target="_blank" href={message.content}>{message.content}</a>:message.content}
           </p>
         </Box>
       ) : ( <Box sx={{ width: "100%" }}>

@@ -39,7 +39,7 @@ const Messages = ( props: any ) => {
     return ()=>{
       pusherClient.unsubscribe(`ch_${cid}`);
     }
-  }, [ cid ]);
+  }, [ cid, uid ]);
 
   // useEffect(()=>{
   //   let scroll_ele = document.getElementById("mxmsg");
@@ -84,7 +84,7 @@ const Messages = ( props: any ) => {
     </Dialog>
   <List sx={{ width: "100%", height: "100%"}}>
     <ListItem>
-      {msgs.map((m: any) => {
+      {msgs?.map((m: any) => {
         if(m.visible === -1) {
           return (
             <Typography variant="h5" color="primary">
@@ -98,8 +98,8 @@ const Messages = ( props: any ) => {
     <ListItem disablePadding sx={{ height: "90%"}}>
       <List sx={{ width: "100%", height: "100%", overflow: "scroll"}}>
         <Box mt={1}></Box>
-        {msgs.map((m: any) => (
-          <ListItem disablePadding>
+        {msgs?.map((m: any,id:number) => (
+          <ListItem key={id} disablePadding>
           <ListItemButton>
             <Message message={m} key={m.id} uid={uid} opendia={open_dialog} />
           </ListItemButton>

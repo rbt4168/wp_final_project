@@ -66,6 +66,7 @@ const ChatList = (props: any) => {
   useEffect(()=>{
     if(users) {
       setOppo(users[0]?.name);
+      setCid(users[0]?.cid);
     }
   }, [users])
 
