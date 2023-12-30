@@ -9,10 +9,12 @@
 
 期望成為新型態的創作交流平台，為藝術家和用戶打造一個自由遊覽的交流空間。
 
-## 專案功能 Project Detail
+## 專案介紹 Project Introduce
 
 ### 首頁 (/)
 在首頁中，使用者可以瀏覽目前已跟隨之創作者的最新作品，在所有使用者中的最新作品以及當下最多人喜歡的作品，並可透過點選上方的導覽列，PROFILE、SERACH、SUPPORT來前往不同的頁面。
+
+![替代文字](./assets/2.png)
 
 ### 使用者頁面 (/profile)
 此頁面有11個附屬功能，以下詳細介紹：
@@ -23,6 +25,8 @@
 * **作品管理 Artworks**
 在作品管理中，可以檢視自己所有以上傳的作品，並透過點選作品進入下方的修改作品頁面。
 
+![替代文字](./assets/3.png)
+
 * **上傳作品 Creation**
 在這個頁面中，可以上傳自己的作品，填寫作品名稱，創作緣由，自己對作品的推薦度以及方便他人搜尋的標籤。
 
@@ -31,6 +35,8 @@
 
 * **交易紀錄 Transactions**
 在這個頁面中，可以看到自己對持有的點數的運用紀錄。
+
+![替代文字](./assets/10.png)
 
 * **轉帳 Transfer**
 此頁面中，可以透過輸入指定的 Account 來轉移點數給指定的使用者。
@@ -45,6 +51,8 @@
 * **私訊 Message**
 在這個頁面中，可以與指定的使用者傳訊息，並同時提供於聊天室轉帳給聊天對象的功能。
 
+![替代文字](./assets/4.png)
+
 * **喜歡的作品 Liked**
 在這個頁面中，可以看到自己點喜歡的所有作品。
 
@@ -58,11 +66,16 @@
 ### 登入與註冊功能 (/login, /register)
 在這部份中我們允許使用者可以透過email和google帳號以及Github帳號來進行註冊與登入，我們允許使用者利用相同的gmail帳號透過google github以及email 的方式註冊不同的帳號 讓使用者建立帳號更加的方便 我們唯一做出的限制只有不允許使用者有相同的使用者名
 
+![替代文字](./assets/1.png)
+
 ### 購買支持點數 (/buy_coin)
 在這個頁面中，可以透過點擊按鈕獲取指定點數（由於串真實金流太危險，同時也不方便助教操作，所以我們並沒有串，但它本身的設計使用來購買點數的）
 
 ### 圖片展示頁面 (/picture/[picture_id])
 在點擊縮圖後，便可以看到圖片的詳細資料，可以看到原本大小的圖片，圖片敘述、標籤、使用者可能也會喜歡的圖片、同時也可以對圖片點擊愛心，以及分享圖片連結，此外，也可以透過點擊作者的資訊欄進入作者的個人頁面。
+
+![替代文字](./assets/5.png)
+![替代文字](./assets/6.png)
 
 ### 作者頁面 (/author/[author_id])
 在作者頁面中，我們可以看到作者所提供的資訊，例如自我介紹，其他社群帳號的連結等等，相當於是作者的小型部落格。
@@ -70,8 +83,13 @@
 可以透過點擊SPONSOR CREATOR前往購買作者Private標籤的頁面。
 頁面下方顯示的圖片有三個大部分 第一個部份為private works 如果使用者有購買該作者的標籤的話可以在這一個部份中看到作者透過對應的付費標籤標記的作品，第二個部份則為作者最推薦的三個作品，第三個部份則是可以透過選單來操作選取不同的排序方式。
 
+![替代文字](./assets/8.png)
+![替代文字](./assets/7.png)
+
 ### 贊助創作者頁面 (/donate/[author_id])
 在這個頁面中，可以透過點數購買作者現正出售的付費標籤，在購買付費標籤後，便能夠在作者頁面看到對應該付費標籤的作品。
+
+![替代文字](./assets/9.png)
 
 ## 工作分工
 ### 葉咸礽 B10902052
@@ -88,7 +106,7 @@
 4. 所有其他後端
 5. 資料庫管理人員
 
-## 技術使用
+## 技術使用 Technology
 * Next.js + Typescript : 作為我們程式的主要架構
 * Material-UI : 用以增進前端操作美觀
 * Next/Auth : 登入及在網頁中的使用者身份確認
@@ -101,8 +119,8 @@
 
 ## 專案架構 Project Structure
 ```
-// 後端的 code 都在 /src/api
-// 其餘都是前端
+// 後端都放在 /src/api
+// 其餘皆為前端 code
 
 /src
 ├─api
@@ -134,7 +152,7 @@
 ```
 
 ## 安裝 Installation
-Follow these steps to set up and run the project:
+根據以下步驟執行專案:
 
 1. **Clone the repository:**
     ```bash
@@ -162,8 +180,32 @@ Follow these steps to set up and run the project:
     yarn migrate
     yarn dev
     ```
-    
-## Deploy 的流量限制 及 開啟時間限制
+
+## .env 設定
+```bash
+POSTGRES_URL=       // postgres database url
+MONGO_URL=          // mongodb database url
+
+PUSHER_ID=                  // pusher id
+NEXT_PUBLIC_PUSHER_KEY=     // pusher key
+PUSHER_SECRET=              // pusher secret
+NEXT_PUBLIC_PUSHER_CLUSTER= // pusher cluster
+
+AUTH_GOOGLE_ID=             // google auth id
+AUTH_GOOGLE_SECRET=         // google auth secret
+
+AUTH_SECRET=                // auth secret
+
+AUTH_GITHUB_ID=             // github auth id
+AUTH_GITHUB_SECRET=         // github auth secret
+
+NEXT_PUBLIC_BASE_URL="http://localhost:3000/"    // local url
+
+NEXT_PUBLIC_API_URL="http://localhost:8000/get/" // local picture api url
+PICTURE_SERVER_URL="http://localhost:8000/"      // local picture server url
+```
+
+## Caution: Deploy 的流量限制 及 開啟時間限制
 * 請上傳的圖片不要超過 10 MB
 * 請不要上傳過多的圖片，以及創立太多的帳號，在線上 Deploy 的部份我們選擇使用的是免費的 Mongodb 以及 Neon 所以運算資源不太足夠 
 * 網頁可能會很慢，請耐心等待
