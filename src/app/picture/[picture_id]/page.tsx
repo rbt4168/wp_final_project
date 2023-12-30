@@ -59,7 +59,7 @@ export default function PictureFull(props: any) {
 
   useEffect(()=>{
     const payload = {
-      pic_id: picture_id,
+      pic_id: Number(picture_id),
     }
 
     axios.post('/api/getOriginalPicture',payload).then((e)=>{
@@ -187,7 +187,7 @@ export default function PictureFull(props: any) {
             <Grid item xs={10}>
               <Typography display="flex" justifyContent="left" alignItems="center"
                 component="h2" variant="h4" color="inherit" gutterBottom mt={3}>
-                Related Works
+                You may also like
               </Typography>
               <Divider>What's Next</Divider>
               <List>

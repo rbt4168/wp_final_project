@@ -18,9 +18,7 @@ export const {
     async session({ session, token }) {
       const email = token.email || session?.user?.email;
       const name = token.name || session?.user?.username;
-      console.log("```````````");
-      console.log(session?.user)
-      console.log("```````````");
+      
 
       if (!email) return session;
       const [user] = await db
