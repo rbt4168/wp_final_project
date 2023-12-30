@@ -3,7 +3,6 @@ import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { auth } from "@/lib/auth";
 import { usersTable } from "@/db/schema"; // Import your UserTable if not already done
-import axios from "axios";
 import { MongoClient } from 'mongodb';
 import { generateRandomString } from "@/lib/utils";
 import PusherServer from "pusher";
@@ -78,7 +77,7 @@ export async function POST(request: Request) {
     }
     
     const collection_chat = database.collection(`chats_${auser?.uid}`);
-    const query_name = { name: author };
+    const query_name = { name: aauthor?.account };
     
     // Execute query
     let iuser = await collection_chat.findOne(query_name);
@@ -94,12 +93,12 @@ export async function POST(request: Request) {
 
       const query1 = {
           cid: chat_id, timestamp: new Date().getTime(), last_message:"", 
-          name: auser?.account
+          name: aauthor?.account
       };
 
       const query2 = {
           cid: chat_id, timestamp: new Date().getTime(), last_message:"", 
-          name: aauthor?.account
+          name: auser?.account
       };
       
       // Execute query
@@ -117,8 +116,6 @@ export async function POST(request: Request) {
       }
 
       return NextResponse.json({ message: "Open Success" });
-
-
     } else {
       return NextResponse.json({ message: "success" });
     }
