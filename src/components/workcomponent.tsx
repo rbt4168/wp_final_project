@@ -1,5 +1,5 @@
 "use client"
-import { Box, Card, CardActionArea, CardMedia, Grid, ListItem, ListItemButton, Typography } from "@mui/material";
+import { Box, Card, CardActionArea, CardMedia, Divider, Grid, ListItem, ListItemButton, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -7,6 +7,8 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { StyledRating } from "./styledcomps";
 import { PICTURE_SERVER_URL } from "@/lib/utils";
+import GlobalChip, { GlobalChipSmall } from "./chipglobal";
+import DivLineCenter, { DivLineCenterNoMt } from "./divline";
 
 async function creatorFetchHandler(user_id: any) {
   try {
@@ -34,68 +36,68 @@ async function workFetchHandler(pic_id: any) {
 }
 
 export function RelatedWorkListItem(props: any) {
-    const { pic_id } = props;
+  const { pic_id } = props;
 
-    const [ picdata, setPicdata ] = useState({
-      url:"",
-      name:"untitled",
-      post_date: "",
-      author_id: 0,
-    });
+  const [ picdata, setPicdata ] = useState({
+    url:"",
+    name:"untitled",
+    post_date: "",
+    author_id: 0,
+  });
 
-    const [ author, setAuthor ] = useState("")
+  const [ author, setAuthor ] = useState("")
 
-    useEffect(()=>{
-      workFetchHandler(pic_id).then((e)=>{
-        if(e){
-          setPicdata(e);
-          creatorFetchHandler(e.author_id).then((e2)=>{
-            setAuthor(e2.name);
-          })
-        }
-        
-      });
+  useEffect(()=>{
+    workFetchHandler(pic_id).then((e)=>{
+      if(e){
+        setPicdata(e);
+        creatorFetchHandler(e.author_id).then((e2)=>{
+          setAuthor(e2.name);
+        })
+      }
       
-    }, [pic_id]);
+    });
+    
+  }, [pic_id]);
 
-    return (
-      <ListItem disablePadding>
-      <ListItemButton href={"/picture/"+pic_id}>
-      <Grid container spacing={2}>
-        <Grid item>
-          <Box
-              component="img"
-              sx={{
-                height: 128,
-                width: 128,
-              }}
-              alt="Related Work."
-              src={PICTURE_SERVER_URL + (picdata.url?picdata.url:"")}
-          />
-        </Grid>
-        <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid item xs>
-              <Typography gutterBottom variant="h5" component="div">
-                {picdata.name?picdata.name:"untitled"}
-              </Typography>
-              <Typography gutterBottom variant="body2" component="div" color="primary">
-                {author}
-              </Typography>
-              <Typography variant="body2" gutterBottom>
-                ID: {pic_id}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {picdata.post_date}
-              </Typography>
-            </Grid>
+  return (
+    <ListItem disablePadding>
+    <ListItemButton href={"/picture/"+pic_id}>
+    <Grid container spacing={2}>
+      <Grid item>
+        <Box
+            component="img"
+            sx={{
+              height: 128,
+              width: 128,
+            }}
+            alt="Related Work."
+            src={PICTURE_SERVER_URL + (picdata.url?picdata.url:"")}
+        />
+      </Grid>
+      <Grid item xs={12} sm container>
+        <Grid item xs container direction="column" spacing={2}>
+          <Grid item xs>
+            <Typography gutterBottom variant="h5" component="div">
+              {picdata.name?picdata.name:"untitled"}
+            </Typography>
+            <Typography gutterBottom variant="body2" component="div" color="primary">
+              {author}
+            </Typography>
+            <Typography variant="body2" gutterBottom>
+              ID: {pic_id}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {picdata.post_date}
+            </Typography>
           </Grid>
         </Grid>
       </Grid>
-      </ListItemButton>
-      </ListItem>
-    );
-  }
+    </Grid>
+    </ListItemButton>
+    </ListItem>
+  );
+}
 
 export function WorkCardComponent(props: any) {
   const { pic_id } = props;
@@ -104,6 +106,8 @@ export function WorkCardComponent(props: any) {
     url:"",
     name:"untitled",
     post_date: "",
+    tag:[],
+    liked_count: 0,
   });
 
   useEffect(()=>{
@@ -114,7 +118,7 @@ export function WorkCardComponent(props: any) {
 
   return (
     <Box m={2}>
-      <Card sx={{ maxWidth: "100%" }}>
+      <Card sx={{ maxWidth: "100%" , marginBottom: 1}} >
         <CardActionArea href={"/picture/"+pic_id}>
           <CardMedia
             component="img"
@@ -122,7 +126,17 @@ export function WorkCardComponent(props: any) {
           />
         </CardActionArea>
       </Card>
-      <Typography>{picdata.post_date}</Typography>
+      {/* <Typography>{picdata.name}</Typography> */}
+      {picdata.tags?.map((e:any, id:number)=>(<GlobalChipSmall key={id} text={e}/>))}
+      <Box display="flex" justifyContent="space-between">
+
+        <Typography fontSize="15px" sx={{ width: "70%", overflow: "hidden" }}>{picdata.name}</Typography>
+        <Typography variant="body2" gutterBottom>
+                {picdata.liked_count} <FavoriteIcon color="secondary" />
+              </Typography>
+            
+      </Box>
+      <Divider textAlign="right" sx={{fontSize: "12px"}}>{picdata.post_date}</Divider>
     </Box>
   );
 }
@@ -136,6 +150,7 @@ export function ArtWorkListItem(props: any) {
     post_date: "",
     recommand_point: 0,
     liked_count: 0,
+    tags: []
   });
 
   useEffect(()=>{
@@ -171,6 +186,7 @@ export function ArtWorkListItem(props: any) {
               <Typography variant="body2" gutterBottom>
                 {picdata.liked_count} <FavoriteIcon color="secondary" />
               </Typography>
+              {picdata.tags?.map((e:any, id:number)=>(<GlobalChipSmall key={id} text={e}/>))}
               <Typography variant="body2" color="text.secondary">
                 <StyledRating
                   name="customized-color"

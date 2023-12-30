@@ -6,7 +6,19 @@ export default function GlobalChip(props: any) {
     return(
         <ThemeProvider theme={main_theme}>
             <CssBaseline/>
-            <Chip variant="outlined" color="primary" label={text} sx={{bgcolor: "#FBF8CC"}}/>
+            <Chip variant="outlined" color="primary" label={text} sx={{bgcolor: 
+                text.includes("private")?"#FADBE5":"#FBF8CC"}}/>
+        </ThemeProvider>
+    )
+}
+
+export function GlobalChipSmall(props: any) {
+    const { text } = props;
+    return(
+        <ThemeProvider theme={main_theme}>
+            <CssBaseline/>
+            <Chip variant="outlined" color="primary" size="small" label={text} sx={{ bgcolor:
+               text.includes("private")?"#FADBE5":"#FBF8CC" }}/>
         </ThemeProvider>
     )
 }
