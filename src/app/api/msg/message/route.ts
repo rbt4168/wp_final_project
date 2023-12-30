@@ -38,16 +38,16 @@ export async function POST(request: Request) {
       { cid: body.cid },
       { $set: { last_message: body.content, timestamp: new Date().getTime() } },
     )
-    pusherServer.trigger(`ch_${body.uid}`, "evt", ".");
+    await pusherServer.trigger(`ch_${body.uid}`, "evt", ".");
     await user2.updateOne(
       { cid: body.cid },
       { $set: { last_message: body.content, timestamp: new Date().getTime() } },
     )
-    pusherServer.trigger(`ch_${body.oppo}`, "evt", ".");
+    await pusherServer.trigger(`ch_${body.oppo}`, "evt", ".");
     
     // Execute query
     let amsg = await collection.insertOne(query);
-    pusherServer.trigger(`ch_${body.cid}`, "evt", ".");
+    await pusherServer.trigger(`ch_${body.cid}`, "evt", ".");
     // trigger renew
 
     // console.log(amsg);

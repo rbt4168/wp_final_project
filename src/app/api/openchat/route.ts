@@ -105,8 +105,8 @@ export async function POST(request: Request) {
       let ans1 = await collection1.insertOne(query1);
       let ans2 = await collection2.insertOne(query2);
 
-      pusherServer.trigger(`ch_${auser?.uid}`, "evt", ".");
-      pusherServer.trigger(`ch_${aauthor?.uid}`, "evt", ".");
+      await pusherServer.trigger(`ch_${auser?.uid}`, "evt", ".");
+      await pusherServer.trigger(`ch_${aauthor?.uid}`, "evt", ".");
 
       // Print the document returned by findOne()
       // console.log(ans1, ans2);

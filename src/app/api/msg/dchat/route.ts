@@ -34,8 +34,8 @@ export async function POST(request: Request) {
     // Execute query
     let ans1 = await collection1.deleteMany(query1);
     let ans2 = await collection2.deleteMany(query2);
-    pusherServer.trigger(`ch_${uid1}`, "evt", ".");
-    pusherServer.trigger(`ch_${uid2}`, "evt", ".");
+    await pusherServer.trigger(`ch_${uid1}`, "evt", ".");
+    await pusherServer.trigger(`ch_${uid2}`, "evt", ".");
 
     // Print the document returned by findOne()
     // console.log(ans1, ans2);
