@@ -9,6 +9,7 @@ import { publicEnv } from "@/lib/env/public";
 
 export const pusherClient = new PusherClient( publicEnv.NEXT_PUBLIC_PUSHER_KEY, {
   cluster: publicEnv.NEXT_PUBLIC_PUSHER_CLUSTER,
+  forceTLS: true,
 });
 
 const Messages = ( props: any ) => {
