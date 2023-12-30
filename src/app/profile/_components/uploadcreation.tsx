@@ -29,7 +29,7 @@ export default function UploadCreation(props: any) {
 
   const [uploaddis, setUploaddis] = useState(true);
 
-  const all_tag = actionUser?.private_tags ? [ ...default_tags, ...actionUser?.private_tags?.map((e:any)=>("private-"+actionUser.username+"-"+e)) ] : default_tags
+  const all_tag = actionUser?.private_tags ? [ ...default_tags, ...actionUser?.private_tags?.map((e:any)=>("private-"+actionUser.username+"-"+e)) ] : default_tags;
 
   function handleSubmit() {
     setDisabled(true);
@@ -143,7 +143,8 @@ export default function UploadCreation(props: any) {
                 label={option}
                 {...getTagProps({ index })}
                 disabled={fixedOptions.indexOf(option) !== -1}
-                variant="outlined" color="primary" sx={{bgcolor: "#FBF8CC"}}
+                variant="outlined" color="primary"
+                sx={{bgcolor: option.includes("private")?"#FADBE5":"#FBF8CC"}}
               />
             ))
           }

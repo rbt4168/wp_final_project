@@ -25,6 +25,7 @@ export default function ModifyCreation(props: any) {
   const fixedOptions: string[] = [];
   const [value, setValue] = useState(fixedOptions);
   const [disabled, setDisable] = useState(false);
+
   const all_tag = actionUser?.private_tags ? [ ...default_tags, ...actionUser?.private_tags?.map((e:any)=>("private-"+actionUser.username+"-"+e)) ] : default_tags;
 
   useEffect(()=>{
@@ -167,7 +168,8 @@ export default function ModifyCreation(props: any) {
                 label={option}
                 {...getTagProps({ index })}
                 disabled={fixedOptions.indexOf(option) !== -1}
-                variant="outlined" color="primary" sx={{bgcolor: "#FBF8CC"}}
+                variant="outlined" color="primary"
+                sx={{bgcolor: option.includes("private")?"#FADBE5":"#FBF8CC"}}
               />
             ))
           }

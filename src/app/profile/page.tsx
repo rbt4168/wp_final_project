@@ -90,7 +90,7 @@ export default function Profile() {
     {
       title: "修改作品",
       icon: (<ModeEditIcon color="secondary"/>),
-      component: (<ModifyCreation pic_id={modifyID} trigger={trig}/>),
+      component: (<ModifyCreation pic_id={modifyID} trigger={trig} actionUser={actionUser}/>),
     },
     {
       title: "交易紀錄",
