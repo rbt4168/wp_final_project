@@ -2,7 +2,7 @@ import { MongoClient } from 'mongodb';
 import { NextResponse } from 'next/server';
 import PusherServer from "pusher";
 
-console.log(process.env.MONGO_URL);
+// console.log(process.env.MONGO_URL);
 
 const client = new MongoClient(process.env.MONGO_URL!, {});
 
@@ -50,7 +50,7 @@ export async function POST(request: Request) {
     pusherServer.trigger(`ch_${body.cid}`, "evt", ".");
     // trigger renew
 
-    console.log(amsg);
+    // console.log(amsg);
     if(amsg === null) {
       return new NextResponse('db issue.', { status: 500 });
     }

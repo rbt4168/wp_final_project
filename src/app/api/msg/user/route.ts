@@ -29,13 +29,13 @@ export const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
 await pusher.connect();
 
 export async function POST(request: Request) {
-  console.log(process.env.MONGO_URL);
+  // console.log(process.env.MONGO_URL);
   try {
     const body = await request.json();
-    console.log(body);
+    // console.log(body);
 
     const response = pusher.send_event("evt", {aaa: "0"}, "ch");
-    console.log(response);
+    // console.log(response);
     // Connect the client to the server	(optional starting in v4.7)
 
     // Get the database and collection on which to run the operation

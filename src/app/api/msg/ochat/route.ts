@@ -13,7 +13,7 @@ function generateRandomString(length:number) {
   return result;
 }
 
-console.log(process.env.MONGO_URL);
+// console.log(process.env.MONGO_URL);
 
 export const pusherServer = new PusherServer({
   appId: process.env.PUSHER_ID!,
@@ -54,7 +54,7 @@ export async function POST(request: Request) {
     pusherServer.trigger(`ch_${body.uid2}`, "evt", ".");
 
     // Print the document returned by findOne()
-    console.log(ans1, ans2);
+    // console.log(ans1, ans2);
 
     if(ans1 === null || ans2 === null) {
       return new NextResponse('db issue.', { status: 500 });

@@ -3,7 +3,7 @@ import { MongoClient } from 'mongodb';
 import { NextResponse } from 'next/server';
 
 // dotenv.config();
-console.log(process.env.MONGO_URL);
+// console.log(process.env.MONGO_URL);
 
 const client = new MongoClient(process.env.MONGO_URL!, {});
 
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     let ans = await collection.find(query).toArray();
 
     // Print the document returned by findOne()
-    console.log(ans);
+    // console.log(ans);
 
     if(ans === null) {
       return new NextResponse('db issue.', { status: 500 });

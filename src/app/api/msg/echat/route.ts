@@ -3,7 +3,7 @@ import { MongoClient } from 'mongodb';
 import { NextResponse } from 'next/server';
 
 // dotenv.config();
-console.log(process.env.MONGO_URL);
+// console.log(process.env.MONGO_URL);
 
 const client = new MongoClient(process.env.MONGO_URL!, {});
 
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     let auser = await collection.findOne(query);
 
     // Print the document returned by findOne()
-    console.log(auser);
+    // console.log(auser);
 
     if (auser === null) {
       return NextResponse.json({ message: "n" });
