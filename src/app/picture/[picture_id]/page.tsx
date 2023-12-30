@@ -190,7 +190,7 @@ export default function PictureFull(props: any) {
             <Grid item xs={10}>
               <Typography display="flex" justifyContent="left" alignItems="center"
                 component="h2" variant="h4" color="inherit" gutterBottom mt={3}>
-                You may also like
+                Inspiration
               </Typography>
               <Divider>What&apos;s Next</Divider>
               <List>

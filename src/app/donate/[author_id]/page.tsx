@@ -31,7 +31,7 @@ function CostListItem(props: any) {
 
     axios.post("/api/buyTag", payload).then((e)=>{
       alert("購買成功!");
-    }).catch((e)=>console.error(e));
+    }).catch((e)=>console.error(e)).finally(()=>setOpen(false));
   }
 
   return(
