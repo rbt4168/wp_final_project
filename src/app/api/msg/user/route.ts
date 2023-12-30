@@ -2,34 +2,17 @@ import { generateRandomString } from '@/lib/utils';
 import { MongoClient } from 'mongodb';
 import { NextResponse } from 'next/server';
 
-// import Pusher from "pusher-js";
-
 const client = new MongoClient(process.env.MONGO_URL!, {});
 
 await client.connect();
-
-// export const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
-//   appId: process.env.PUSHER_ID!,
-//   secret: process.env.PUSHER_SECRET!,
-//   cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!,
-//   useTLS: true,
-// });
-
-// await pusher.connect();
-
 export async function POST(request: Request) {
-  // console.log(process.env.MONGO_URL);
   try {
     const body = await request.json();
-    // console.log(body);
-
-    // const response = pusher.send_event("evt", {aaa: "0"}, "ch");
-    // console.log(response);
-    // Connect the client to the server	(optional starting in v4.7)
 
     // Get the database and collection on which to run the operation
     const database = client.db("testaaa");
     const collection = database.collection("user");
+    
     const query = { account: body.account };
     
     // Execute query

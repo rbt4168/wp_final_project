@@ -4,6 +4,21 @@ import { db } from "@/db";
 import { auth } from "@/lib/auth";
 import { usersTable } from "@/db/schema"; // Import your UserTable if not already done
 import axios from "axios";
+import { MongoClient } from 'mongodb';
+import { generateRandomString } from "@/lib/utils";
+import PusherServer from "pusher";
+
+const pusherServer = new PusherServer({
+  appId: process.env.PUSHER_ID!,
+  key: process.env.NEXT_PUBLIC_PUSHER_KEY!,
+  secret: process.env.PUSHER_SECRET!,
+  cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!,
+  useTLS: true,
+});
+
+const client = new MongoClient(process.env.MONGO_URL!, {});
+
+await client.connect();
 
 export async function POST(request: Request) {
   try {
@@ -35,41 +50,79 @@ export async function POST(request: Request) {
         return new NextResponse("No author you bad guy", { status: 401 });
     }
 
-    let eauthor = await axios.post("http://localhost:3000/api/msg/euser", {account: author});
-    if(eauthor.data.message === "n") {
-      let pauthor = await axios.post("http://localhost:3000/api/msg/user", {test: "test", account: author});
-      eauthor = await axios.post("http://localhost:3000/api/msg/euser", {account: author});
+    // Get the database and collection on which to run the operation
+    const database = client.db("testaaa");
+    const collection = database.collection("user");
+
+    const query_user = { account: User.username };
+    const query_author = { account: author };
+    
+    // Execute query
+    let auser = await collection.findOne(query_user);
+    let aauthor = await collection.findOne(query_author);
+
+    if (auser === null) {
+      await collection.insertOne({account: User.username, uid: generateRandomString(16)});
+
+      auser = await collection.findOne(query_user);
     }
 
-    let euser = await axios.post("http://localhost:3000/api/msg/euser", {account: User.username});
-    if(euser.data.message === "n") {
-      let puser = await axios.post("http://localhost:3000/api/msg/user", {test: "test", account: User.username});
-      euser = await axios.post("http://localhost:3000/api/msg/euser", {account: User.username});
+    if(aauthor === null) {
+      await collection.insertOne({account: author, uid: generateRandomString(16)});
+
+      aauthor = await collection.findOne(query_author);
     }
 
-    console.log("----------------------------");
-    console.log(eauthor.data, euser.data);
-    console.log("----------------------------");
-
-    let echat = await axios.post("http://localhost:3000/api/msg/echat", {uid: euser.data.uid, name: author});
-
-    if(euser.data.uid === eauthor.data.uid) {
+    if(auser?.uid === aauthor?.uid) {
       return new NextResponse("Talk to self.", { status: 403 });
     }
+    
+    const collection_chat = database.collection(`chats_${auser?.uid}`);
+    const query_name = { name: author };
+    
+    // Execute query
+    let iuser = await collection_chat.findOne(query_name);
 
-    if(echat.data.message === "e") {
+    // Print the document returned by findOne()
+    // console.log(auser);
+
+    if (iuser === null) {
+      const collection1 = database.collection(`chats_${auser?.uid}`);
+      const collection2 = database.collection(`chats_${aauthor?.uid}`);
+
+      const chat_id = generateRandomString(16);
+
+      const query1 = {
+          cid: chat_id, timestamp: new Date().getTime(), last_message:"", 
+          name: auser?.account
+      };
+
+      const query2 = {
+          cid: chat_id, timestamp: new Date().getTime(), last_message:"", 
+          name: aauthor?.account
+      };
+      
+      // Execute query
+      let ans1 = await collection1.insertOne(query1);
+      let ans2 = await collection2.insertOne(query2);
+
+      pusherServer.trigger(`ch_${auser?.uid}`, "evt", ".");
+      pusherServer.trigger(`ch_${aauthor?.uid}`, "evt", ".");
+
+      // Print the document returned by findOne()
+      // console.log(ans1, ans2);
+
+      if(ans1 === null || ans2 === null) {
+        return new NextResponse('db issue.', { status: 500 });
+      }
+
+      return NextResponse.json({ message: "Open Success" });
+
+
+    } else {
       return NextResponse.json({ message: "success" });
-      // return new NextResponse("Duplicate chat.", { status: 403 });
     }
 
-    let oc_payload = {
-      uid1: euser.data.uid, uid2: eauthor.data.uid,
-      name1: eauthor.data.account, name2: euser.data.account
-    }
-
-    let res = await axios.post("http://localhost:3000/api/msg/ochat", oc_payload);
-
-    return NextResponse.json({ message: "success" });
   } catch (error) {
     console.error("Error in POST function: ", error);
     return new NextResponse("Internal Error", { status: 500 });
