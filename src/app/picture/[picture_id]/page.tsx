@@ -73,7 +73,6 @@ export default function PictureFull(props: any) {
       setCurrentUser(e.data.user[0]);
     }).catch((e)=>console.error(e));
     axios.post('/api/relatedWorks',payload).then((e)=>{
-      alert(e.data.pictureIds);
       setRelatedArr(e.data.pictureIds);
     }).catch((e)=>console.error(e));
   }, [])
@@ -188,7 +187,7 @@ export default function PictureFull(props: any) {
             <Grid item xs={10}>
               <Typography display="flex" justifyContent="left" alignItems="center"
                 component="h2" variant="h4" color="inherit" gutterBottom mt={3}>
-                Related Works
+                你可能也會喜歡
               </Typography>
               <Divider>What's Next</Divider>
               <List>
