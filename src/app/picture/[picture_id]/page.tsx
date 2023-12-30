@@ -111,7 +111,8 @@ export default function PictureFull(props: any) {
 
           <Box display="flex" justifyContent="space-between" >
             <Typography display="flex" justifyContent="left" alignItems="center"
-            component="h2" variant="h4" color="inherit" gutterBottom mt={3} sx={{ maxWidth: "80%", overflow:"hidden" }}>
+            component="h2" variant="h4" color="inherit" gutterBottom mt={3}
+            sx={{ maxWidth: "80%", overflow:"hidden" }}>
               {picdata.name?picdata.name:"untitled"}
             </Typography>
 
@@ -119,7 +120,9 @@ export default function PictureFull(props: any) {
               <IconButton aria-label="fingerprint" color="secondary" onClick={handleLikedStatus} disabled={disable}>
                 {picdata.liked_count?picdata.liked_count:0}{onliked?(<FavoriteIcon sx={{ width: "3rem", height: "3rem" }}/>):(<FavoriteBorderIcon  sx={{ width: "3rem", height: "3rem" }}/>) }
               </IconButton>
-              <IconButton aria-label="fingerprintx" color="primary" onClick={()=>{}}>
+              <IconButton aria-label="fingerprintx" color="primary" onClick={()=>{
+                navigator.clipboard.writeText(window.location.href);
+              }}>
                 <ShareIcon color="primary" sx={{ width: "3rem", height: "3rem" }}/>
               </IconButton>
             </Box>
