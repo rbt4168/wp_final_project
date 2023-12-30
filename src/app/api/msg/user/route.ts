@@ -1,32 +1,21 @@
+import { generateRandomString } from '@/lib/utils';
 import { MongoClient } from 'mongodb';
 import { NextResponse } from 'next/server';
 
-import Pusher from "pusher-js";
-
-function generateRandomString(length:number) {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let result = '';
-
-  for (let i = 0; i < length; i++) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    result += characters.charAt(randomIndex);
-  }
-
-  return result;
-}
+// import Pusher from "pusher-js";
 
 const client = new MongoClient(process.env.MONGO_URL!, {});
 
 await client.connect();
 
-export const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
-  appId: process.env.PUSHER_ID!,
-  secret: process.env.PUSHER_SECRET!,
-  cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!,
-  useTLS: true,
-});
+// export const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
+//   appId: process.env.PUSHER_ID!,
+//   secret: process.env.PUSHER_SECRET!,
+//   cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!,
+//   useTLS: true,
+// });
 
-await pusher.connect();
+// await pusher.connect();
 
 export async function POST(request: Request) {
   // console.log(process.env.MONGO_URL);
@@ -34,7 +23,7 @@ export async function POST(request: Request) {
     const body = await request.json();
     // console.log(body);
 
-    const response = pusher.send_event("evt", {aaa: "0"}, "ch");
+    // const response = pusher.send_event("evt", {aaa: "0"}, "ch");
     // console.log(response);
     // Connect the client to the server	(optional starting in v4.7)
 
@@ -52,6 +41,7 @@ export async function POST(request: Request) {
     }
 
     // Print the document returned by findOne()
+    console.log("msg: login");
     console.log(auser);
 
     if(auser === null) {

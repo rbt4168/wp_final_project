@@ -4,7 +4,7 @@ import { Divider, List, ListItem } from "@mui/material";
 import InputStable from "./Input";
 
 export default function ChatView ( props: any ) {
-  const { user, cid, oppo, oppouid } = props;
+  const { user, cid, oppo, oppouid, trigger } = props;
 
   return (
     <List sx={{ width: "100%", height: "100%"}}>
@@ -13,7 +13,7 @@ export default function ChatView ( props: any ) {
       </ListItem>
       <Divider />
       <ListItem disablePadding>
-        <InputStable user={user} cid={cid} oppo={oppo} oppouid={oppouid}/>
+        <InputStable user={user} cid={cid} oppo={oppo} oppouid={oppouid} trigger={trigger}/>
       </ListItem>
     </List>
   )

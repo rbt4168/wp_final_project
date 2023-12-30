@@ -5,7 +5,7 @@ import ChatView from './ChatView'
 import { Box, Divider, Grid } from '@mui/material';
 
 export default function HomeAA(props: any) {
-  const { username } = props;
+  const { username, trigger } = props;
 
   const [user, setUser] = useState({account:"", uid:""})
   const [cid, setCid] = useState("");
@@ -24,11 +24,12 @@ export default function HomeAA(props: any) {
   return (
     <Grid container height="100%">
       <Grid item md={4}>
-        <Sidebar user={user} setCid={setCid} oppo={oppo} setOppo={setOppo} oppouid={oppouid} setOppouid={setOppouid}/>
+        <Sidebar user={user} setCid={setCid} oppo={oppo}
+          setOppo={setOppo} oppouid={oppouid} setOppouid={setOppouid}/>
       </Grid>
       <Divider orientation="vertical"/>
       <Grid item md={7}>
-        <ChatView user={user} cid={cid} oppo={oppo} oppouid={oppouid}/>
+        <ChatView user={user} cid={cid} oppo={oppo} oppouid={oppouid} trigger={trigger}/>
       </Grid>
     </Grid>
   )

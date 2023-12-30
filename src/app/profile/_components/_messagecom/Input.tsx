@@ -4,7 +4,7 @@ import axios from "axios";
 import React, { useState } from "react";
 
 export default function InputStable( props: any ) {
-  const {user, cid, oppouid, oppo} = props;
+  const {user, cid, oppouid, oppo, trigger } = props;
 
   const [text, setText] = useState("");
   const [dval, setDval] = useState(0);
@@ -30,6 +30,7 @@ export default function InputStable( props: any ) {
         console.log(res);
         setText("");
         setOpendia(false);
+        trigger();
       })
     }).catch((e)=>console.error(e));
   }

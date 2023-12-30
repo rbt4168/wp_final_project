@@ -122,7 +122,7 @@ export default function Profile() {
     {
       title: "私訊",
       icon: (<ChatIcon color="secondary"/>),
-      component: (<MessageSystem actionUser={actionUser}/>)
+      component: (<MessageSystem actionUser={actionUser} trigger={trig}/>)
     },
     {
       title: "喜歡的作品",

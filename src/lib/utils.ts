@@ -24,7 +24,7 @@ export function chunkArray(array:any[], chunkSize:number) {
   return result;
 }
 
-function generateRandomString(length:number) {
+export function generateRandomString(length:number) {
   const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   let result = "";
   for (let i = 0; i < length; i++) {
