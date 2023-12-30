@@ -2,11 +2,14 @@
 import { main_theme } from "@/lib/themes";
 import { Box, Button, CssBaseline, Grid, Link, Paper, ThemeProvider, Typography } from "@mui/material";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function CreatorHeader(props: any) {
   const { activeAuthor, authorId } = props;
-  const [ linkArr, setLinkArr ] = useState(["", "", "", ""])
+  const [ linkArr, setLinkArr ] = useState(["", "", "", ""]);
+
+  const router = useRouter();
 
   const [ followed, setFollowed ] = useState(false);
   const [ currentUser, setCurrentUser ] = useState({
@@ -29,6 +32,7 @@ export default function CreatorHeader(props: any) {
   function handleOpenChat() {
     axios.post("/api/openchat",{author: activeAuthor.account}).then((e)=>{
       console.log(e);
+      router.push("/profile?target=message");
     }).catch((e)=>console.error(e));
   }
 

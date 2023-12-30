@@ -34,7 +34,7 @@ import PrivTagManange from "./_components/privatetagman"
 import OwnedTags from "./_components/ownedtag"
 
 import axios from "axios"
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import MessageSystem from "./_components/messagesys";
 
 export default function Profile() {
@@ -44,6 +44,13 @@ export default function Profile() {
   const [ isLogin, setIsLogin ] = useState(false);
 
   const router = useRouter();
+  
+  const searchParams = useSearchParams();
+ 
+
+  const target_page = searchParams.get('target')==="message"?"私訊":"帳號資料";
+  const [ modifyID, setModifyID ] = useState(0);
+  const [ selectName, setSelectName ] = useState(target_page);
 
   useEffect(()=>{
     if(!isLogin) {
@@ -67,9 +74,6 @@ export default function Profile() {
     setTrigger(!tirgger);
     setModifyID(0);
   }
-
-  const [ modifyID, setModifyID ] = useState(0);
-  const [ selectName, setSelectName ] = useState("帳號資料");
 
   const list_items = [
     {

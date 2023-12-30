@@ -188,7 +188,7 @@ export default function MessageSystem(props: any) {
       </Typography>
       <Divider />
 
-      <Box display="flex">
+      <Box height="100vh" display="flex">
         <HomeAA username={actionUser.username}/>
       </Box>
       <Divider orientation="vertical" flexItem/>

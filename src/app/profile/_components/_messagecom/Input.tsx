@@ -52,7 +52,7 @@ export default function InputStable( props: any ) {
   return (
     <>
     <Grid container sx={{ width: "100%"}}>
-      <Grid item md={10}>
+      <Grid item md={8}>
         <Input
           type="text"
           placeholder="Type something..."
@@ -66,7 +66,10 @@ export default function InputStable( props: any ) {
         <Button onClick={handleSend} component="label" variant="contained">
           Send
         </Button>
-        <Button onClick={()=>setOpendia(true)} component="label" variant="contained">
+      </Grid>
+      
+      <Grid item md={2}>
+        <Button onClick={()=>setOpendia(true)} color="secondary" component="label" variant="contained">
           Donate
         </Button>
       </Grid>

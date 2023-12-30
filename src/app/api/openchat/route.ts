@@ -47,15 +47,19 @@ export async function POST(request: Request) {
       euser = await axios.post("http://localhost:3000/api/msg/euser", {account: User.username});
     }
 
-    console.log(eauthor, euser);
+    console.log("----------------------------");
+    console.log(eauthor.data, euser.data);
+    console.log("----------------------------");
 
     let echat = await axios.post("http://localhost:3000/api/msg/echat", {uid: euser.data.uid, name: author});
-    if(echat.data.message === "e") {
-      return new NextResponse("Duplicate chat.", { status: 403 });
-    }
 
     if(euser.data.uid === eauthor.data.uid) {
       return new NextResponse("Talk to self.", { status: 403 });
+    }
+
+    if(echat.data.message === "e") {
+      return NextResponse.json({ message: "success" });
+      // return new NextResponse("Duplicate chat.", { status: 403 });
     }
 
     let oc_payload = {
@@ -65,7 +69,7 @@ export async function POST(request: Request) {
 
     let res = await axios.post("http://localhost:3000/api/msg/ochat", oc_payload);
 
-    return NextResponse.json({ res });
+    return NextResponse.json({ message: "success" });
   } catch (error) {
     console.error("Error in POST function: ", error);
     return new NextResponse("Internal Error", { status: 500 });

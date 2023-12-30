@@ -13,14 +13,16 @@ export default function HomeAA(props: any) {
   const [oppouid, setOppouid] = useState("");
   
   useEffect(()=>{
-    axios.post("/api/msg/user", {test: "test", account: username}).then((res)=>{
-      let iuser = JSON.parse(res.data.message);
-      setUser(iuser);
-    }).catch((e)=>console.error(e));
-  }, []);
+    if(username && username !== "") {
+      axios.post("/api/msg/user", {test: "test", account: username}).then((res)=>{
+        let iuser = JSON.parse(res.data.message);
+        setUser(iuser);
+      }).catch((e)=>console.error(e));
+    }
+  }, [ username ]);
   
   return (
-    <Grid container>
+    <Grid container height="100%">
       <Grid item md={4}>
         <Sidebar user={user} setCid={setCid} oppo={oppo} setOppo={setOppo} oppouid={oppouid} setOppouid={setOppouid}/>
       </Grid>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import { Box, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
 
@@ -62,6 +62,12 @@ const ChatList = (props: any) => {
   const { selfuid, users, setCid, setOppo, setOppouid, oppouid, seluser } = props;
   console.log(users);
   console.log(users?.sort((a:any, b:any) => { return b.timestamp - a.timestamp }));
+
+  useEffect(()=>{
+    if(users) {
+      setOppo(users[0]?.name);
+    }
+  }, [users])
 
   return (
     <List>

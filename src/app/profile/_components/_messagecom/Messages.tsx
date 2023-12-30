@@ -82,7 +82,7 @@ const Messages = ( props: any ) => {
       <Button onClick={() => reset_visible(-1)}>設為公告</Button>
       <Button onClick={close_dialog}>Close</Button>
     </Dialog>
-  <List sx={{ width: "100%", maxHeight: "80vh"}}>
+  <List sx={{ width: "100%", height: "100%"}}>
     <ListItem>
       {msgs.map((m: any) => {
         if(m.visible === -1) {
@@ -95,8 +95,8 @@ const Messages = ( props: any ) => {
       })}
     </ListItem>
     <Divider />
-    <ListItem disablePadding>
-      <List sx={{ width: "100%", maxHeight: "60vh", overflow: "scroll"}}>
+    <ListItem disablePadding sx={{ height: "90%"}}>
+      <List sx={{ width: "100%", height: "100%", overflow: "scroll"}}>
         <Box mt={1}></Box>
         {msgs.map((m: any) => (
           <ListItem disablePadding>
