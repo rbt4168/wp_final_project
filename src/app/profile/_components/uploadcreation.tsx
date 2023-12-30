@@ -27,6 +27,8 @@ export default function UploadCreation(props: any) {
   const [value, setValue] = useState(fixedOptions);
   const [disabled, setDisabled] = useState(false);
 
+  const [uploaddis, setUploaddis] = useState(true);
+
   const all_tag = actionUser?.private_tags ? [ ...default_tags, ...actionUser?.private_tags?.map((e:any)=>("private-"+actionUser.username+"-"+e)) ] : default_tags
 
   function handleSubmit() {
@@ -62,6 +64,9 @@ export default function UploadCreation(props: any) {
         setPreviewUrl(reader.result as string);
       };
       reader.readAsDataURL(file);
+      setUploaddis(false);
+    } else {
+      setUploaddis(true);
     }
   };
 
@@ -172,7 +177,7 @@ export default function UploadCreation(props: any) {
       }
 
       <Box mx={5} my={3}>
-        <Button component="label" variant="outlined" onClick={handleSubmit} disabled={disabled}
+        <Button component="label" variant="outlined" onClick={handleSubmit} disabled={disabled || uploaddis}
           sx={{width: "60%"}}>
           完成上傳 Submit
         </Button>
