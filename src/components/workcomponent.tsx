@@ -31,7 +31,7 @@ async function workFetchHandler(pic_id: any) {
     return response.data.picture[0];
   } catch (e) {
     console.error(e);
-    return {};
+    return {pic_id: 0}
   }
 }
 
@@ -45,22 +45,25 @@ export function RelatedWorkListItem(props: any) {
     author_id: 0,
   });
 
-  const [ author, setAuthor ] = useState("")
+  const [ author, setAuthor ] = useState("");
+  const [ alive, setAlive ] = useState(false);
 
   useEffect(()=>{
     workFetchHandler(pic_id).then((e)=>{
       if(e){
-        setPicdata(e);
-        creatorFetchHandler(e.author_id).then((e2)=>{
-          setAuthor(e2.name);
-        })
+        if(e.pic_id) {
+          setPicdata(e);
+          creatorFetchHandler(e.author_id).then((e2)=>{
+            setAuthor(e2.name);
+            setAlive(true);
+          })
+        }
       }
-      
     });
     
   }, [pic_id]);
 
-  return pic_id ? (
+  return alive && pic_id ? (
     <ListItem disablePadding>
     <ListItemButton href={"/picture/"+pic_id}>
     <Grid container spacing={2}>
@@ -110,13 +113,20 @@ export function WorkCardComponent(props: any) {
     liked_count: 0,
   });
 
+  const [ alive, setAlive ] = useState(false);
+
   useEffect(()=>{
     workFetchHandler(pic_id).then((e)=>{
-      e?setPicdata(e):0;
+      if(e) {
+        if(e.pic_id) {
+          setPicdata(e);
+          setAlive(true);
+        }
+      }
     });
   }, [pic_id]);
 
-  return pic_id ? (
+  return alive && pic_id ? (
     <Box m={2}>
       <Card sx={{ maxWidth: "100%" , marginBottom: 1}} >
         <CardActionArea href={"/picture/"+pic_id}>
@@ -152,14 +162,21 @@ export function ArtWorkListItem(props: any) {
     liked_count: 0,
     tags: []
   });
+  
+  const [ alive, setAlive ] = useState(false);
 
   useEffect(()=>{
     workFetchHandler(pic_id).then((e)=>{
-      e?setPicdata(e):0;
+      if(e) {
+        if(e.pic_id) {
+          setPicdata(e);
+          setAlive(true);
+        }
+      }
     });
   }, [pic_id]);
 
-  return pic_id ? (
+  return alive && pic_id ? (
     <ListItem disablePadding>
     <ListItemButton onClick={()=>{ setid(pic_id); redir("修改作品");}}>
       <Grid container spacing={2}>

@@ -16,6 +16,9 @@ export async function POST(request: Request) {
       .where(eq(pictureTable.pic_id, pic_id))
       .execute();
 
+    if(!picture) {
+      return new NextResponse("Internal Error", { status: 404 });
+    }
     
     // Return the picture information
     return NextResponse.json({ picture });
