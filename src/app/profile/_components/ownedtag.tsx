@@ -40,7 +40,8 @@ export default function OwnedTags(props: any) {
                 label={option}
                 {...getTagProps({ index })}
                 disabled={fixedOptions.indexOf(option) !== -1}
-                variant="outlined" color="primary" sx={{bgcolor: "#FBF8CC"}}
+                variant="outlined" color="primary"
+                sx={{bgcolor: option.includes("private")?"#FADBE5":"#FBF8CC"}}
               />
             ))
           }

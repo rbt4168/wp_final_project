@@ -47,8 +47,8 @@ app.post('/upload', async (req, res) => {
 
                 return sharp(originalPath)
                     .extract({ width: minDimension, height: minDimension, left: leftOffset, top: topOffset })
-                    .resize(80, 80)
-                    .jpeg({ quality: 80 })
+                    .resize(150, 150)
+                    .jpeg()
                     .toFile(compressedPath);
             })
             .then(() => res.send(JSON.stringify({
