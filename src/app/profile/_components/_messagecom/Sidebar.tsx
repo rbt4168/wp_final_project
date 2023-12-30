@@ -6,10 +6,10 @@ import axios from "axios";
 
 import PusherClient from "pusher-js";
 
-import { NEXT_PUBLIC_PUSHER_KEY, NEXT_PUBLIC_PUSHER_CLUSTER } from "@/lib/utils";
+import { publicEnv } from "@/lib/env/public";
 
-export const pusherClient = new PusherClient(NEXT_PUBLIC_PUSHER_KEY, {
-  cluster: NEXT_PUBLIC_PUSHER_CLUSTER,
+export const pusherClient = new PusherClient(publicEnv.NEXT_PUBLIC_PUSHER_KEY, {
+  cluster: publicEnv.NEXT_PUBLIC_PUSHER_CLUSTER,
 });
 
 export default function Sidebar(props:any) {
