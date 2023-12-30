@@ -60,7 +60,7 @@ export function RelatedWorkListItem(props: any) {
     
   }, [pic_id]);
 
-  return (
+  return pic_id ? (
     <ListItem disablePadding>
     <ListItemButton href={"/picture/"+pic_id}>
     <Grid container spacing={2}>
@@ -96,7 +96,7 @@ export function RelatedWorkListItem(props: any) {
     </Grid>
     </ListItemButton>
     </ListItem>
-  );
+  ) : (<></>);
 }
 
 export function WorkCardComponent(props: any) {
@@ -116,7 +116,7 @@ export function WorkCardComponent(props: any) {
     });
   }, [pic_id]);
 
-  return (
+  return pic_id ? (
     <Box m={2}>
       <Card sx={{ maxWidth: "100%" , marginBottom: 1}} >
         <CardActionArea href={"/picture/"+pic_id}>
@@ -138,7 +138,7 @@ export function WorkCardComponent(props: any) {
       </Box>
       <Divider textAlign="right" sx={{fontSize: "12px"}}>{picdata.post_date}</Divider>
     </Box>
-  );
+  ) : (<></>);
 }
 
 export function ArtWorkListItem(props: any) {
@@ -159,7 +159,7 @@ export function ArtWorkListItem(props: any) {
     });
   }, [pic_id]);
 
-  return (
+  return pic_id ? (
     <ListItem disablePadding>
     <ListItemButton onClick={()=>{ setid(pic_id); redir("修改作品");}}>
       <Grid container spacing={2}>
@@ -205,5 +205,5 @@ export function ArtWorkListItem(props: any) {
       </Grid>
     </ListItemButton>
     </ListItem>
-  );
+  ) : (<></>);
 }
