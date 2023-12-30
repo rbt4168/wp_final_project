@@ -95,6 +95,7 @@ export default function SearchBar(props: any) {
           renderTags={(tagValue:any, getTagProps:any) =>
             tagValue.map((option:any, index:number) => (
               <Chip
+                key={index}
                 label={option}
                 {...getTagProps({ index })}
                 disabled={posOptions.indexOf(option) !== -1}
@@ -129,6 +130,7 @@ export default function SearchBar(props: any) {
           renderTags={(tagValue:any, getTagProps:any) =>
             tagValue.map((option:any, index:number) => (
               <Chip
+                key={index}
                 label={option}
                 {...getTagProps({ index })}
                 disabled={negOptions.indexOf(option) !== -1}

@@ -10,7 +10,7 @@ await client.connect();
 
 // console.log(process.env.MONGO_URL);
 
-export const pusherServer = new PusherServer({
+const pusherServer = new PusherServer({
   appId: process.env.PUSHER_ID!,
   key: process.env.NEXT_PUBLIC_PUSHER_KEY!,
   secret: process.env.PUSHER_SECRET!,

@@ -84,10 +84,10 @@ const Messages = ( props: any ) => {
     </Dialog>
   <List sx={{ width: "100%", height: "100%"}}>
     <ListItem>
-      {msgs?.map((m: any) => {
+      {msgs?.map((m: any, id:number) => {
         if(m.visible === -1) {
           return (
-            <Typography variant="h5" color="primary">
+            <Typography key={id} variant="h5" color="primary">
               <CampaignIcon color="primary"/> {m.content}
             </Typography>
           );

@@ -109,7 +109,7 @@ export function WorkCardComponent(props: any) {
     url:"",
     name:"untitled",
     post_date: "",
-    tag:[],
+    tags:[],
     liked_count: 0,
   });
 

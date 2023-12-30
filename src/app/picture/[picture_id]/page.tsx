@@ -192,7 +192,7 @@ export default function PictureFull(props: any) {
                 component="h2" variant="h4" color="inherit" gutterBottom mt={3}>
                 You may also like
               </Typography>
-              <Divider>What's Next</Divider>
+              <Divider>What&apos;s Next</Divider>
               <List>
                 {relatedArr.map((e:any, id:any)=>{
                   return(<RelatedWorkListItem key={id} pic_id={e}/>)
