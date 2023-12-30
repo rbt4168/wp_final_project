@@ -59,7 +59,7 @@ export default function PictureFull(props: any) {
 
   useEffect(()=>{
     const payload = {
-      pic_id: picture_id,
+      pic_id: Number(picture_id),
     }
 
     axios.post('/api/getOriginalPicture',payload).then((e)=>{
@@ -73,6 +73,7 @@ export default function PictureFull(props: any) {
       setCurrentUser(e.data.user[0]);
     }).catch((e)=>console.error(e));
     axios.post('/api/relatedWorks',payload).then((e)=>{
+      alert(e.data.pictureIds);
       setRelatedArr(e.data.pictureIds);
     }).catch((e)=>console.error(e));
   }, [])
