@@ -30,10 +30,12 @@ export default function CreatorHeader(props: any) {
   }
 
   function handleOpenChat() {
+    setDisable(true);
     axios.post("/api/openchat",{author: activeAuthor.account}).then((e)=>{
+      
       console.log(e);
       router.push("/profile?target=message");
-    }).catch((e)=>console.error(e));
+    }).catch((e)=>console.error(e)).finally(()=>{setDisable(false)});
   }
 
   useEffect(()=>{
