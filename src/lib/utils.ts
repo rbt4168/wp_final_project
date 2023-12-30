@@ -34,6 +34,10 @@ function generateRandomString(length:number) {
   return result;
 }
 
+export function reverse_array(array:any[]){
+  return array.map((item:any,idx:number) => array[array.length-1-idx])
+}
+
 export var PICTURE_SERVER_URL = "http://localhost:8000/get/";
 
 export var MONGO_URL="mongodb+srv://rbt4168:dev@cluster0.ikzhlb9.mongodb.net/?retryWrites=true&w=majority"
