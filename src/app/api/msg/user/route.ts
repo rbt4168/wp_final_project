@@ -9,13 +9,11 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    // Get the database and collection on which to run the operation
     const database = client.db("testaaa");
     const collection = database.collection("user");
     
     const query = { account: body.account };
     
-    // Execute query
     let auser = await collection.findOne(query);
 
     if (auser === null) {
@@ -23,9 +21,7 @@ export async function POST(request: Request) {
       auser = await collection.findOne(query);
     }
 
-    // Print the document returned by findOne()
-    console.log("msg: login");
-    console.log(auser);
+    console.log("msg: login", auser);
 
     if(auser === null) {
       return new NextResponse('db issue.', { status: 500 });
@@ -33,7 +29,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ message: JSON.stringify(auser)});
   } catch (error) {
-    console.error("Error in POST function: ", error);
+    console.error("/api/msg/user :", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

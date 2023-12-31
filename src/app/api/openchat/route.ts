@@ -21,30 +21,25 @@ await client.connect();
 
 export async function POST(request: Request) {
   try {
-    // Authentication
+    const body = await request.json();
+    const { author } = body;
+
     const session = await auth();
     if (!session?.user?.email) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    // Extract data from request body
-    const body = await request.json();
-    const { author } = body;
-
-    console.log(author);
-    
-    // Assume you have a user table where you want to update this information
-    // and 'userId' is obtained from the session or some other source
-    const session_id = session?.user?.id; // Replace with actual way to get the user's ID
-
+    const session_id = session?.user?.id;
 
     const [User] = await db
-          .select()
+          .select({
+            username: usersTable.username,
+            coins: usersTable.coins,
+          })
           .from(usersTable)
           .where(eq(usersTable.displayId, session_id))
           .execute();
     
-    // Update user profile in the database
     if (!User){
         return new NextResponse("No author you bad guy", { status: 401 });
     }
@@ -56,7 +51,6 @@ export async function POST(request: Request) {
     const query_user = { account: User.username };
     const query_author = { account: author };
     
-    // Execute query
     let auser = await collection.findOne(query_user);
     let aauthor = await collection.findOne(query_author);
 
@@ -79,11 +73,7 @@ export async function POST(request: Request) {
     const collection_chat = database.collection(`chats_${auser?.uid}`);
     const query_name = { name: aauthor?.account };
     
-    // Execute query
     const iuser = await collection_chat.findOne(query_name);
-
-    // Print the document returned by findOne()
-    // console.log(auser);
 
     if (iuser === null) {
       const collection1 = database.collection(`chats_${auser?.uid}`);
@@ -101,15 +91,11 @@ export async function POST(request: Request) {
           name: auser?.account
       };
       
-      // Execute query
       const ans1 = await collection1.insertOne(query1);
       const ans2 = await collection2.insertOne(query2);
 
       await pusherServer.trigger(`ch_${auser?.uid}`, "evt", ".");
       await pusherServer.trigger(`ch_${aauthor?.uid}`, "evt", ".");
-
-      // Print the document returned by findOne()
-      // console.log(ans1, ans2);
 
       if(ans1 === null || ans2 === null) {
         return new NextResponse('db issue.', { status: 500 });
@@ -119,9 +105,8 @@ export async function POST(request: Request) {
     } else {
       return NextResponse.json({ message: "success" });
     }
-
   } catch (error) {
-    console.error("Error in POST function: ", error);
+    console.error("/api/openchat :", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

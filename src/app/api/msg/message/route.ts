@@ -2,8 +2,6 @@ import { MongoClient } from 'mongodb';
 import { NextResponse } from 'next/server';
 import PusherServer from "pusher";
 
-// console.log(process.env.MONGO_URL);
-
 const client = new MongoClient(process.env.MONGO_URL!, {});
 
 await client.connect();
@@ -17,47 +15,42 @@ const pusherServer = new PusherServer({
 });
 
 // {uid: , cid: , content:, oppo: }
-
-
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    // const { uid, cid, content, oppo } = body;
+    const { uid, cid, content, oppo } = body;
     
-    // Get the database and collection on which to run the operation
     const database = client.db("testaaa");
-    const collection = database.collection(`messages_${body.cid}`);
+    const collection = database.collection(`messages_${cid}`);
     const query = { 
-        content: body.content, uid: body.uid,
+        content: content, uid: uid,
         visible: 3, timestamp: new Date().getTime()
     };
 
-    const user1 = database.collection(`chats_${body.uid}`);
-    const user2 = database.collection(`chats_${body.oppo}`);
-    await user1.updateOne(
-      { cid: body.cid },
-      { $set: { last_message: body.content, timestamp: new Date().getTime() } },
-    )
-    await pusherServer.trigger(`ch_${body.uid}`, "evt", ".");
-    await user2.updateOne(
-      { cid: body.cid },
-      { $set: { last_message: body.content, timestamp: new Date().getTime() } },
-    )
-    await pusherServer.trigger(`ch_${body.oppo}`, "evt", ".");
-    
-    // Execute query
-    const amsg = await collection.insertOne(query);
-    await pusherServer.trigger(`ch_${body.cid}`, "evt", ".");
-    // trigger renew
+    const user1 = database.collection(`chats_${uid}`);
+    const user2 = database.collection(`chats_${oppo}`);
 
-    // console.log(amsg);
+    await user1.updateOne(
+      { cid: cid },
+      { $set: { last_message: content, timestamp: new Date().getTime() } },
+    )
+    await user2.updateOne(
+      { cid: cid },
+      { $set: { last_message: content, timestamp: new Date().getTime() } },
+    )
+    const amsg = await collection.insertOne(query);
+
+    await pusherServer.trigger(`ch_${uid}`, "evt", ".");
+    await pusherServer.trigger(`ch_${oppo}`, "evt", ".");
+    await pusherServer.trigger(`ch_${cid}`, "evt", ".");
+
     if(amsg === null) {
       return new NextResponse('db issue.', { status: 500 });
     }
 
     return NextResponse.json({ message: JSON.stringify(amsg)});
   } catch (error) {
-    console.error("Error in POST function: ", error);
+    console.error("/api/msg/message :", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

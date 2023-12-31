@@ -18,13 +18,11 @@ await client.connect();
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+    const chat_id = generateRandomString(16);
 
-    // Get the database and collection on which to run the operation
     const database = client.db("testaaa");
     const collection1 = database.collection(`chats_${body.uid1}`);
     const collection2 = database.collection(`chats_${body.uid2}`);
-
-    const chat_id = generateRandomString(16);
 
     const query1 = {
         cid: chat_id, timestamp: new Date().getTime(), last_message:"", 
@@ -35,14 +33,11 @@ export async function POST(request: Request) {
         name: body.name2
     };
     
-    // Execute query
     const ans1 = await collection1.insertOne(query1);
     const ans2 = await collection2.insertOne(query2);
-    pusherServer.trigger(`ch_${body.uid1}`, "evt", ".");
-    pusherServer.trigger(`ch_${body.uid2}`, "evt", ".");
 
-    // Print the document returned by findOne()
-    // console.log(ans1, ans2);
+    await pusherServer.trigger(`ch_${body.uid1}`, "evt", ".");
+    await pusherServer.trigger(`ch_${body.uid2}`, "evt", ".");
 
     if(ans1 === null || ans2 === null) {
       return new NextResponse('db issue.', { status: 500 });
@@ -50,7 +45,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ message: "Open Success" });
   } catch (error) {
-    console.error("Error in POST function: ", error);
+    console.error("/api/msg/ochat :", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
