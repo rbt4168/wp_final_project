@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+"use client"
+
+import { useState, useEffect } from 'react'
+import { Divider, Grid } from '@mui/material';
+
 import Sidebar from './Sidebar'
 import ChatView from './ChatView'
-import { Box, Divider, Grid } from '@mui/material';
 
-export default function HomeAA(props: any) {
+import axios from 'axios'
+
+export default function MessageHome(props: any) {
   const { username, trigger } = props;
 
   const [user, setUser] = useState({account:"", uid:""})
@@ -15,7 +19,7 @@ export default function HomeAA(props: any) {
   useEffect(()=>{
     if(username && username !== "") {
       axios.post("/api/msg/user", {test: "test", account: username}).then((res)=>{
-        let iuser = JSON.parse(res.data.message);
+        const iuser = JSON.parse(res.data.message);
         setUser(iuser);
       }).catch((e)=>console.error(e));
     }

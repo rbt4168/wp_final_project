@@ -1,10 +1,11 @@
-import { main_theme } from "@/lib/themes";
+"use client"
+
 import { Box } from "@mui/material";
-import React from "react";
 
-var urlRegex = /((http[s]?|ftp):\/)\/?([^:\/\s]+)(?::([0-9]+))?((\/\w+)*\/)?([\w\-\.]*)?([#?\w\=]+)?([\&\w=\w]+.*)?([\w\+\-\/\%]*)?[A-Za-z0-9_\/]/g;
+import { main_theme } from "@/lib/themes";
+import { url_regex } from "@/lib/utils";
 
-const Message = (props: any) => {
+function Message(props: any) {
   const { message, uid, opendia } = props;
 
   const show = () => {
@@ -22,10 +23,10 @@ const Message = (props: any) => {
       {show() ? (
         <Box sx={{ width: "100%" }}>
           <p
-            onMouseDown={(e)=>{opendia(message._id, message.uid === uid)}}
-            onClick={(e)=>{opendia(message._id, message.uid === uid)}}
+            onMouseDown={()=>{opendia(message._id, message.uid === uid)}}
+            onClick={()=>{opendia(message._id, message.uid === uid)}}
             style={{ padding: "10px", background: (message.uid === uid) ? main_theme.palette.primary.light : main_theme.palette.secondary.light, borderRadius: "10px" ,textAlign: ((message.uid === uid) ? "right" : "left")}}>
-            {message?.content?.match(urlRegex)?<a target="_blank" href={message.content}>{message.content}</a>:message.content}
+            {message?.content?.match(url_regex)?<a target="_blank" href={message.content} rel="noreferrer">{message.content}</a>:message.content}
           </p>
         </Box>
       ) : (
@@ -37,6 +38,6 @@ const Message = (props: any) => {
       )}
     </>
   );
-};
+}
 
 export default Message;

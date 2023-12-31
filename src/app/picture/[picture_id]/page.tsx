@@ -44,10 +44,9 @@ export default function PictureFull(props: any) {
 
   const [currentUser, setCurrentUser] = useState({
     liked_picture: []
-  })
+  });
   
   const [onliked, setonliked] = useState(false);
-
   const [ relatedArr, setRelatedArr ] = useState([0,0,0,0,0]);
 
 

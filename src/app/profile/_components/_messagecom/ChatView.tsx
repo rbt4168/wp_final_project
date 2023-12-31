@@ -1,6 +1,7 @@
-import Messages from "./Messages";
-import React from 'react'
+"use client"
 import { Divider, List, ListItem } from "@mui/material";
+
+import Messages from "./Messages";
 import InputStable from "./Input";
 
 export default function ChatView ( props: any ) {

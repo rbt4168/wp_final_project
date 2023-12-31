@@ -51,7 +51,7 @@ export async function POST(request: Request) {
 
     const DateFomate = `${currentDate.getFullYear()}-${padWithZero(currentDate.getMonth() + 1)}-${padWithZero(currentDate.getDate())}`;
 
-    let res = await axios.post(process.env.PICTURE_SERVER_URL+"upload", {img: previewUrl})
+    const res = await axios.post(process.env.PICTURE_SERVER_URL+"upload", {img: previewUrl})
     console.log(res.data.original, res.data.compress);
 
     const [ updoadPicture ] = await db

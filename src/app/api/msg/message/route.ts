@@ -46,7 +46,7 @@ export async function POST(request: Request) {
     await pusherServer.trigger(`ch_${body.oppo}`, "evt", ".");
     
     // Execute query
-    let amsg = await collection.insertOne(query);
+    const amsg = await collection.insertOne(query);
     await pusherServer.trigger(`ch_${body.cid}`, "evt", ".");
     // trigger renew
 

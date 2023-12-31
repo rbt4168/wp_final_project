@@ -1,14 +1,17 @@
-import React, {useEffect, useState} from "react";
+"use client"
+
+import {useEffect, useState} from "react";
+import { Box } from "@mui/material";
+
 import ChatList from "./ChatList";
-import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
-
-import axios from "axios";
-
-import PusherClient from "pusher-js";
 
 import { publicEnv } from "@/lib/env/public";
 
-export const pusherClient = new PusherClient(publicEnv.NEXT_PUBLIC_PUSHER_KEY, {
+import axios from "axios";
+import PusherClient from "pusher-js";
+
+
+const pusherClient = new PusherClient(publicEnv.NEXT_PUBLIC_PUSHER_KEY, {
   cluster: publicEnv.NEXT_PUBLIC_PUSHER_CLUSTER,
   forceTLS: true,
 });
@@ -19,7 +22,7 @@ export default function Sidebar(props:any) {
 
   useEffect(()=>{
     axios.post("/api/msg/chats", {uid: user.uid}).then((res)=>{
-      let iuser = JSON.parse(res.data.message);
+      const iuser = JSON.parse(res.data.message);
       console.log(iuser);
       setOppos(iuser);
     }).catch((e)=>console.error(e));
@@ -35,7 +38,7 @@ export default function Sidebar(props:any) {
     channel.bind("evt", (data:any) => {
       console.log(data);
       axios.post("/api/msg/chats", {uid: user.uid}).then((res)=>{
-        let iuser = JSON.parse(res.data.message);
+        const iuser = JSON.parse(res.data.message);
         console.log(iuser);
         setOppos(iuser);
       }).catch((e)=>console.error(e));
@@ -44,7 +47,7 @@ export default function Sidebar(props:any) {
     return ()=>{
       pusherClient.unsubscribe(`ch_${user.uid}`);
     }
-  }, [user])
+  }, [ user ])
 
   return (
     <Box sx={{ width: "100%" }}>

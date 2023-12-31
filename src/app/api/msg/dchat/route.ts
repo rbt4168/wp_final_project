@@ -32,8 +32,8 @@ export async function POST(request: Request) {
     const query2 = { cid: cid };
     
     // Execute query
-    let ans1 = await collection1.deleteMany(query1);
-    let ans2 = await collection2.deleteMany(query2);
+    const ans1 = await collection1.deleteMany(query1);
+    const ans2 = await collection2.deleteMany(query2);
     await pusherServer.trigger(`ch_${uid1}`, "evt", ".");
     await pusherServer.trigger(`ch_${uid2}`, "evt", ".");
 

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react";
+import { signIn } from "next-auth/react";
 import { Avatar, Box, Button, Checkbox, CssBaseline,
   FormControlLabel, Grid, Link, Paper, TextField, Typography } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
@@ -12,7 +13,7 @@ import Copyright from '@/components/copyright';
 import { main_theme } from '@/lib/themes';
 import { publicEnv } from "@/lib/env/public";
 
-import { signIn } from "next-auth/react";
+
 export default function SignInSide() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");

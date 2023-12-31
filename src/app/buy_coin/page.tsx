@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Box, Button, Card, CardActions, CardContent, 
   CardHeader, Container, CssBaseline, Grid, Typography } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
@@ -11,7 +12,6 @@ import FooterComponent from '@/components/footer';
 import { main_theme } from '@/lib/themes';
 
 import axios from "axios"
-import { useRouter } from 'next/navigation';
 
 const tiers = [
   {
@@ -51,12 +51,28 @@ const tiers = [
   },
 ];
 
-export default function Pricing(props: any) {
+export default function Pricing() {
   const [isDisabled, setIsDisabled] = useState(false);
-  
   const [ isLogin, setIsLogin ] = useState(false);
 
   const router = useRouter();
+
+  function handleSubmit(amount: number){
+    setIsDisabled(true);
+
+    const payload = {
+      coins: amount
+    };
+
+    axios.post("/api/buy_coin", payload)
+      .then(() => {
+        alert("儲值成功");
+      }).catch(() => {
+        alert("Error occurred while paying");
+      }).finally(() => {
+        setIsDisabled(false);
+      });
+  }
 
   useEffect(()=>{
     if(!isLogin) {
@@ -65,23 +81,6 @@ export default function Pricing(props: any) {
       }).catch(()=>{router.push("/login")});
     }
   }, []);
-
-  function handleSubmit(amount:number){
-    setIsDisabled(true);
-
-    const payload = {
-      coins: amount
-    };
-
-    axios.post("/api/buy_coin", payload)
-      .then(response => {
-        alert("儲值成功");
-      }).catch((e) => {
-        alert("Error occurred while paying");
-      }).finally(() => {
-        setIsDisabled(false);
-      });
-  }
 
   return (
     <ThemeProvider theme={main_theme}>

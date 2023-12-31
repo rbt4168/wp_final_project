@@ -16,7 +16,12 @@ import { main_theme } from "@/lib/themes";
 
 import axios from "axios";
 
-function CostListItem(props: any) {
+interface list_prop_interface {
+  text: string
+  cost: number
+  author: string
+}
+function CostListItem(props: list_prop_interface) {
   const {text, cost, author} = props;
 
   const [open, setOpen] = useState(false);
@@ -29,9 +34,12 @@ function CostListItem(props: any) {
       authorname: author, 
     }
 
-    axios.post("/api/buyTag", payload).then((e)=>{
-      alert("購買成功!");
-    }).catch((e)=>console.error(e)).finally(()=>setOpen(false));
+    axios.post("/api/buyTag", payload)
+      .then((e)=>{
+        alert("購買成功!");
+      })
+      .catch((e)=>console.error(e))
+      .finally(()=>setOpen(false));
   }
 
   return(
@@ -42,7 +50,7 @@ function CostListItem(props: any) {
           <Box display="flex" justifyContent="space-between" sx={{width: "100%"}}>
             <GlobalChip text={"private-"+author+"-"+text}/>
             <Typography color="inherit">
-              {cost+" Coins"}
+              {cost.toString() + " Coins"}
             </Typography>
           </Box>
         </ListItemButton>
@@ -68,13 +76,18 @@ function CostListItem(props: any) {
             </Button>
           </DialogActions>
         </Dialog>
-
       </ListItem>
     </>
   )
 }
 
-export default function DonatePage(props: any) {
+interface prop_interface {
+  params : {
+    author_id: number
+  }
+}
+
+export default function DonatePage(props: prop_interface) {
   const { params } = props;
   const { author_id } = params;
   

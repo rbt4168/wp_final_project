@@ -80,7 +80,7 @@ export async function POST(request: Request) {
     const query_name = { name: aauthor?.account };
     
     // Execute query
-    let iuser = await collection_chat.findOne(query_name);
+    const iuser = await collection_chat.findOne(query_name);
 
     // Print the document returned by findOne()
     // console.log(auser);
@@ -102,8 +102,8 @@ export async function POST(request: Request) {
       };
       
       // Execute query
-      let ans1 = await collection1.insertOne(query1);
-      let ans2 = await collection2.insertOne(query2);
+      const ans1 = await collection1.insertOne(query1);
+      const ans2 = await collection2.insertOne(query2);
 
       await pusherServer.trigger(`ch_${auser?.uid}`, "evt", ".");
       await pusherServer.trigger(`ch_${aauthor?.uid}`, "evt", ".");

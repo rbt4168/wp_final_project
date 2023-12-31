@@ -1,53 +1,56 @@
 "use client"
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
+
+import { signIn } from "next-auth/react";
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from "react";
+import { Avatar, Box, Button, Checkbox, CssBaseline,
+  FormControlLabel, Grid, Link, Paper, TextField, Typography } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+
 import Copyright from '@/components/copyright';
+
 import { main_theme } from '@/lib/themes';
-
-import { useState } from "react";
-
-// Run: npx shadcn-ui@latest add card
 import { publicEnv } from "@/lib/env/public";
-import { signIn } from "next-auth/react";
-import { useSearchParams } from 'next/navigation';
+
+import axios from 'axios';
 
 
 export default function SignInSide() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [ isLogin, setIsLogin ] = useState(false);
 
+  const router = useRouter();
   const searchParams = useSearchParams();
  
   const error_msg = searchParams.get('error')
 
   const handleSubmit = () => {
-    // TODO: sign in logic
+    
     signIn("credentials", {
       email,
       password,
       callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/login`,
-    }).then((e)=>{
-
+    }).then(()=>{
+      setIsLogin(true);
+      router.push("/");
     }).catch((e)=>console.error(e));
   };
 
+  useEffect(()=>{
+    if(!isLogin) {
+      axios.get("/api/getNowUser").then(()=>{
+        router.push("/");
+      }).catch((e)=>console.error(e));
+    }
+  }, []);
+
   return (
     <ThemeProvider theme={main_theme}>
+      <CssBaseline />
       <Grid container component="main" sx={{ height: '100vh' }}>
-        <CssBaseline />
         <Grid item xs={false} sm={4} md={7}
           sx={{
             backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',

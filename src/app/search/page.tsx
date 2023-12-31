@@ -13,7 +13,7 @@ import DivLineCenter from "@/components/divline";
 import FooterComponent from "@/components/footer";
 import NavigationBar from "@/components/navbar";
 
-export default function SearchPage(props: any) {
+export default function SearchPage() {
   const [ consequence, setConsequence ] = useState([])
   const [ latArr, setLatArr ] = useState([[]] as any[][]);
 

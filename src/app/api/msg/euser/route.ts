@@ -18,7 +18,7 @@ export async function POST(request: Request) {
     const query = { account: account };
 
     // Execute query
-    let auser = await collection.findOne(query);
+    const auser = await collection.findOne(query);
 
     // Print the document returned by findOne()
     // console.log(auser);

@@ -38,19 +38,15 @@ import { useRouter, useSearchParams } from "next/navigation";
 import MessageSystem from "./_components/messagesys";
 
 export default function Profile() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
   const [ actionUser, setActionUser ] = useState({});
   const [ tirgger, setTrigger ] = useState(false);
-
   const [ isLogin, setIsLogin ] = useState(false);
-
-  const router = useRouter();
-  
-  const searchParams = useSearchParams();
- 
-
-  const target_page = searchParams.get('target')==="message"?"私訊":"帳號資料";
   const [ modifyID, setModifyID ] = useState(0);
-  const [ selectName, setSelectName ] = useState(target_page);
+  const [ selectName, setSelectName ] = useState(
+    searchParams.get('target')==="message"?"私訊":"帳號資料");
 
   useEffect(()=>{
     if(!isLogin) {

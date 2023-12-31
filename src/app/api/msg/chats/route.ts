@@ -18,7 +18,7 @@ export async function POST(request: Request) {
     const query = {};
 
     // Execute query
-    let ans = await collection.find(query).toArray();
+    const ans = await collection.find(query).toArray();
 
     // Print the document returned by findOne()
     // console.log(ans);

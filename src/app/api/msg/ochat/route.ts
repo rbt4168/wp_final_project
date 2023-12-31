@@ -36,8 +36,8 @@ export async function POST(request: Request) {
     };
     
     // Execute query
-    let ans1 = await collection1.insertOne(query1);
-    let ans2 = await collection2.insertOne(query2);
+    const ans1 = await collection1.insertOne(query1);
+    const ans2 = await collection2.insertOne(query2);
     pusherServer.trigger(`ch_${body.uid1}`, "evt", ".");
     pusherServer.trigger(`ch_${body.uid2}`, "evt", ".");
 

@@ -1,19 +1,23 @@
-import React, { useEffect } from "react";
-import axios from "axios";
-import { Box, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
+"use client"
 
-const ChatListUnit = ( props: any ) => {
-  const {user, selfuid, setCid, setOppo, oppouid, setOppouid, selectuser } = props;
+import { useEffect } from "react";
+import { Box, Divider, List, ListItem, ListItemButton,
+  ListItemIcon, ListItemText, Typography } from "@mui/material";
+
+import axios from "axios";
+
+function ChatListUnit(props: any) {
+  const {user, setCid, setOppo, setOppouid, selectuser } = props;
 
   function handler () {
     setCid(user.cid);
     setOppo(user.name);
-    // alert(JSON.stringify(user));
+
     axios.post("/api/msg/euser", {account: user.name}).then((res)=>{
       if (res.data.message === "e") {
         // user exist
-        let quid = res.data.uid;
-        let qacc = res.data.account;
+        const quid = res.data.uid;
+        const qacc = res.data.account;
         console.log(quid);
         setOppouid(res.data.uid);
 
@@ -23,13 +27,6 @@ const ChatListUnit = ( props: any ) => {
     }).catch((e)=>{
       console.error(e);
     })
-  }
-
-  function handle_remove() {
-    console.log(`remove uid1:${selfuid} uid2:${oppouid} cid: ${user.cid}`);
-    axios.post("/api/msg/dchat", {uid1: selfuid, uid2: oppouid, cid: user.cid}).then((res)=>{
-      console.log(res);
-    }).catch((e)=>console.error(e))
   }
 
   return (
@@ -58,7 +55,7 @@ const ChatListUnit = ( props: any ) => {
   )
 }
 
-const ChatList = (props: any) => {
+function ChatList(props: any) {
   const { selfuid, users, setCid, setOppo, setOppouid, oppouid, seluser } = props;
   console.log(users);
   console.log(users?.sort((a:any, b:any) => { return b.timestamp - a.timestamp }));
@@ -81,6 +78,6 @@ const ChatList = (props: any) => {
     <Divider />
     </List>
   );
-};
+}
 
 export default ChatList;

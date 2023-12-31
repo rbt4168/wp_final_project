@@ -47,15 +47,22 @@ export default function AuthorPage(props: any) {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+
+  function handleClick(event: React.MouseEvent<HTMLElement>) {
     setAnchorEl(event.currentTarget);
   };
 
   function handleClose() {
     setAnchorEl(null);
   }
+  
+  function handleSort(id: number) {
+    setBasonArr(option_list[id].value as never[]);
+    setFirt(option_list[id].first_text);
+    setSect(option_list[id].second_text);
+  }
 
-  let option_list = [
+  const option_list = [
     {
       title: "從新到舊排序",
       icon: (<KeyboardDoubleArrowDownIcon />),
@@ -86,16 +93,9 @@ export default function AuthorPage(props: any) {
     },
   ]
 
-
   useEffect(()=>{
     setLatArr(chunkArray(basonArr, 5));
   }, [basonArr])
-
-  function handleSort(id: number) {
-    setBasonArr(option_list[id].value as never[]);
-    setFirt(option_list[id].first_text);
-    setSect(option_list[id].second_text);
-  }
 
   useEffect(()=>{
     axios.get("/api/getAuthorById?user_id="+author_id).then((e)=>{
@@ -126,36 +126,15 @@ export default function AuthorPage(props: any) {
     axios.post("/api/authorTag", payload).then((e)=>{
       setPriArr(chunkArray(e.data.pictureIds, 5));
     }).catch((e)=>console.error(e));
-    /*
-    axios.post("/api/authorRecommand", payload).then((e)=>{
-      setRecArr(e.data.pictureIds);
-    }).catch((e)=>console.error(e));
 
-    axios.post("/api/authorRecommand", payload).then((e)=>{
-      setRecArr(e.data.pictureIds);
-    }).catch((e)=>console.error(e));
-
-    axios.post("/api/authorRecommand", payload).then((e)=>{
-      setRecArr(e.data.pictureIds);
-    }).catch((e)=>console.error(e));
-
-    axios.post("/api/authorRecommand", payload).then((e)=>{
-      setRecArr(e.data.pictureIds);
-    }).catch((e)=>console.error(e));
-
-    axios.post("/api/authorRecommand", payload).then((e)=>{
-      setRecArr(e.data.pictureIds);
-    }).catch((e)=>console.error(e));
-*/
   }, [])
 
-  return(
+  return (
   <ThemeProvider theme={main_theme}>
     <CssBaseline />
     <NavigationBar />
 
     <CreatorHeader activeAuthor={activeAuthor} setActiveAuthor={setActiveAuthor} authorId={author_id}/>
-
 
     <Grid container 
       justifyContent="center"
@@ -168,44 +147,45 @@ export default function AuthorPage(props: any) {
       </Button>
     </Grid>
     
-    
     {priArr.length >= 1 ? (
-    <>
-      <DivLineCenter text="Private Works"/>
-      {
-        priArr.map((e0:any[],idx:any)=>{
-          return(
-            <Grid key={idx} container 
-              justifyContent="center"
-              alignItems="center"
-            >
-              {e0.map((e:any, id:any)=>{
-                return(
-                <Grid key={id} item xs={12} md={2}>
-                  <WorkCardComponent pic_id={e} />
+        <>
+          <DivLineCenter text="Private Works"/>
+          {priArr.map((e0:number[], idx:number)=>{
+              return (
+                <Grid key={idx} container 
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  {e0.map((e:number, id:number)=>{
+                      return (
+                      <Grid key={id} item xs={12} md={2}>
+                        <WorkCardComponent pic_id={e} />
+                      </Grid>
+                      )
+                    })
+                  }
                 </Grid>
-                )
-              })}
-            </Grid>
-          )
-        })
-      }
-    </>
-    ) : (<></>) }
+              )
+            })
+          }
+        </>
+      ) : (<></>)
+    }
 
     <DivLineCenter text="Top 3 Recommanded by Author"/>
     <Grid container 
       justifyContent="center"
       alignItems="center"
     >
-      {recArr.map((e:any, id:any)=>{
-        if(id>=3) return(<></>);
-        return(
-        <Grid key={id} item xs={12} md={3}>
-          <WorkCardComponent pic_id={e} />
-        </Grid>
-        )
-      })}
+      {recArr.map((e:number, id:number)=>{
+          if(id>=3) return(<></>);
+          return (
+            <Grid key={id} item xs={12} md={3}>
+              <WorkCardComponent pic_id={e} />
+            </Grid>
+          )
+        })
+      }
     </Grid>
 
     
@@ -233,34 +213,36 @@ export default function AuthorPage(props: any) {
       justifyContent="center"
       alignItems="center"
     >
-      {latArr.length > 0 ? (latArr[0].map((e:any, id:any)=>{
-        if(id>=5) return(<></>);
-        return(
-        <Grid key={id} item xs={12} md={2}>
-          <WorkCardComponent pic_id={e} />
-        </Grid>
-        )
-      })):(<></>)}
+      {latArr.length > 0 ? (latArr[0].map((e:number, id:number)=>{
+            if(id>=5) return(<></>);
+            return (
+              <Grid key={id} item xs={12} md={2}>
+                <WorkCardComponent pic_id={e} />
+              </Grid>
+            )
+          })
+        ) : (<></>)
+      }
     </Grid>
 
     {latArr.length >= 1 ? (
     <>
       <DivLineCenterNoMt text={sect}/>
-      {
-        latArr.map((e0:any[],idx:any)=>{
+      {latArr.map((e0:number[],idx:number)=>{
           if(idx===0) return(<></>)
           return(
             <Grid key={idx} container 
               justifyContent="center"
               alignItems="center"
             >
-              {e0.map((e:any, id:any)=>{
-                return(
-                <Grid key={id} item xs={12} md={2}>
-                  <WorkCardComponent pic_id={e} />
-                </Grid>
-                )
-              })}
+              {e0.map((e:number, id:number)=>{
+                  return(
+                  <Grid key={id} item xs={12} md={2}>
+                    <WorkCardComponent pic_id={e} />
+                  </Grid>
+                  )
+                })
+              }
             </Grid>
           )
         })
@@ -284,17 +266,17 @@ export default function AuthorPage(props: any) {
       }}
     >
       {option_list.map((option: any, idx:number) => (
-        <MenuItem key={option} selected={option === 'Pyxis'} onClick={()=>handleSort(idx)}>
-          <ListItemIcon>
-            {option.icon}
-          </ListItemIcon>
-          <Typography variant="inherit" noWrap>
-            {option.title}
-          </Typography>
-        </MenuItem>
-      ))}
+          <MenuItem key={option} selected={option === 'Pyxis'} onClick={()=>handleSort(idx)}>
+            <ListItemIcon>
+              {option.icon}
+            </ListItemIcon>
+            <Typography variant="inherit" noWrap>
+              {option.title}
+            </Typography>
+          </MenuItem>
+        ))
+      }
     </Menu>
-    
 
     <FooterComponent/>
   </ThemeProvider>
