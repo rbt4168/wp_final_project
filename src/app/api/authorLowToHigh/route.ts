@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
-import { eq, asc } from "drizzle-orm";
 import { db } from "@/db";
-import { usersTable, pictureTable } from "@/db/schema"; // Import your UserTable if not already done
+import { usersTable, pictureTable } from "@/db/schema";
+
+import { eq, asc } from "drizzle-orm";
 
 export async function POST(request: Request) {
   try {
-    // Authentication
     const body = await request.json();
-    const {author_id} = body;
-    // Query
+    const { author_id } = body;
+    
     const [author] = await db.select({
       authorname: usersTable.username
     })
@@ -27,13 +27,14 @@ export async function POST(request: Request) {
       .execute();
       
     const prefix = `private-${author.authorname}`;
-    const pictureIds = pictureLowToHigh.filter(picture => picture.tags && !picture.tags.some(tag => tag.startsWith(prefix))
+    
+    const pictureIds = pictureLowToHigh.filter(
+      picture => picture.tags && !picture.tags.some(tag => tag.startsWith(prefix))
     ).map(picture => picture.pic_id);
     
-    // Return the user information
     return NextResponse.json({ pictureIds });
   } catch (error) {
-    console.error("Error in POST function: ", error);
+    console.error("/api/authorLowToHigh :", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

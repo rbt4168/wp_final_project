@@ -1,15 +1,14 @@
 import { NextResponse } from "next/server";
-import { eq } from "drizzle-orm";
 import { db } from "@/db";
-import { usersTable } from "@/db/schema"; // Import your UserTable if not already done
+import { usersTable } from "@/db/schema";
+
+import { eq } from "drizzle-orm";
 
 export async function GET(request: Request) {
   try {
-    // Request Body
     const { searchParams } = new URL(request.url)
     const user_id = parseInt(searchParams.get('user_id') || "");
 
-    // Query
     const user = await db
       .select()
       .from(usersTable)
@@ -18,7 +17,6 @@ export async function GET(request: Request) {
     
     const select_user = user[0];
     
-    // Return the user information
     return NextResponse.json({
       account: select_user?.username,
       name: select_user?.name, 
@@ -29,9 +27,8 @@ export async function GET(request: Request) {
       tags: select_user?.private_tags,
       costs: select_user?.private_tags_cost
     });
-
   } catch (error) {
-    console.error("Error in POST function: ", error);
+    console.error("/api/getAuthorById :", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

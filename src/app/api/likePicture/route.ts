@@ -1,47 +1,46 @@
 import { NextResponse } from "next/server";
-import { and, eq } from "drizzle-orm";
 import { db } from "@/db";
+import { usersTable, pictureTable } from "@/db/schema";
+
+import { eq } from "drizzle-orm";
+
 import { auth } from "@/lib/auth";
-import { pictureTable, usersTable } from "@/db/schema"; // Import your UserTable if not already done
 
 export async function POST(request: Request) {
   try {
-    // Authentication
+    const body = await request.json();
+    const { pic_id, like } = body;
+
     const session = await auth();
     if (!session?.user?.email) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    // Extract data from request body
-    const body = await request.json();
-    const { pic_id, like } = body;
+    const session_id = session?.user?.id;
 
-    // Assume you have a user table where you want to update this information
-    // and 'userId' is obtained from the session or some other source
-    const session_id = session?.user?.id; // Replace with actual way to get the user's ID
-
-    const User = await db
+    const [User] = await db
           .select({
-            author: usersTable.name,
-            id   : usersTable.id
+            username: usersTable.username
           })
           .from(usersTable)
           .where(eq(usersTable.displayId, session_id))
           .execute();
+    
     if (!User){
         return new NextResponse("No author you bad guy", { status: 401 });
     }
 
-    console.log("Authentication Pass.");
-    
-
     const [currentPicture] = await db
-      .select()
+      .select({
+        liked_count: pictureTable.liked_count,
+      })
       .from(pictureTable)
       .where(eq(pictureTable.pic_id, parseInt(pic_id)));
     
     const [currentUser] = await db
-      .select()
+      .select({
+        liked_picture: usersTable.liked_picture,
+      })
       .from(usersTable)
       .where(eq(usersTable.username,(session?.user?.username)));
     
@@ -52,8 +51,11 @@ export async function POST(request: Request) {
     }
 
     let new_like_cnt;
+
     const currentLikedPictures = currentUser.liked_picture || [];
+
     let updatedLikedPictures = [];
+
     if(like) {
       new_like_cnt = (currentPicture.liked_count || 0) + 1;
       updatedLikedPictures = [...currentLikedPictures, parseInt(pic_id)];
@@ -69,10 +71,7 @@ export async function POST(request: Request) {
       })
       .where(eq(pictureTable.pic_id, parseInt(pic_id)))
       .returning();
-      
-    console.log("Update Picture.");
     
-    // Update the user's record
     const [updatedUser] = await db
       .update(usersTable)
       .set({
@@ -80,13 +79,10 @@ export async function POST(request: Request) {
       })
       .where(eq(usersTable.username, session?.user?.username))
       .returning();
-      
-    console.log("Update User.");
 
-    // Return the updated user information
     return NextResponse.json({ updatedUser, updatedPicture });
   } catch (error) {
-    console.error("Error in POST function: ", error);
+    console.error("/api/likePicture :", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

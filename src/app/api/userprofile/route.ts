@@ -1,21 +1,34 @@
 import { NextResponse } from "next/server";
-import { eq } from "drizzle-orm";
 import { db } from "@/db";
+import { usersTable } from "@/db/schema";
+
+import { eq } from "drizzle-orm";
+
 import { auth } from "@/lib/auth";
-import { usersTable } from "@/db/schema"; // Import your UserTable if not already done
 
 export async function POST(request: Request) {
   try {
-    // Authentication
+    const body = await request.json();
+    const { name, quote, title, bio, links } = body;
+
     const session = await auth();
     if (!session?.user?.email) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    // Extract data from request body
-    const body = await request.json();
-    const { name, quote, title, bio, links } = body;
-    const username = session.user.username; 
+    const session_id = session?.user?.id;
+
+    const [User] = await db
+          .select({
+            username: usersTable.username,
+          })
+          .from(usersTable)
+          .where(eq(usersTable.displayId, session_id))
+          .execute();
+    
+    if (!User){
+        return new NextResponse("No author you bad guy", { status: 401 });
+    }
 
     const [updatedUser] = await db
       .update(usersTable)
@@ -26,12 +39,12 @@ export async function POST(request: Request) {
         bio: bio,
         links: links // String, seperate by ','
       })
-      .where(eq(usersTable.username, username)) // Assuming 'id' is the user identifier in your table
+      .where(eq(usersTable.username, User.username || "")) // Assuming 'id' is the user identifier in your table
       .returning();
-    // Return the updated user information
+    
     return NextResponse.json({ updatedUser });
   } catch (error) {
-    console.error("Error in POST function: ", error);
+    console.error("/api/userprofile :", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

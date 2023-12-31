@@ -1,43 +1,48 @@
 import { NextResponse } from "next/server";
-import { eq } from "drizzle-orm";
 import { db } from "@/db";
+import { usersTable, transactionTable } from "@/db/schema";
+
+import { eq } from "drizzle-orm";
+
 import { auth } from "@/lib/auth";
-import { transactionTable, usersTable } from "@/db/schema"; // Import your UserTable if not already done
 
 export async function POST(request: Request) {
   try {
-    // Authentication
+    const body = await request.json();
+    const { authorname, tagname } = body;
+
     const session = await auth();
     if (!session?.user?.email) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    // Extract data from request body
-    const body = await request.json();
-    const { authorname, tagname } = body;
-    
-    // Assume you have a user table where you want to update this information
-    // and 'userId' is obtained from the session or some other source
-    const session_id = session?.user?.id; // Replace with actual way to get the user's ID
+    const session_id = session?.user?.id;
 
     const [User] = await db
-          .select()
+          .select({
+            username: usersTable.username,
+            coins: usersTable.coins,
+            owned_private_tag: usersTable.owned_private_tag
+          })
           .from(usersTable)
           .where(eq(usersTable.displayId, session_id))
           .execute();
     
-    // Update user profile in the database
     if (!User) {
         return new NextResponse("No author you bad guy", { status: 401 });
     }
 
     const [Author] = await db
-          .select()
+          .select({
+            username: usersTable.username,
+            private_tags: usersTable.private_tags,
+            private_tags_cost: usersTable.private_tags_cost,
+
+          })
           .from(usersTable)
           .where(eq(usersTable.username, authorname))
           .execute();
 
-    // Update user profile in the database
     if (!Author) {
       return new NextResponse("Author Not Exist", { status: 400 });
     }
@@ -62,13 +67,10 @@ export async function POST(request: Request) {
       return new NextResponse("Not Enough Coins", { status: 400 });
     }
 
-   // Check if the user has an existing post_picture array, if not, initialize it
    const currentOwnedTag = User.owned_private_tag || [];
     
-   // Append the new pic_id to the array
    const updatedOwnedTag = [...currentOwnedTag, "private-"+authorname+"-"+tagname];
 
-    // Update the user's record
     const [updatedUser] = await db
       .update(usersTable)
       .set({
@@ -79,7 +81,9 @@ export async function POST(request: Request) {
       .returning();
     
     const [Author2] = await db
-      .select()
+      .select({
+        coins: usersTable.coins,
+      })
       .from(usersTable)
       .where(eq(usersTable.username, authorname))
       .execute();
@@ -101,10 +105,9 @@ export async function POST(request: Request) {
         timestamp: Date.now().toString()
       }).returning()
 
-    // Return the updated user information
     return NextResponse.json({ newTx });
   } catch (error) {
-    console.error("Error in POST function: ", error);
+    console.error("/api/buyTag", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

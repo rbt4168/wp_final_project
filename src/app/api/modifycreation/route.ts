@@ -1,55 +1,52 @@
 import { NextResponse } from "next/server";
-import { eq } from "drizzle-orm";
 import { db } from "@/db";
+import { usersTable, pictureTable } from "@/db/schema";
+
+import { and, eq } from "drizzle-orm";
+
 import { auth } from "@/lib/auth";
-import { pictureTable, usersTable } from "@/db/schema"; // Import your UserTable if not already done
 
 export async function POST(request: Request) {
   try {
-    // Authentication
+    const body = await request.json();
+    const { pic_id, title, origin, recommand, value } = body;
+
     const session = await auth();
     if (!session?.user?.email) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    const session_id = session?.user?.id; // Replace with actual way to get the user's ID
 
-    // Extract data from request body
-    const body = await request.json();
-    const { pic_id, title, origin, recommand, value } = body;
+    const session_id = session?.user?.id;
 
-    // Assume you have a user table where you want to update this information
-    // and 'userId' is obtained from the session or some other source
-
-    const User = await db
-          .select({
-            author: usersTable.name,
-            id   : usersTable.id
-          })
+    const [User] = await db
+          .select({id: usersTable.id})
           .from(usersTable)
           .where(eq(usersTable.displayId, session_id))
           .execute();
-
+    
     if (!User){
-        // console.log("fefefe");
         return new NextResponse("No author you bad guy", { status: 401 });
     }
 
-    const [updoadPicture]  = await db
+    const [uploadPicture]  = await db
       .update(pictureTable)
       .set({
         name: title,
         description: origin,
         recommand_point: recommand,
         tags: value,
-      }).where(eq(pictureTable.pic_id, pic_id))
-      .returning();
+      }).where(and(
+        eq(pictureTable.author_id, User.id),
+        eq(pictureTable.pic_id, pic_id)
+      )).returning();
     
-    if (!updoadPicture){
+    if (!uploadPicture){
         return new NextResponse("No author you bad guy", { status: 401 });
     }
-    return NextResponse.json({ updoadPicture });
+
+    return NextResponse.json({ uploadPicture });
   } catch (error) {
-    console.error("Error in POST function: ", error);
+    console.error("/api/modifycreation :", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

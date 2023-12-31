@@ -1,28 +1,27 @@
 import { NextResponse } from "next/server";
-import { eq } from "drizzle-orm";
 import { db } from "@/db";
-import { auth } from "@/lib/auth";
-import { usersTable } from "@/db/schema"; // Import your UserTable if not already done
+import { usersTable } from "@/db/schema";
 
-export async function GET(request: Request) {
+import { eq } from "drizzle-orm";
+
+import { auth } from "@/lib/auth";
+
+export async function GET() {
   try {
-    // Authentication
     const session = await auth();
     if (!session?.user?.username) {
         return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    // Query
-    const user = await db
+    const Users = await db
       .select()
       .from(usersTable)
       .where(eq(usersTable.username, session?.user?.username))
       .execute();
     
-    // Return the user information
-    return NextResponse.json({ user });
+    return NextResponse.json({ Users });
   } catch (error) {
-    console.error("Error in POST function: ", error);
+    console.error("/getNowUser :", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

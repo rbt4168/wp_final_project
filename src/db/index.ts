@@ -9,5 +9,6 @@ const client = new Client({
   connectionString: privateEnv.POSTGRES_URL,
   connectionTimeoutMillis: 50000,
 });
+
 await client.connect();
 export const db = drizzle(client, { schema });

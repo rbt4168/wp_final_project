@@ -1,36 +1,55 @@
 import { NextResponse } from "next/server";
-import { eq, desc, inArray} from "drizzle-orm";
 import { db } from "@/db";
-import { auth } from "@/lib/auth";
-import { pictureTable, usersTable } from "@/db/schema"; // Import your UserTable if not already done
+import { pictureTable, usersTable } from "@/db/schema";
 
-export async function GET(request: Request) {
+import { eq, inArray } from "drizzle-orm";
+
+import { auth } from "@/lib/auth";
+
+export async function GET() {
   try {
-    // Authentication
     const session = await auth();
-    if (!session?.user?.username) {
-        return new NextResponse("Unauthorized", { status: 401 });
+    if (!session?.user?.email) {
+      return new NextResponse("Unauthorized", { status: 401 });
     }
+
+    const session_id = session?.user?.id;
+
     const [user] = await db
-    .select()
-    .from(usersTable)
-    .where(eq(usersTable.username, session.user?.username))
+          .select({
+            liked_user: usersTable.liked_user,
+          })
+          .from(usersTable)
+          .where(eq(usersTable.displayId, session_id))
+          .execute();
     // Query
     const likedUserIds = user.liked_user || [-100]; // Ensure this is always an array
 
     const followedLatestPicture = await db
-      .select()
+      .select({
+        pic_id: pictureTable.pic_id,
+        tags: pictureTable.tags,
+      })
       .from(pictureTable)
       .where(inArray(pictureTable.author_id, likedUserIds))
       .execute();
-    const filteredForPrivate = followedLatestPicture.filter(picture => picture.tags && !picture.tags.some(tag => tag.startsWith('private')));
+    
+    const filteredForPrivate = followedLatestPicture.filter(
+      picture => picture.tags &&
+      !picture.tags.some(tag => tag.startsWith('private'))
+    );
+
     const numberOfPicturesToExtract = Math.min(5, filteredForPrivate.length);
-    const topPictures = filteredForPrivate.sort((a, b) => b.pic_id - a.pic_id).slice(0, numberOfPicturesToExtract);
+
+    const topPictures = filteredForPrivate
+      .sort((a, b) => b.pic_id - a.pic_id)
+      .slice(0, numberOfPicturesToExtract);
+    
     const pictureIds = topPictures.map(picture => picture.pic_id);
-    // Return the user information
+
     return NextResponse.json({ pictureIds });
   } catch (error) {
-    console.error("Error in POST function: ", error);
+    console.error("/api/homeFollowedLatest :", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

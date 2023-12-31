@@ -1,33 +1,32 @@
 import { NextResponse } from "next/server";
-import { eq } from "drizzle-orm";
 import { db } from "@/db";
+import { usersTable, transactionTable } from "@/db/schema";
+
+import { eq } from "drizzle-orm";
+
 import { auth } from "@/lib/auth";
-import { transactionTable, usersTable } from "@/db/schema"; // Import your UserTable if not already done
 
 export async function POST(request: Request) {
   try {
-    // Authentication
+    const body = await request.json();
+    const { tacc, amount } = body;
+
     const session = await auth();
     if (!session?.user?.email) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    // Extract data from request body
-    const body = await request.json();
-    const { tacc, amount } = body;
-    
-    // Assume you have a user table where you want to update this information
-    // and 'userId' is obtained from the session or some other source
-    const session_id = session?.user?.id; // Replace with actual way to get the user's ID
-
+    const session_id = session?.user?.id;
 
     const [User] = await db
-          .select()
+          .select({
+            username: usersTable.username,
+            coins: usersTable.coins,
+          })
           .from(usersTable)
           .where(eq(usersTable.displayId, session_id))
           .execute();
     
-    // Update user profile in the database
     if (!User){
         return new NextResponse("No author you bad guy", { status: 401 });
     }
@@ -37,23 +36,26 @@ export async function POST(request: Request) {
     }
 
     const [User2] = await db
-          .select()
+          .select({
+            username: usersTable.username,
+            coins: usersTable.coins,
+          })
           .from(usersTable)
           .where(eq(usersTable.username, tacc))
           .execute();
     
-    // Update user profile in the database
     if (!User2){
       return new NextResponse("Unknown Receiver", { status: 401 });
     }
 
-    let user1count = (User.coins || 0);
-    let user2count = (User2.coins || 0);
     const amount_int = parseInt(amount);
 
     if(amount_int <= 0) {
       return new NextResponse("Negtive or zero amount", { status: 400 });
     }
+
+    let user1count = (User.coins || 0);
+    let user2count = (User2.coins || 0);
 
     if(user1count < amount_int) {
       return new NextResponse("Not Enough Money", { status: 400 });
@@ -88,10 +90,9 @@ export async function POST(request: Request) {
         timestamp: Date.now().toString()
       }).returning()
 
-    // Return the updated user information
     return NextResponse.json({ newTx });
   } catch (error) {
-    console.error("Error in POST function: ", error);
+    console.error("/api/transferCoin", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
