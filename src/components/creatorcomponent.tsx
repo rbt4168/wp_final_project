@@ -2,10 +2,14 @@ import { Box, Grid, ListItem, ListItemButton, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-async function creatorFetchHandler(user_id: any) {
+interface creator_interface {
+  user_id: number
+}
+
+async function creatorFetchHandler(user_id: number) {
   try {
-    const response = await axios.get("/api/getAuthorById?user_id="+user_id);
-    // console.log(response.data)
+    const response = await axios.get("/api/getAuthorById?user_id=" + user_id.toString());
+    
     return response.data;
   } catch (e) {
     console.error(e);
@@ -13,7 +17,7 @@ async function creatorFetchHandler(user_id: any) {
   }
 }
 
-export function CreatorListItem(props: any) {
+export function CreatorListItem(props: creator_interface) {
     const { user_id } = props;
     
     const [ authorData, setAuthouData ] = useState({

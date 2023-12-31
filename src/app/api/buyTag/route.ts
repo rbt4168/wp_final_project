@@ -67,11 +67,11 @@ export async function POST(request: Request) {
       return new NextResponse("Not Enough Coins", { status: 400 });
     }
 
-   const currentOwnedTag = User.owned_private_tag || [];
+    const currentOwnedTag = User.owned_private_tag || [];
     
-   const updatedOwnedTag = [...currentOwnedTag, "private-"+authorname+"-"+tagname];
+    const updatedOwnedTag = [...currentOwnedTag, "private-"+authorname+"-"+tagname];
 
-    const [updatedUser] = await db
+    await db
       .update(usersTable)
       .set({
         coins: usercoin - tagcost,
@@ -88,7 +88,7 @@ export async function POST(request: Request) {
       .where(eq(usersTable.username, authorname))
       .execute();
 
-    const [updatedAuthor] = await db
+    await db
       .update(usersTable)
       .set({
         coins: (Author2.coins || 0) + tagcost,

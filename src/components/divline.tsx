@@ -1,8 +1,11 @@
 import { main_theme } from "@/lib/themes";
 import { CssBaseline, Divider, Grid, ThemeProvider } from "@mui/material";
-import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
-export default function DivLineCenter(props:any) {
+interface div_props {
+  text: string
+}
+
+export default function DivLineCenter(props: div_props) {
   const { text } = props;
   return(
     <ThemeProvider theme={main_theme}>
@@ -20,7 +23,7 @@ export default function DivLineCenter(props:any) {
     </ThemeProvider>
   )
 }
-export function DivLineCenterNoMt(props:any) {
+export function DivLineCenterNoMt(props: div_props) {
   const { text } = props;
   return(
     <ThemeProvider theme={main_theme}>
@@ -38,7 +41,7 @@ export function DivLineCenterNoMt(props:any) {
   )
 }
 
-export function DivLineCenterFull(props:any) {
+export function DivLineCenterFull(props: div_props) {
   const { text } = props;
   return(
     <ThemeProvider theme={main_theme}>

@@ -17,7 +17,6 @@ function ChatListUnit(props: any) {
       if (res.data.message === "e") {
         // user exist
         const quid = res.data.uid;
-        const qacc = res.data.account;
         console.log(quid);
         setOppouid(res.data.uid);
 

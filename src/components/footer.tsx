@@ -4,7 +4,7 @@ import Copyright from './copyright';
 import { main_theme } from '../lib/themes';
 import { ThemeProvider } from '@mui/material';
 
-export default function FooterComponent(props: any) {
+export default function FooterComponent() {
   return (
     <ThemeProvider theme={main_theme}>
       <Container

@@ -35,7 +35,7 @@ function CostListItem(props: list_prop_interface) {
     }
 
     axios.post("/api/buyTag", payload)
-      .then((e)=>{
+      .then(()=>{
         alert("購買成功!");
       })
       .catch((e)=>console.error(e))

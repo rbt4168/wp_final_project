@@ -121,7 +121,7 @@ export default function SearchBar(props: any) {
           onChange={(event:any, newValue:any) => {
             setNegValue([
               ...negOptions,
-              ...newValue?.filter((option:any) => negOptions.indexOf(option) === -1),
+              ...newValue?.filter((option:any) => negOptions?.indexOf(option) === -1),
             ]);
             console.log(negvalue);
           }}

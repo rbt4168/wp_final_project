@@ -59,7 +59,7 @@ export default CredentialsProvider({
           coins: 100
         }).returning();
 
-      const [ newTx ] = await db
+      await db
         .insert(transactionTable)
         .values({
           to_user: username,

@@ -7,13 +7,12 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { StyledRating } from "./styledcomps";
 import { PICTURE_SERVER_URL } from "@/lib/utils";
-import GlobalChip, { GlobalChipSmall } from "./chipglobal";
-import DivLineCenter, { DivLineCenterNoMt } from "./divline";
+import { GlobalChipSmall } from "./chipglobal";
 
 async function creatorFetchHandler(user_id: any) {
   try {
     const response = await axios.get("/api/getAuthorById?user_id="+user_id);
-    // console.log(response.data)
+    
     return response.data;
   } catch (e) {
     console.error(e);
