@@ -13,13 +13,13 @@ export async function GET() {
         return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const Users = await db
+    const user = await db
       .select()
       .from(usersTable)
       .where(eq(usersTable.username, session?.user?.username))
       .execute();
     
-    return NextResponse.json({ Users });
+    return NextResponse.json({ user });
   } catch (error) {
     console.error("/getNowUser :", error);
     return new NextResponse("Internal Error", { status: 500 });
