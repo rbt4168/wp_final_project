@@ -16,7 +16,7 @@ export default function FooterComponent() {
           py: [3, 6],
         }}
       >
-        <Copyright sx={{ mt: 0 }} />
+        <Copyright />
       </Container>
     </ThemeProvider>
   );
